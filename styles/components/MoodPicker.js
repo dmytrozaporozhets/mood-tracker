@@ -13,8 +13,19 @@ const MoodPickerStyle = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
     },
-    emoji: {
-        fontSize: 30,
+    saveButton: {
+        backgroundColor: '#aee',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+    },
+    disabledButton: {
+        backgroundColor: '#ccc',
+    },
+    saveButtonText: {
+        fontSize: 16,
+        color: '#000',
+        fontWeight: 'bold',
     },
 });
 
