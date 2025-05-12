@@ -4,23 +4,22 @@ A simple mobile app for tracking your daily mood. Built with **React Native** an
 
 ## 📱 Features
 
-- Select your current mood
-- Save mood locally (AsyncStorage)
-- View your emotional history
+- Select your current mood using emoji buttons
+- Save your mood locally using `AsyncStorage`
+- View your emotional history with styled mood cards
+- Navigate between screens using React Navigation
 
 ## 🚀 Technologies
 
-- React Native
-- Expo
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
 - JavaScript (ES6+)
-- AsyncStorage
+- [React Navigation](https://reactnavigation.org/)
+- [AsyncStorage](https://react-native-async-storage.github.io/async-storage/)
 
 ## 🛠️ Getting Started
 
-```bash
-git clone https://github.com/dmytrozaporozhets/mood-tracker.git
-cd mood-tracker
-npm install
-npm start
-
-
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/dmytrozaporozhets/mood-tracker.git
+   cd mood-tracker
