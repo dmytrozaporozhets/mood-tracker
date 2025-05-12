@@ -1,14 +1,16 @@
 import { View } from 'react-native';
-
-import MoodPicker from '../components/MoodPicker';
-import layout from '../styles/general/layout';
+import layout from "../styles/general/layout";
+import MoodPicker from '../components/MoodPicker'
+import ScreenView from '../components/ScreenView'
 
 const MoodScreen = () => {
-  return (
-    <View style={layout.container}>
-      <MoodPicker />
-    </View>
-  );
+    return (
+        <ScreenView>
+            <View style={layout.center}>
+                <MoodPicker/>
+            </View>
+        </ScreenView>
+    );
 };
 
 export default MoodScreen;

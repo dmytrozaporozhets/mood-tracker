@@ -47,37 +47,42 @@ const MoodPicker = () => {
     loadMoods();
   }, []);
 
-  return (
-    <View style={MoodPickerStyle.container}>
-      <Text style={MoodPickerStyle.title}>How are you feeling today?</Text>
-      <View style={MoodPickerStyle.moodList}>
-        {moods.map((mood) => (
-          <MoodButton
-            key={mood.label}
-            value={mood}
-            isSelected={selectedMood?.label === mood.label}
-            onPress={() => setSelectedMood(mood)}
-          />
-        ))}
-      </View>
-      <TouchableOpacity
-        style={[MoodPickerStyle.saveButton, !selectedMood && MoodPickerStyle.disabledButton]}
-        onPress={handleSave}
-        disabled={!selectedMood}
-      >
-        <Text style={MoodPickerStyle.saveButtonText}>Save</Text>
-      </TouchableOpacity>
-      <FlatList
-        data={moodList}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <MoodCard item={item} />}
-        style={{ marginTop: 20 }}
-        contentContainerStyle={{ paddingBottom: 100 }}
-        ref={flatListRef}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
-  );
+    return (
+        <View>
+            <Text style={MoodPickerStyle.title}>How are you feeling today?</Text>
+            <View style={MoodPickerStyle.moodList}>
+                {moods.map((mood) => (
+                    <MoodButton
+                        key={mood.label}
+                        value={mood}
+                        isSelected={selectedMood?.label === mood.label}
+                        onPress={() => setSelectedMood(mood)}
+                    />
+                ))}
+            </View>
+            <TouchableOpacity
+                style={[
+                    MoodPickerStyle.saveButton,
+                    !selectedMood && MoodPickerStyle.disabledButton,
+                ]}
+                onPress={handleSave}
+                disabled={!selectedMood}
+            >
+                <Text style={MoodPickerStyle.saveButtonText}>Save</Text>
+            </TouchableOpacity>
+            <FlatList
+                data={moodList}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <MoodCard item={item}/>
+                )}
+                style={{ marginTop: 20 }}
+                contentContainerStyle={{ paddingBottom: 100 }}
+                ref={flatListRef}
+                showsVerticalScrollIndicator={false}
+            />
+        </View>
+    );
 };
 
 export default MoodPicker;
