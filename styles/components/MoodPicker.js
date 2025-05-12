@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const MoodPickerStyle = StyleSheet.create({
-    container: {
-        marginTop: 100,
-        flex:1,
-    },
     title: {
         fontSize: 20,
         marginBottom: 20,

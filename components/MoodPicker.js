@@ -48,7 +48,7 @@ const MoodPicker = () => {
     }, []);
 
     return (
-        <View style={MoodPickerStyle.container}>
+        <View>
             <Text style={MoodPickerStyle.title}>How are you feeling today?</Text>
             <View style={MoodPickerStyle.moodList}>
                 {moods.map((mood) => (
