@@ -1,1 +1,1 @@
-export const MOOD_SCREEN ="Mood Screen"
+export const MOOD_SCREEN = 'Mood Screen';
