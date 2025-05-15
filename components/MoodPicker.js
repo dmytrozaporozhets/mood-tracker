@@ -1,18 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useEffect, useRef, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-import MoodCard from '../components/MoodCard';
 import { moods } from '../constants/moods';
 import MoodPickerStyle from '../styles/components/MoodPicker';
 import MoodButton from './MoodButton';
-
-const STORAGE_KEY = 'mood-list';
+import {MOOD_LIST_KEY} from '../constants/storage'
 
 const MoodPicker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [moodList, setMoodList] = useState([]);
-  const flatListRef = useRef(null);
 
   const handleSave = async () => {
     if (!selectedMood) return;
@@ -21,18 +18,17 @@ const MoodPicker = () => {
     const sortedList = [...updatedList].sort((a, b) => new Date(b.date) - new Date(a.date));
 
     try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(sortedList));
+      await AsyncStorage.setItem(MOOD_LIST_KEY, JSON.stringify(sortedList));
       setMoodList(sortedList);
       setSelectedMood(null);
-      flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
     } catch (e) {
       console.error('Failed to save mood', e);
     }
-  };
+  }
 
   const loadMoods = async () => {
     try {
-      const stored = await AsyncStorage.getItem(STORAGE_KEY);
+      const stored = await AsyncStorage.getItem(MOOD_LIST_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
         const sortedList = [...parsed].sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -67,15 +63,6 @@ const MoodPicker = () => {
       >
         <Text style={MoodPickerStyle.saveButtonText}>Save</Text>
       </TouchableOpacity>
-      <FlatList
-        data={moodList}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => <MoodCard item={item} />}
-        style={{ marginTop: 20 }}
-        contentContainerStyle={{ paddingBottom: 100 }}
-        ref={flatListRef}
-        showsVerticalScrollIndicator={false}
-      />
     </View>
   );
 };
