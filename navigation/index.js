@@ -1,8 +1,9 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import BottomTabBar from './BottomTabBar';
+import React from 'react';
+
 import MoodScreen from '../screens/MoodScreen';
+import BottomTabBar from './BottomTabBar';
 import { MOOD_SCREEN, ROOT_TABS } from './RouteNames';
 
 const Stack = createNativeStackNavigator();

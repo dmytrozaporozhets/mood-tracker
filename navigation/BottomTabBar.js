@@ -1,9 +1,10 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
+import React from 'react';
+
 import HistoryScreen from '../screens/HistoryScreen';
-import { HOME_SCREEN, HISTORY_SCREEN } from './RouteNames';
+import HomeScreen from '../screens/HomeScreen';
 import { CustomBottomBar } from './CustomBottomBar';
+import { HISTORY_SCREEN, HOME_SCREEN } from './RouteNames';
 
 const Tab = createBottomTabNavigator();
 
@@ -13,8 +14,8 @@ const BottomTabBar = () => {
       screenOptions={{ headerShown: false }}
       tabBar={(props) => <CustomBottomBar {...props} />}
     >
-      <Tab.Screen name='Home' component={HomeScreen} />
-      <Tab.Screen name="History" component={HistoryScreen} />
+      <Tab.Screen name={HOME_SCREEN} component={HomeScreen} />
+      <Tab.Screen name={HISTORY_SCREEN} component={HistoryScreen} />
     </Tab.Navigator>
   );
 };
