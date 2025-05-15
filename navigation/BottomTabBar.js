@@ -13,8 +13,8 @@ const BottomTabBar = () => {
       screenOptions={{ headerShown: false }}
       tabBar={(props) => <CustomBottomBar {...props} />}
     >
-      <Tab.Screen name={HOME_SCREEN} component={HomeScreen} />
-      <Tab.Screen name={HISTORY_SCREEN} component={HistoryScreen} />
+      <Tab.Screen name='Home' component={HomeScreen} />
+      <Tab.Screen name="History" component={HistoryScreen} />
     </Tab.Navigator>
   );
 };

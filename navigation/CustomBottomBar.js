@@ -1,10 +1,8 @@
 import React from 'react';
 import { View, Pressable, Text } from 'react-native';
-import { useLinkBuilder, useTheme } from '@react-navigation/native';
+import {IconRoute} from '../components/elements/IconRoute';
 
 export const CustomBottomBar = ({ state, descriptors, navigation }) => {
-  const { colors } = useTheme();
-  const { buildHref } = useLinkBuilder();
 
   return (
     <View style={{ flexDirection: 'row' }}>
@@ -42,9 +40,14 @@ export const CustomBottomBar = ({ state, descriptors, navigation }) => {
             testID={options.tabBarButtonTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            style={{ flex: 1, padding: 10, alignItems: 'center' }}
+            style={{ flex: 1, alignItems: 'center', height:60,justifyContent:'center',
+              backgroundColor:isFocused ? 'darkblue':'white' }}
           >
-            <Text style={{ color: isFocused ? colors.primary : colors.text }}>
+            <IconRoute
+              route={label}
+              color={ isFocused ? 'white' : 'gray'}
+            />
+            <Text style={{ color: isFocused ? 'white' : 'gray' }}>
               {label}
             </Text>
           </Pressable>
