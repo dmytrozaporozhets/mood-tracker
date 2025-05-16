@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useCallback, useState } from 'react';
-import { FlatList,Text, View } from 'react-native';
-import {sg} from '../styling'
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import MoodCard from '../components/MoodCard';
-import {MOOD_LIST_KEY} from '../constants/storage'
 import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useState } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import MoodCard from '../components/MoodCard';
+import { MOOD_LIST_KEY } from '../constants/storage';
+import { sg } from '../styling';
 
 const HistoryScreen = () => {
   const insets = useSafeAreaInsets();
@@ -32,15 +32,19 @@ const HistoryScreen = () => {
   );
 
   return (
-    <View style={[sg.flex,{paddingTop:insets.top}]} >
-      {!moodList.length ? <Text>No history yet</Text> : <FlatList
-        data={moodList}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <MoodCard item={item} />}
-        style={{ marginTop: 20 }}
-        contentContainerStyle={{ paddingBottom: 100 }}
-        showsVerticalScrollIndicator={false}
-      />}
+    <View style={[sg.flex, { paddingTop: insets.top }]}>
+      {!moodList.length ? (
+        <Text>No history yet</Text>
+      ) : (
+        <FlatList
+          data={moodList}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => <MoodCard item={item} />}
+          style={{ marginTop: 20 }}
+          contentContainerStyle={{ paddingBottom: 100 }}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
     </View>
   );
 };
