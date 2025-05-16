@@ -1,15 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { moods } from '../constants/moods';
+import { MOOD_LIST_KEY } from '../constants/storage';
 import MoodPickerStyle from '../styles/components/MoodPicker';
 import MoodButton from './MoodButton';
-import {MOOD_LIST_KEY} from '../constants/storage'
 
 const MoodPicker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
   const [moodList, setMoodList] = useState([]);
+  const { t } = useTranslation();
 
   const handleSave = async () => {
     if (!selectedMood) return;
@@ -24,7 +26,7 @@ const MoodPicker = () => {
     } catch (e) {
       console.error('Failed to save mood', e);
     }
-  }
+  };
 
   const loadMoods = async () => {
     try {
@@ -61,7 +63,7 @@ const MoodPicker = () => {
         onPress={handleSave}
         disabled={!selectedMood}
       >
-        <Text style={MoodPickerStyle.saveButtonText}>Save</Text>
+        <Text style={MoodPickerStyle.saveButtonText}>{t('button:save')}</Text>
       </TouchableOpacity>
     </View>
   );

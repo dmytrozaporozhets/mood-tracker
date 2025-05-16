@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import ScreenView from '../components/ScreenView';
 import layout from '../styles/general/layout';
