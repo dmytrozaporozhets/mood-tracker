@@ -6,8 +6,10 @@ A simple mobile app for tracking your daily mood. Built with React Native and Ex
 
 - Select your current mood with emoji
 - Save moods locally using AsyncStorage
-- View your emotional history (coming soon)
-- Responsive layout with Safe Area support for iOS & Android
+- View your emotional history
+- Bottom tab navigation: Home, History, Profile
+- Internationalization (i18n) with English & Ukrainian support
+- Dynamic language switching from the Home screen
 
 ## 🚀 Technologies
 
@@ -15,7 +17,10 @@ A simple mobile app for tracking your daily mood. Built with React Native and Ex
 - Expo
 - JavaScript (ES6+)
 - AsyncStorage
-- `react-native-safe-area-context`
+- React Navigation (Stack & Bottom Tabs)
+- react-native-safe-area-context
+- react-i18next & expo-localization
+- ESLint & Prettier
 
 ## 🛠️ Getting Started
 
@@ -24,3 +29,7 @@ git clone https://github.com/dmytrozaporozhets/mood-tracker.git
 cd mood-tracker
 npm install
 npm start
+
+
+
+
