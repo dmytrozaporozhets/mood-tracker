@@ -307,6 +307,9 @@ export default {
   pB50: {
     paddingBottom: 50,
   },
+  pB100: {
+    paddingBottom: 100,
+  },
   pL0: {
     paddingLeft: 0,
   },
