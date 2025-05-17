@@ -1,12 +1,16 @@
-// components/LanguageSwitcher.js
 import React from 'react';
 import { View, Pressable, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { sg } from '../styling';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
-  const changeLang = (lng) => i18n.changeLanguage(lng);
+  const changeLang =  async (lng) => {
+    await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
+    await i18n.changeLanguage(lng);
+  };
 
   return (
     <View style={[sg.row, sg.jCSpaceEvenly, sg.p10]}>
