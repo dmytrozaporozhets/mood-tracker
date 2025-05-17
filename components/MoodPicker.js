@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import useMoods from '../hooks/useMoods'
 
 import { moods } from '../constants/moods';
 import { MOOD_LIST_KEY } from '../constants/storage';
@@ -10,7 +11,7 @@ import MoodButton from './MoodButton';
 
 const MoodPicker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
-  const [moodList, setMoodList] = useState([]);
+  const { moodList,setMoodList, loadMoods } = useMoods();
   const { t } = useTranslation();
 
   const handleSave = async () => {
@@ -25,19 +26,6 @@ const MoodPicker = () => {
       setSelectedMood(null);
     } catch (e) {
       console.error('Failed to save mood', e);
-    }
-  };
-
-  const loadMoods = async () => {
-    try {
-      const stored = await AsyncStorage.getItem(MOOD_LIST_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        const sortedList = [...parsed].sort((a, b) => new Date(b.date) - new Date(a.date));
-        setMoodList(sortedList);
-      }
-    } catch (e) {
-      console.error('Failed to load moods', e);
     }
   };
 
