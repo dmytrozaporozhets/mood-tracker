@@ -3,9 +3,9 @@ import { ActivityIndicator, View } from 'react-native';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import Navigation from './navigation';
-import { sg } from './styling';
-import { useLanguage } from './hooks/useLanguage';
+import Navigation from './src/navigation';
+import { sg } from './src/styling';
+import { useLanguage } from './src/hooks/useLanguage';
 
 export default function App() {
   const { isLanguageReady, i18n } = useLanguage();
