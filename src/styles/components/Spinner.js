@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Colors, sg } from '../../styling';
+
+import { Colors } from '../../styling';
 import width from '../../utils/device';
 import height from '../../utils/device';
 
