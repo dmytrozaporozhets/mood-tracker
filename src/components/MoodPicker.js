@@ -8,6 +8,7 @@ import { MOOD_LIST_KEY } from '../constants/storage';
 import useMoods from '../hooks/useMoods';
 import MoodPickerStyle from '../styles/components/MoodPicker';
 import MoodButton from './MoodButton';
+import { sortByDateDesc } from '../utils/date';
 
 const MoodPicker = () => {
   const [selectedMood, setSelectedMood] = useState(null);
@@ -18,7 +19,7 @@ const MoodPicker = () => {
     if (!selectedMood) return;
     const newItem = { ...selectedMood, date: new Date().toISOString(), id: Date.now() };
     const updatedList = [...moodList, newItem];
-    const sortedList = [...updatedList].sort((a, b) => new Date(b.date) - new Date(a.date));
+    const sortedList = sortByDateDesc(updatedList);
 
     try {
       await AsyncStorage.setItem(MOOD_LIST_KEY, JSON.stringify(sortedList));
