@@ -115,6 +115,7 @@ export default {
     black30: 'rgba(0,0,0,0.3)',
     black40: 'rgba(0,0,0,0.4)',
     black50: 'rgba(0,0,0,0.5)',
+    black60: 'rgba(0,0,0,0.6)',
     white10: 'rgba(255, 255, 255, 0.1)',
     white20: 'rgba(255, 255, 255, 0.2)',
     white30: 'rgba(255, 255, 255, 0.3)',

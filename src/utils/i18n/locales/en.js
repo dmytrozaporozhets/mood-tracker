@@ -1,13 +1,14 @@
 export default {
-  route:{
-    home:"Home",
-    history:"History",
-    profile: "Profile",
+  route: {
+    home: 'Home',
+    history: 'History',
+    profile: 'Profile',
   },
   button: {
-    save: "Save",
+    save: 'Save',
   },
-  mood:{
+  mood: {
     title: 'How are you feeling today?',
   },
+  loading: 'Loading...',
 };

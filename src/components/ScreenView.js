@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 
-import { isAndroid } from '../constants';
 import layout from '../styles/general/layout';
+import { isAndroid } from '../utils/device';
 
 const ScreenView = ({ children, style }) => {
   const paddingTop = isAndroid ? StatusBar.currentHeight : 0;
