@@ -8,3 +8,7 @@ export const formatDate = (dateString) => {
     minute: '2-digit',
   });
 };
+
+export const sortByDateDesc = (list) => {
+  return [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
+};
