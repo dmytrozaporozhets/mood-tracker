@@ -1,12 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import HistoryScreen from '../screens/HistoryScreen';
 import HomeScreen from '../screens/HomeScreen';
-import { CustomBottomBar } from './CustomBottomBar';
 import ProfileScreen from '../screens/ProfileScreen';
-import { useTranslation } from 'react-i18next';
-
+import { CustomBottomBar } from './CustomBottomBar';
 
 const Tab = createBottomTabNavigator();
 

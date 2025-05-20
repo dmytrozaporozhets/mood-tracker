@@ -1,8 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Localization from 'expo-localization';
+import i18n from 'i18next';
 import { useEffect, useState } from 'react';
 import { initReactI18next } from 'react-i18next';
-import i18n from 'i18next';
-import * as Localization from 'expo-localization';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
 import en from '../utils/i18n/locales/en';
@@ -33,15 +33,13 @@ export const useLanguage = () => {
   useEffect(() => {
     const init = async () => {
       const lng = await getInitialLanguage();
-      await i18n
-        .use(initReactI18next)
-        .init({
-          resources,
-          lng,
-          fallbackLng: 'en',
-          interpolation: { escapeValue: false },
-          react: { useSuspense: false },
-        });
+      await i18n.use(initReactI18next).init({
+        resources,
+        lng,
+        fallbackLng: 'en',
+        interpolation: { escapeValue: false },
+        react: { useSuspense: false },
+      });
       setIsLanguageReady(true);
     };
 

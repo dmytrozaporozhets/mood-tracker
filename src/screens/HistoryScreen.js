@@ -1,10 +1,10 @@
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import useMoods from '../hooks/useMoods'
 
 import MoodCard from '../components/MoodCard';
+import useMoods from '../hooks/useMoods';
 import { sg } from '../styling';
 
 const HistoryScreen = () => {

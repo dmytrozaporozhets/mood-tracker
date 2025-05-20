@@ -1,21 +1,16 @@
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
 import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import Navigation from './navigation';
-import { sg } from './styling';
-import { useLanguage } from './hooks/useLanguage';
+import Spinner from './src/components/Spinner';
+import { useLanguage } from './src/hooks/useLanguage';
+import Navigation from './src/navigation';
 
 export default function App() {
   const { isLanguageReady, i18n } = useLanguage();
 
   if (!isLanguageReady) {
-    return (
-      <View style={[sg.flex, sg.center]}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
+    return <Spinner />;
   }
 
   return (
