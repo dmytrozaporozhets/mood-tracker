@@ -5,7 +5,7 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import styles from '../styles/components/Spinner';
 import { Colors } from '../styling';
 
-const Spinner = () => {
+const Spinner: React.FC = () => {
   const { t } = useTranslation();
 
   return (

@@ -4,7 +4,21 @@ import { Text, View } from 'react-native';
 import MoodCardStyle, { moodColors } from '../styles/components/MoodCard';
 import { formatDate } from '../utils/date';
 
-const MoodCard = ({ item }) => {
+export type MoodLabel = keyof typeof moodColors;
+
+export interface MoodItem {
+  emoji: string;
+  label: MoodLabel;
+  date: string;
+  note?: string;
+  id?: number;
+}
+
+interface MoodCardProps {
+  item: MoodItem;
+}
+
+const MoodCard: React.FC<MoodCardProps> = ({ item }) => {
   const { emoji, label, date, note } = item;
   const backgroundColor = moodColors[label] || '#eee';
 

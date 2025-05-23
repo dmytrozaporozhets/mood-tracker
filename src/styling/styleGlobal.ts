@@ -1,12 +1,14 @@
 import Colors from './Colors';
+import  {GlobalTypes} from'../types/globalTypes';
 
-export default {
+const globalStyles:GlobalTypes = {
   absolute: { position: 'absolute' },
   spaceBetween: {
     flex: 1,
     justifyContent: 'space-between',
   },
   center: {
+    flex: 1,
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
@@ -508,9 +510,6 @@ export default {
   borderTransp: {
     borderColor: 'transparent',
   },
-  flexNull: {
-    flex: null,
-  },
   flex: {
     flex: 1,
   },
@@ -532,7 +531,9 @@ export default {
   flexWrap: {
     flexWrap: 'wrap',
   },
-  ffRegular: {},
+  ffRegular: {
+    fontWeight: '400',
+  },
   ffSemiBold: {
     fontWeight: '500',
   },
@@ -684,3 +685,5 @@ export default {
   r50: { right: 50 },
   bgBlack: { backgroundColor: Colors.neutrals[600] },
 };
+
+export default globalStyles;

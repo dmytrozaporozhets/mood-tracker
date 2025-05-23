@@ -9,15 +9,22 @@ import useMoods from '../hooks/useMoods';
 import MoodPickerStyle from '../styles/components/MoodPicker';
 import { sortByDateDesc } from '../utils/date';
 import MoodButton from './MoodButton';
+import { MoodItem } from './MoodCard';
 
-const MoodPicker = () => {
-  const [selectedMood, setSelectedMood] = useState(null);
+const MoodPicker: React.FC = () => {
+  const [selectedMood, setSelectedMood] = useState<MoodItem | null>(null);
   const { moodList, setMoodList, loadMoods } = useMoods();
   const { t } = useTranslation();
 
   const handleSave = async () => {
     if (!selectedMood) return;
-    const newItem = { ...selectedMood, date: new Date().toISOString(), id: Date.now() };
+
+    const newItem: MoodItem = {
+      ...selectedMood,
+      date: new Date().toISOString(),
+      id: Date.now(),
+    };
+
     const updatedList = [...moodList, newItem];
     const sortedList = sortByDateDesc(updatedList);
 
@@ -32,7 +39,7 @@ const MoodPicker = () => {
 
   useEffect(() => {
     loadMoods();
-  }, []);
+  }, [loadMoods]);
 
   return (
     <View>
@@ -43,7 +50,7 @@ const MoodPicker = () => {
             key={mood.label}
             value={mood}
             isSelected={selectedMood?.label === mood.label}
-            onPress={() => setSelectedMood(mood)}
+            onPress={() => setSelectedMood(mood as MoodItem)}
           />
         ))}
       </View>
