@@ -1,13 +1,18 @@
-import React from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
+import React, { ReactNode } from 'react';
+import { SafeAreaView, StatusBar, StyleProp, ViewStyle } from 'react-native';
 
-import layout from '../styles/general/layout';
 import { isAndroid } from '../utils/device';
+import { sg } from '../styling';
 
-const ScreenView = ({ children, style }) => {
-  const paddingTop = isAndroid ? StatusBar.currentHeight : 0;
+interface ScreenViewProps {
+  children: ReactNode;
+  style?: StyleProp<ViewStyle>;
+}
 
-  return <SafeAreaView style={[layout.container, { paddingTop }, style]}>{children}</SafeAreaView>;
+const ScreenView: React.FC<ScreenViewProps> = ({ children, style }) => {
+  const paddingTop = isAndroid ? StatusBar.currentHeight ?? 0 : 0;
+
+  return <SafeAreaView style={[sg.center, { paddingTop }, style]}>{children}</SafeAreaView>;
 };
 
 export default ScreenView;

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { Colors } from '../../styling'
 
 export const moodColors = {
   Happy: '#D1F5D3',
@@ -17,8 +18,8 @@ const MoodCardStyle = StyleSheet.create({
     marginVertical: 4,
     marginHorizontal: 12,
     borderRadius: 16,
-    backgroundColor: '#fff', // fallback
-    shadowColor: '#000',
+    backgroundColor: Colors.neutrals.white,
+    shadowColor: Colors.neutrals[600],
     shadowOpacity: 0.05,
     shadowRadius: 8,
     shadowOffset: { width: 0, height: 2 },

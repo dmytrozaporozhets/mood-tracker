@@ -1,11 +1,16 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { IconRoute } from '../components/elements/IconRoute';
 import { Colors, sg } from '../styling';
 
-export const CustomBottomBar = ({ state, descriptors, navigation }) => {
+export const CustomBottomBar: React.FC<BottomTabBarProps> = ({
+  state,
+  descriptors,
+  navigation,
+}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -36,6 +41,8 @@ export const CustomBottomBar = ({ state, descriptors, navigation }) => {
             });
           };
 
+          const labelColor = isFocused ? Colors.neutrals.white : Colors.primary[500];
+
           return (
             <Pressable
               key={route.key}
@@ -49,16 +56,22 @@ export const CustomBottomBar = ({ state, descriptors, navigation }) => {
                 sg.aICenter,
                 sg.h60,
                 sg.jCCenter,
-                { backgroundColor: isFocused ? Colors.primary[500] : Colors.neutrals.white },
+                {
+                  backgroundColor: isFocused ? Colors.primary[500] : Colors.neutrals.white,
+                },
               ]}
             >
-              <IconRoute
-                route={label}
-                color={isFocused ? Colors.neutrals.white : Colors.primary[500]}
-              />
-              <Text style={{ color: isFocused ? Colors.neutrals.white : Colors.primary[500] }}>
-                {label}
-              </Text>
+              <IconRoute route={typeof label === 'string' ? label : route.name} color={labelColor} />
+              {typeof label === 'string' ? (
+                <Text style={{ color: labelColor }}>{label}</Text>
+              ) : (
+                label({
+                  focused: isFocused,
+                  color: labelColor,
+                  position: 'below-icon',
+                  children: route.name,
+                })
+              )}
             </Pressable>
           );
         })}
