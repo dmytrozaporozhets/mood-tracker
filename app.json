@@ -27,6 +27,7 @@
     },
     "plugins": [
       "expo-localization"
-    ]
+    ],
+    "entryPoint": "./index.tsx"
   }
 }
