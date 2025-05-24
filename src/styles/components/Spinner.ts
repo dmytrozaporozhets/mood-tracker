@@ -1,8 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { Colors } from '../../styling';
-import width from '../../utils/device';
-import height from '../../utils/device';
+import {width,height} from '../../utils/device';
 
 export default StyleSheet.create({
   overlay: {
