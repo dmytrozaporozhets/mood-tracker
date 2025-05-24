@@ -1,15 +1,14 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, View} from 'react-native';
-
+import { Pressable, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
 import { sg } from '../styling';
 
 const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
 
-  const changeLang = async (lng: string): Promise<void> => {
+  const changeLang = async (lng: string) => {
     await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
     await i18n.changeLanguage(lng);
   };
