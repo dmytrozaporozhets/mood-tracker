@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ROOT_TABS } from '../../navigation/RouteNames';
 import ScreenView from '../../components/ScreenView';
 import { onboardingSlides } from '../../constants/onboarding';
 import OnboardingScreenStyle from'../../styles/screens/OnboardingScreen';
 import { sg } from '../../styling';
+import { RootStackParamList } from '../../navigation/types';
 
 
 const OnboardingScreen = () => {
-  const navigation = useNavigation();
+const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleDone = () => {
     navigation.reset({
