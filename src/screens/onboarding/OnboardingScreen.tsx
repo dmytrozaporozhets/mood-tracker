@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, Pressable, FlatList } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, Pressable, FlatList,NativeScrollEvent, NativeSyntheticEvent  } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { ROOT_TABS } from '../../navigation/RouteNames';
 import ScreenView from '../../components/ScreenView';
@@ -8,11 +8,14 @@ import OnboardingScreenStyle from'../../styles/screens/OnboardingScreen';
 import { sg } from '../../styling';
 import { RootStackParamList } from '../../navigation/types';
 import { useTranslation } from 'react-i18next';
+import Pagination from '../../components/Pagination';
 
 
 const OnboardingScreen = () => {
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 const { t } = useTranslation();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef<FlatList>(null);
 
   const handleDone = () => {
     navigation.reset({
@@ -28,17 +31,34 @@ const { t } = useTranslation();
     </View>
   );
 
+   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const newIndex = Math.round(offsetX / event.nativeEvent.layoutMeasurement.width);
+    if (newIndex !== currentIndex) {
+      setCurrentIndex(newIndex);
+    }
+  };
+
+  const onDotPress =(index:number) => flatListRef.current?.scrollToIndex({ index })
+
   return (
     <ScreenView style={sg.bgWhite}>
       <View style={OnboardingScreenStyle.container}>
       <FlatList
-        data={onboardingSlides}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.key}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
+          ref={flatListRef}
+          data={onboardingSlides}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.key}
+          horizontal
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScroll={onScroll}
+          scrollEventThrottle={16}
       />
+      <Pagination 
+        total={onboardingSlides.length} 
+        currentIndex={currentIndex}
+        onDotPress={onDotPress}/>
       <Pressable style={OnboardingScreenStyle.button} onPress={handleDone}>
         <Text style={OnboardingScreenStyle.buttonText}>{t('button:getStarted')}</Text>
       </Pressable>
