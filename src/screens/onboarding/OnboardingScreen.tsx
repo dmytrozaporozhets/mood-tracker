@@ -7,10 +7,12 @@ import { onboardingSlides } from '../../constants/onboarding';
 import OnboardingScreenStyle from'../../styles/screens/OnboardingScreen';
 import { sg } from '../../styling';
 import { RootStackParamList } from '../../navigation/types';
+import { useTranslation } from 'react-i18next';
 
 
 const OnboardingScreen = () => {
 const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+const { t } = useTranslation();
 
   const handleDone = () => {
     navigation.reset({
@@ -21,8 +23,8 @@ const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const renderItem = ({ item }: { item: typeof onboardingSlides[0] }) => (
     <View style={OnboardingScreenStyle.slide}>
-      <Text style={OnboardingScreenStyle.title}>{item.title}</Text>
-      <Text style={OnboardingScreenStyle.description}>{item.description}</Text>
+      <Text style={OnboardingScreenStyle.title}>{t(item.titleKey)}</Text>
+      <Text style={OnboardingScreenStyle.description}>{t(item.descriptionKey)}</Text>
     </View>
   );
 
@@ -38,10 +40,10 @@ const navigation = useNavigation<NavigationProp<RootStackParamList>>();
         showsHorizontalScrollIndicator={false}
       />
       <Pressable style={OnboardingScreenStyle.button} onPress={handleDone}>
-        <Text style={OnboardingScreenStyle.buttonText}>Get Started</Text>
+        <Text style={OnboardingScreenStyle.buttonText}>{t('button:getStarted')}</Text>
       </Pressable>
       <Pressable style={OnboardingScreenStyle.skipButton} onPress={handleDone}>
-        <Text style={OnboardingScreenStyle.skipText}>Skip</Text>
+        <Text style={OnboardingScreenStyle.skipText}>{t('button:skip')}</Text>
       </Pressable>
     </View>
     </ScreenView>

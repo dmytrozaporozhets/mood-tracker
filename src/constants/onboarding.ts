@@ -1,17 +1,23 @@
-export const onboardingSlides = [
+export type OnboardingSlide = {
+  key: string;
+  titleKey: string;
+  descriptionKey: string;
+};
+
+export const onboardingSlides: OnboardingSlide[] = [
   {
     key: '1',
-    title: 'Track your mood',
-    description: 'Choose how you feel every day and keep track of your emotional health.',
+    titleKey: 'onboarding:trackTitle',
+    descriptionKey: 'onboarding:trackDescription',
   },
   {
     key: '2',
-    title: 'View history',
-    description: 'See trends and understand your emotional patterns over time.',
+    titleKey: 'onboarding:historyTitle',
+    descriptionKey: 'onboarding:historyDescription',
   },
   {
     key: '3',
-    title: 'It’s private',
-    description: 'All your mood data stays on your device. You’re in control.',
+    titleKey: 'onboarding:privacyTitle',
+    descriptionKey: 'onboarding:privacyDescription',
   },
 ];
