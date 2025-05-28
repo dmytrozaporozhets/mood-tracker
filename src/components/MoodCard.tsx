@@ -11,7 +11,7 @@ export interface MoodItem {
   label: MoodLabel;
   date: string;
   note?: string;
-  id?: number;
+  id: number;
 }
 
 interface MoodCardProps {
