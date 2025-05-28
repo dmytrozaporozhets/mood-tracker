@@ -17,3 +17,7 @@ interface HasDate {
 export const sortByDateDesc = <T extends HasDate>(list: T[]): T[] => {
   return [...list].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
+
+export const getTodayDate = (): string => {
+  return new Date().toISOString().split('T')[0];
+};

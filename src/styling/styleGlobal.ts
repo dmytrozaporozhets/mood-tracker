@@ -684,6 +684,7 @@ const globalStyles:GlobalTypes = {
   r40: { right: 40 },
   r50: { right: 50 },
   bgBlack: { backgroundColor: Colors.neutrals[600] },
+  bgWhite: { backgroundColor: Colors.neutrals.white },
 };
 
 export default globalStyles;
