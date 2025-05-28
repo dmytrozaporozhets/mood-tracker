@@ -20,7 +20,9 @@ const HistoryScreen = () => {
   return (
     <View style={[sg.flex, { paddingTop: insets.top }]}>
       {!moodList.length ? (
-        <Text>No history yet</Text>
+        <View style={[sg.center, sg.flex]}>
+          <Text style={sg.textCenter}>No history yet</Text>
+        </View>
       ) : (
         <FlatList
           data={moodList}

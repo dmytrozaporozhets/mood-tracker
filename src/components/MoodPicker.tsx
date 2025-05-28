@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { moods } from '../constants/moods';
-import { MOOD_LIST_KEY } from '../constants/storage';
+import { saveTodayMoodItem } from '../storage/moodStorage';
 import useMoods from '../hooks/useMoods';
 import MoodPickerStyle from '../styles/components/MoodPicker';
-import { sortByDateDesc } from '../utils/date';
 import MoodButton from './MoodButton';
 import { MoodItem } from './MoodCard';
 
@@ -17,7 +15,7 @@ interface MoodPickerProps {
 
 const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
   const [selectedMood, setSelectedMood] = useState<MoodItem | null>(null);
-  const { moodList, setMoodList, loadMoods } = useMoods();
+  const { setMoodList, loadMoods } = useMoods();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -33,17 +31,10 @@ const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
       id: Date.now(),
     };
 
-    const updatedList = [...moodList, newItem];
-    const sortedList = sortByDateDesc(updatedList);
-
-    try {
-      await AsyncStorage.setItem(MOOD_LIST_KEY, JSON.stringify(sortedList));
-      setMoodList(sortedList);
-      setSelectedMood(null);
-      onSelectMood?.();
-    } catch (e) {
-      console.error('Failed to save mood', e);
-    }
+    const updated = await saveTodayMoodItem(newItem);
+    setMoodList(updated);
+    setSelectedMood(null);
+    onSelectMood?.();
   };
 
   return (
@@ -62,7 +53,7 @@ const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
       <TouchableOpacity
         style={[
           MoodPickerStyle.saveButton,
-          !selectedMood && MoodPickerStyle.disabledButton
+          !selectedMood && MoodPickerStyle.disabledButton,
         ]}
         onPress={handleSave}
         disabled={!selectedMood}

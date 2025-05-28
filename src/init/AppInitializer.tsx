@@ -13,26 +13,37 @@ const AppInitializer = () => {
   const [showMoodModal, setShowMoodModal] = useState(false);
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
-        if (!onboardingShown) {
-          setShowOnboarding(true);
-        } else {
-          const mood = await getTodayMood();
-          if (!mood) {
-            setShowMoodModal(true);
-          }
+  const init = async () => {
+    try {
+      const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
+      if (!onboardingShown) {
+        setShowOnboarding(true);
+      } else {
+        const mood = await getTodayMood();
+        if (!mood) {
+          setShowMoodModal(true);
         }
-      } catch (e) {
-        console.warn('Initialization error:', e);
-      } finally {
-        setIsReady(true);
       }
-    };
+    } catch (e) {
+      console.warn('Initialization error:', e);
+    } finally {
+      setIsReady(true);
+    }
+  };
 
-    init();
-  }, []);
+  init();
+}, []);
+
+useEffect(() => {
+  //  Перевірка після завершення онбордингу
+  if (!showOnboarding) {
+    getTodayMood().then((mood) => {
+      if (!mood) {
+        setShowMoodModal(true);
+      }
+    });
+  }
+}, [showOnboarding]);
 
   if (!isReady) return <Spinner />;
 

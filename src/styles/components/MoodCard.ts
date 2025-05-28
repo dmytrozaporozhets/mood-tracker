@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '../../styling'
+import { Colors } from '../../styling';
 
 export const moodColors = {
   Happy: '#D1F5D3',
