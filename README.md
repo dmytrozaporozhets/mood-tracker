@@ -9,13 +9,15 @@ A simple mobile app for tracking your daily mood. Built with React Native and Ex
 - View your emotional history
 - Bottom tab navigation: Home, History, Profile
 - Internationalization (i18n) with English & Ukrainian support
-- Dynamic language switching from the Home screen
+- Dynamic language switching from the **Profile** screen
+- **State management with MobX for reactive mood tracking**
 
 ## 🚀 Technologies
 
 - React Native
 - Expo
 - JavaScript (ES6+)
+- MobX & mobx-react-lite
 - AsyncStorage
 - React Navigation (Stack & Bottom Tabs)
 - react-native-safe-area-context
@@ -29,7 +31,3 @@ git clone https://github.com/dmytrozaporozhets/mood-tracker.git
 cd mood-tracker
 npm install
 npm start
-
-
-
-

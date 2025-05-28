@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text, TouchableOpacity, View } from 'react-native';
 
 import { moods } from '../constants/moods';
-import { saveTodayMoodItem } from '../storage/moodStorage';
-import useMoods from '../hooks/useMoods';
 import MoodPickerStyle from '../styles/components/MoodPicker';
 import MoodButton from './MoodButton';
 import { MoodItem } from './MoodCard';
+import { useStore } from '../store/StoreProvider';
 
 interface MoodPickerProps {
   onSelectMood?: () => void;
@@ -15,12 +14,8 @@ interface MoodPickerProps {
 
 const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
   const [selectedMood, setSelectedMood] = useState<MoodItem | null>(null);
-  const { setMoodList, loadMoods } = useMoods();
+  const { moodStore } = useStore();
   const { t } = useTranslation();
-
-  useEffect(() => {
-    loadMoods();
-  }, [loadMoods]);
 
   const handleSave = async () => {
     if (!selectedMood) return;
@@ -31,8 +26,7 @@ const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
       id: Date.now(),
     };
 
-    const updated = await saveTodayMoodItem(newItem);
-    setMoodList(updated);
+    await moodStore.saveMood(newItem);
     setSelectedMood(null);
     onSelectMood?.();
   };

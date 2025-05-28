@@ -1,21 +1,24 @@
-import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 
 import MoodCard from '../components/MoodCard';
-import useMoods from '../hooks/useMoods';
+import { useStore } from '../store/StoreProvider';
 import { sg } from '../styling';
 
 const HistoryScreen = () => {
   const insets = useSafeAreaInsets();
-  const { moodList, loadMoods } = useMoods();
+  const { moodStore } = useStore();
 
   useFocusEffect(
     useCallback(() => {
-      loadMoods();
-    }, [])
+      moodStore.loadMoods();
+    }, [moodStore])
   );
+
+  const { moodList } = moodStore;
 
   return (
     <View style={[sg.flex, { paddingTop: insets.top }]}>
@@ -37,4 +40,4 @@ const HistoryScreen = () => {
   );
 };
 
-export default HistoryScreen;
+export default observer(HistoryScreen);
