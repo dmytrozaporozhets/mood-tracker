@@ -4,7 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { i18n, initI18n } from './src/utils/i18n/i18n';
 import Spinner from './src/components/Spinner';
-import AppInitializer from './src/init/AppInitializer';
+import AppShell from './src/init/AppShell';
 import { StoreProvider } from './src/store/StoreProvider';
 
 export default function App() {
@@ -22,7 +22,7 @@ export default function App() {
     <StoreProvider>
       <I18nextProvider i18n={i18n}>
         <SafeAreaProvider>
-          {isReady ? <AppInitializer /> : <Spinner />}
+          {isReady ? <AppShell /> : <Spinner />}
         </SafeAreaProvider>
       </I18nextProvider>
     </StoreProvider>
