@@ -2,24 +2,45 @@ import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { observer } from 'mobx-react-lite';
+import { useTranslation } from 'react-i18next';
 
 import { IconRoute } from '../components/elements/IconRoute';
-import { Colors, sg } from '../styling';
+import { useStore } from '../store/StoreProvider';
+import { sg } from '../styling';
 
-export const CustomBottomBar: React.FC<BottomTabBarProps> = ({
+const CustomBottomBarComponent: React.FC<BottomTabBarProps> = ({
   state,
   descriptors,
   navigation,
 }) => {
   const insets = useSafeAreaInsets();
+  const { themeStore } = useStore();
+  const { colors, fonts, dark } = themeStore.theme;
+  const { t } = useTranslation('route');
+
+  const backgroundColor = dark
+    ? colors.bottomBarDark.inactiveBackground
+    : colors.bottomBar.inactiveBackground;
+
+  const borderColor = dark
+    ? colors.borderDark
+    : colors.border;
 
   return (
-    <View style={[sg.bgBlack, { paddingBottom: insets.bottom }]}>
-      <View style={sg.row}>
+    <View
+      style={{
+        backgroundColor,
+        paddingBottom: insets.bottom,
+        borderTopWidth: 1,
+        borderTopColor: borderColor,
+      }}
+    >
+      <View style={[sg.row, { backgroundColor }]}>
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
-          const label = options.tabBarLabel ?? options.title ?? route.name;
-
+          const labelKey = options.tabBarLabel as string;
+          const label = t(labelKey);
           const isFocused = state.index === index;
 
           const onPress = () => {
@@ -41,7 +62,19 @@ export const CustomBottomBar: React.FC<BottomTabBarProps> = ({
             });
           };
 
-          const labelColor = isFocused ? Colors.neutrals.white : Colors.primary[500];
+          const tabBackgroundColor = isFocused
+            ? (dark
+                ? colors.bottomBarDark.activeBackground
+                : colors.bottomBar.activeBackground)
+            : backgroundColor;
+
+          const labelColor = isFocused
+            ? (dark
+                ? colors.bottomBarDark.activeText
+                : colors.bottomBar.activeText)
+            : (dark
+                ? colors.bottomBarDark.inactiveText
+                : colors.bottomBar.inactiveText);
 
           return (
             <Pressable
@@ -57,21 +90,16 @@ export const CustomBottomBar: React.FC<BottomTabBarProps> = ({
                 sg.h60,
                 sg.jCCenter,
                 {
-                  backgroundColor: isFocused ? Colors.primary[500] : Colors.neutrals.white,
+                  backgroundColor: tabBackgroundColor,
+                  borderRightWidth: index < state.routes.length - 1 ? 1 : 0,
+                  borderRightColor: borderColor,
                 },
               ]}
             >
-              <IconRoute route={typeof label === 'string' ? label : route.name} color={labelColor} />
-              {typeof label === 'string' ? (
-                <Text style={{ color: labelColor }}>{label}</Text>
-              ) : (
-                label({
-                  focused: isFocused,
-                  color: labelColor,
-                  position: 'below-icon',
-                  children: route.name,
-                })
-              )}
+              <IconRoute route={labelKey} color={labelColor} />
+              <Text style={[{ color: labelColor }, fonts.medium]}>
+                {label}
+              </Text>
             </Pressable>
           );
         })}
@@ -79,3 +107,5 @@ export const CustomBottomBar: React.FC<BottomTabBarProps> = ({
     </View>
   );
 };
+
+export const CustomBottomBar = observer(CustomBottomBarComponent);

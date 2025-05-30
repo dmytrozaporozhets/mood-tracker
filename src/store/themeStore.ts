@@ -1,4 +1,6 @@
 import { makeAutoObservable } from "mobx";
+import { createTheme } from '../styling/themes/createTheme';
+import { Theme } from '../types/theme';
 
 export class ThemeStore {
   isDark = false;
@@ -14,4 +16,9 @@ export class ThemeStore {
   setDarkMode(value: boolean) {
     this.isDark = value;
   }
+
+  get theme(): Theme {
+    return createTheme(this.isDark);
+  }
 }
+
