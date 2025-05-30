@@ -12,7 +12,7 @@ const Spinner: React.FC = () => {
     <View style={styles.overlay}>
       <View style={styles.spinnerContainer}>
         <ActivityIndicator size="large" color={Colors.neutrals.white} />
-        <Text style={styles.loadingText}>{t('loading')}</Text>
+        <Text style={styles.loadingText}>{t('base.loading')}</Text>
       </View>
     </View>
   );

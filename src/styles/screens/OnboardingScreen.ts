@@ -1,15 +1,13 @@
 import { StyleSheet } from "react-native";
-import { Colors } from "../../styling";
 import { width } from "../../utils/device";
 
 const OnboardingScreenStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.neutrals.white,
     justifyContent: 'center',
   },
   slide: {
-    width:width,
+    width: width,
     padding: 30,
     justifyContent: 'center',
     alignItems: 'center',
@@ -22,11 +20,9 @@ const OnboardingScreenStyle = StyleSheet.create({
   },
   description: {
     fontSize: 16,
-    color: '#444',
     textAlign: 'center',
   },
   button: {
-    backgroundColor: Colors.blueness[400],
     marginHorizontal: 40,
     borderRadius: 12,
     padding: 15,
@@ -34,7 +30,6 @@ const OnboardingScreenStyle = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: {
-    color: Colors.neutrals.white,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -44,8 +39,7 @@ const OnboardingScreenStyle = StyleSheet.create({
     padding: 10,
   },
   skipText: {
-    color: Colors.greyness[600],
-    fontSize: 14,
+    fontSize: 16,
   },
 });
 

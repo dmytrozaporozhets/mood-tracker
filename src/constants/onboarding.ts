@@ -7,17 +7,17 @@ export type OnboardingSlide = {
 export const onboardingSlides: OnboardingSlide[] = [
   {
     key: '1',
-    titleKey: 'onboarding:trackTitle',
-    descriptionKey: 'onboarding:trackDescription',
+    titleKey: 'onboarding.trackTitle',
+    descriptionKey: 'onboarding.trackDescription',
   },
   {
     key: '2',
-    titleKey: 'onboarding:historyTitle',
-    descriptionKey: 'onboarding:historyDescription',
+    titleKey: 'onboarding.historyTitle',
+    descriptionKey: 'onboarding.historyDescription',
   },
   {
     key: '3',
-    titleKey: 'onboarding:privacyTitle',
-    descriptionKey: 'onboarding:privacyDescription',
+    titleKey: 'onboarding.privacyTitle',
+    descriptionKey: 'onboarding.privacyDescription',
   },
 ];

@@ -13,43 +13,45 @@ const AppInitializer = () => {
   const [showMoodModal, setShowMoodModal] = useState(false);
 
   useEffect(() => {
-  const init = async () => {
-    try {
-      const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
-      if (!onboardingShown) {
-        setShowOnboarding(true);
-      } else {
-        const mood = await getTodayMood();
+    const init = async () => {
+      try {
+        const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
+        if (!onboardingShown) {
+          setShowOnboarding(true);
+        } else {
+          const mood = await getTodayMood();
+          if (!mood) {
+            setShowMoodModal(true);
+          }
+        }
+      } catch (e) {
+        console.warn('Initialization error:', e);
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (!showOnboarding) {
+      getTodayMood().then((mood) => {
         if (!mood) {
           setShowMoodModal(true);
         }
-      }
-    } catch (e) {
-      console.warn('Initialization error:', e);
-    } finally {
-      setIsReady(true);
+      });
     }
-  };
-
-  init();
-}, []);
-
-useEffect(() => {
-  //  Перевірка після завершення онбордингу
-  if (!showOnboarding) {
-    getTodayMood().then((mood) => {
-      if (!mood) {
-        setShowMoodModal(true);
-      }
-    });
-  }
-}, [showOnboarding]);
+  }, [showOnboarding]);
 
   if (!isReady) return <Spinner />;
 
   return (
     <>
-      <Navigation showOnboarding={showOnboarding} setShowOnboarding={setShowOnboarding} />
+      <Navigation
+        showOnboarding={showOnboarding}
+        setShowOnboarding={setShowOnboarding}
+      />
       {showMoodModal && <MoodModal onClose={() => setShowMoodModal(false)} />}
     </>
   );

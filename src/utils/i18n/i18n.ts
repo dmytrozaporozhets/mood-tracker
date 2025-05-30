@@ -8,8 +8,8 @@ import ua from './locales/ua';
 import { LANGUAGE_STORAGE_KEY } from '../../constants/storage';
 
 const resources = {
-  en,
-  ua,
+  en: { translation: en },
+  ua: { translation: ua },
 };
 
 const getInitialLanguage = async (): Promise<string> => {
@@ -38,6 +38,7 @@ export const initI18n = (): Promise<void> => {
           resources,
           lng,
           fallbackLng: 'en',
+          defaultNS: 'translation',
           interpolation: { escapeValue: false },
           react: { useSuspense: false },
         })

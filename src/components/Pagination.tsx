@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Animated, TouchableWithoutFeedback } from 'react-native';
-import PaginationStyle from '../styles/components/Pagination';
-import { Colors } from '../styling';
 
 interface PaginationProps {
   total: number;
@@ -18,8 +16,8 @@ const Pagination: React.FC<PaginationProps> = ({
   currentIndex,
   dotSize = 8,
   activeDotSize = 12,
-  activeColor = Colors.neutrals[600],
-  inactiveColor = Colors.neutrals[300],
+  activeColor,
+  inactiveColor,
   onDotPress,
 }) => {
   const scales = useRef<Animated.Value[]>([]).current;
@@ -41,7 +39,7 @@ const Pagination: React.FC<PaginationProps> = ({
   }, [currentIndex]);
 
   return (
-    <View style={PaginationStyle.pagination}>
+    <View style={{ flexDirection: 'row', justifyContent: 'center', marginVertical: 15 }}>
       {Array.from({ length: total }).map((_, index) => {
         const scale = scales[index].interpolate({
           inputRange: [0, 1],
@@ -50,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
         const backgroundColor = scales[index].interpolate({
           inputRange: [0, 1],
-          outputRange: [inactiveColor, activeColor],
+          outputRange: [inactiveColor ?? '#CCC', activeColor ?? '#555'],
         });
 
         return (
@@ -60,13 +58,13 @@ const Pagination: React.FC<PaginationProps> = ({
           >
             <Animated.View
               style={{
-                  width: activeDotSize,
-                  height: activeDotSize,
-                  borderRadius: activeDotSize / 2,
-                  backgroundColor,
-                  transform: [{ scale }],
-                  marginHorizontal: dotSize / 2,
-                }}
+                width: activeDotSize,
+                height: activeDotSize,
+                borderRadius: activeDotSize / 2,
+                backgroundColor,
+                transform: [{ scale }],
+                marginHorizontal: dotSize / 2,
+              }}
             />
           </TouchableWithoutFeedback>
         );

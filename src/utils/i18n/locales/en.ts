@@ -11,6 +11,13 @@ export default {
   },
   mood: {
     title: 'How are you feeling today?',
+    labels: {
+      Happy: 'Happy',
+      Relaxed: 'Relaxed',
+      Neutral: 'Neutral',
+      Sad: 'Sad',
+      Angry: 'Angry',
+    },
   },
   onboarding: {
     trackTitle: 'Track your mood',
@@ -20,5 +27,30 @@ export default {
     privacyTitle: 'It’s private',
     privacyDescription: 'All your mood data stays on your device. You’re in control.',
   },
-  loading: 'Loading...',
+  months: {
+    january: 'January',
+    february: 'February',
+    march: 'March',
+    april: 'April',
+    may: 'May',
+    june: 'June',
+    july: 'July',
+    august: 'August',
+    september: 'September',
+    october: 'October',
+    november: 'November',
+    december: 'December',
+},
+  meta: {
+    at: 'at',
+  },
+  base:{  
+    loading: 'Loading...',
+  },
+  settings: {
+    language: 'Language',
+    theme: 'Theme',
+    light: 'Light',
+    dark: 'Dark',
+  },
 };

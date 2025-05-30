@@ -1,16 +1,20 @@
 import React from 'react';
 import { Modal, View, StyleSheet, Pressable, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 
 import MoodPicker from './MoodPicker';
-import { Colors } from '../styling';
+import { useStore } from '../store/StoreProvider';
 
 type Props = {
   onClose: () => void;
 };
 
 const MoodModal: React.FC<Props> = ({ onClose }) => {
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const { themeStore } = useStore();
+  const colors = themeStore.theme.colors;
 
   return (
     <Modal
@@ -20,12 +24,16 @@ const MoodModal: React.FC<Props> = ({ onClose }) => {
       onRequestClose={onClose}
     >
       <View style={[styles.backdrop, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
-        <View style={styles.modalContainer}>
+        <View style={[styles.modalContainer, { backgroundColor: colors.card }]}>
           <Pressable onPress={onClose} style={styles.closeButton}>
-              <Text style={styles.close}>✕</Text>
+            <Text style={[styles.close, { color: themeStore.isDark ? colors.textLight : colors.text }]}>
+              ✕
+            </Text>
           </Pressable>
           <View style={styles.header}>
-            <Text style={styles.title}>How are you feeling today?</Text>
+            <Text style={[styles.title, { color: colors.text }]}>
+              {t('mood.title')}
+            </Text>
           </View>
           <MoodPicker onSelectMood={onClose} />
         </View>
@@ -42,7 +50,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContainer: {
-    backgroundColor: Colors.neutrals.white,
     width: '90%',
     borderRadius: 20,
     paddingVertical: 30,  
@@ -62,17 +69,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '600',
-    color: Colors.neutrals[600],
   },
   closeButton: {
     position: 'absolute',
     right: 10,
     padding: 5,
-    top:10,
+    top: 10,
   },
   close: {
     fontSize: 18,
-    color: Colors.neutrals[500],
   },
 });
 
