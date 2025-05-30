@@ -11,6 +11,13 @@ export default {
   },
   mood: {
     title: 'Як ти почуваєшся сьогодні?',
+    labels: {
+      Happy: 'Щасливий',
+      Relaxed: 'Розслаблений',
+      Neutral: 'Нейтральний',
+      Sad: 'Сумний',
+      Angry: 'Злий',
+    },
   },
   onboarding: {
     trackTitle: 'Відстежуйте настрій',
@@ -20,5 +27,30 @@ export default {
     privacyTitle: 'Це приватно',
     privacyDescription: 'Усі дані про настрій зберігаються лише на вашому пристрої.',
   },
-  loading: 'Завантаження...',
+  months: {
+    january: 'Січень',
+    february: 'Лютий',
+    march: 'Березень',
+    april: 'Квітень',
+    may: 'Травень',
+    june: 'Червень',
+    july: 'Липень',
+    august: 'Серпень',
+    september: 'Вересень',
+    october: 'Жовтень',
+    november: 'Листопад',
+    december: 'Грудень',
+  },
+  meta: {
+    at: 'о',
+  },
+  base:{  
+    loading: 'Завантаження...',
+  },
+  settings: {
+    language: 'Мова',
+    theme: 'Тема',
+    light: 'Світла',
+    dark: 'Темна',
+  },
 };
