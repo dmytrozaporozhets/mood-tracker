@@ -14,8 +14,10 @@ interface MoodPickerProps {
 
 const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
   const [selectedMood, setSelectedMood] = useState<MoodItem | null>(null);
-  const { moodStore } = useStore();
+  const { moodStore, themeStore } = useStore();
   const { t } = useTranslation();
+
+  const theme = themeStore.theme;
 
   const handleSave = async () => {
     if (!selectedMood) return;
@@ -47,12 +49,18 @@ const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
       <TouchableOpacity
         style={[
           MoodPickerStyle.saveButton,
-          !selectedMood && MoodPickerStyle.disabledButton,
+          {
+            backgroundColor: selectedMood ? theme.colors.primary : theme.colors.placeholder,
+            shadowColor: selectedMood ? theme.colors.primaryDark : 'transparent',
+          },
+          !selectedMood && { opacity: 0.6 },
         ]}
         onPress={handleSave}
         disabled={!selectedMood}
       >
-        <Text style={MoodPickerStyle.saveButtonText}>{t('button:save')}</Text>
+        <Text style={[MoodPickerStyle.saveButtonText, { color: theme.colors.textLight }]}>
+          {t('button.save')}
+        </Text>
       </TouchableOpacity>
     </View>
   );
