@@ -8,7 +8,7 @@ import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
 import { useStore } from '../store/StoreProvider';
 
 const LanguageSwitcher: React.FC = observer(() => {
-  const { i18n } = useTranslation();
+  const { i18n,t } = useTranslation();
   const { themeStore } = useStore();
   const { colors, fonts } = themeStore.theme;
 
@@ -22,7 +22,9 @@ const LanguageSwitcher: React.FC = observer(() => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.label, fonts.medium, { color: colors.text }]}>Language</Text>
+      <Text style={[styles.label, fonts.medium, { color: colors.text }]}>
+        {t('settings.language')}
+      </Text>
       <View style={styles.langContainer}>
         {['en', 'ua'].map((lng) => {
           const isActive = i18n.language === lng;

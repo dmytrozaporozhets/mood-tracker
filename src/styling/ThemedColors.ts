@@ -1,18 +1,11 @@
-const MoodColorsLight = {
+export const MoodColors = {
   Happy: '#D1F5D3',
-  Neutral: '#F5F5F5',
+  Relaxed: '#FFF5C3',
+  Neutral: '#A5A5A5',
   Sad: '#D0E8F2',
   Angry: '#FAD4D4',
-  Excited: '#FFF5C3',
-};
+} as const;
 
-const MoodColorsDark = {
-  Happy: '#204D20',
-  Neutral: '#2A2A2A',
-  Sad: '#1B3A4B',
-  Angry: '#4B1C1C',
-  Excited: '#4B3A1B',
-};
 
 export default {
   primary: '#3A86FF',
@@ -34,8 +27,12 @@ export default {
   placeholderDark: '#777777',
   inputBackground: '#F0F0F0',
   inputBackgroundDark: '#2A2A2A',
-  moodEmoji: MoodColorsLight,
-  moodEmojiDark: MoodColorsDark,
+  moodEmoji: 
+    { background: MoodColors,
+      label: '#1A1A1A',
+      date: '#444444',
+      note: '#666666',
+    },
   bottomBar: {
     activeBackground: '#3A86FF',
     inactiveBackground: '#FFFFFF',

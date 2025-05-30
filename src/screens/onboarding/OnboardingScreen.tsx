@@ -70,10 +70,10 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
           onDotPress={onDotPress}
         />
         <Pressable style={OnboardingScreenStyle.button} onPress={handleDone}>
-          <Text style={OnboardingScreenStyle.buttonText}>{t('button:getStarted')}</Text>
+          <Text style={OnboardingScreenStyle.buttonText}>{t('button.getStarted')}</Text>
         </Pressable>
         <Pressable style={OnboardingScreenStyle.skipButton} onPress={handleDone}>
-          <Text style={OnboardingScreenStyle.skipText}>{t('button:skip')}</Text>
+          <Text style={OnboardingScreenStyle.skipText}>{t('button.skip')}</Text>
         </Pressable>
       </View>
     </ScreenView>

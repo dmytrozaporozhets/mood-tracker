@@ -17,7 +17,7 @@ const CustomBottomBarComponent: React.FC<BottomTabBarProps> = ({
   const insets = useSafeAreaInsets();
   const { themeStore } = useStore();
   const { colors, fonts, dark } = themeStore.theme;
-  const { t } = useTranslation('route');
+  const { t } = useTranslation();
 
   const backgroundColor = dark
     ? colors.bottomBarDark.inactiveBackground
@@ -40,7 +40,7 @@ const CustomBottomBarComponent: React.FC<BottomTabBarProps> = ({
         {state.routes.map((route, index) => {
           const { options } = descriptors[route.key];
           const labelKey = options.tabBarLabel as string;
-          const label = t(labelKey);
+          const label = t(`route.${labelKey}`);
           const isFocused = state.index === index;
 
           const onPress = () => {

@@ -25,8 +25,12 @@ export interface ColorsStyle {
   placeholderDark: string;
   inputBackground: string;
   inputBackgroundDark: string;
-  moodEmoji: Record<string, string>;
-  moodEmojiDark: Record<string, string>;
+  moodEmoji: { 
+    background: typeof MoodColors,
+    label: string,
+    date: string,
+    note: string;
+  },
   bottomBar: BottomBarColors;
   bottomBarDark: BottomBarColors;
   notification: string;
