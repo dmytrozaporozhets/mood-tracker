@@ -1,29 +1,85 @@
 import React from 'react';
+import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Pressable, Text, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
-import { sg } from '../styling';
+import { observer } from 'mobx-react-lite';
 
-const LanguageSwitcher: React.FC = () => {
+import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
+import { useStore } from '../store/StoreProvider';
+
+const LanguageSwitcher: React.FC = observer(() => {
   const { i18n } = useTranslation();
+  const { themeStore } = useStore();
+  const { colors, fonts } = themeStore.theme;
 
   const changeLang = async (lng: string) => {
     await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
     await i18n.changeLanguage(lng);
   };
 
+  const activeBg = colors.primary;
+  const activeText = themeStore.isDark ? '#000' : '#fff';
+
   return (
-    <View style={[sg.row, sg.jCSpaceEvenly, sg.p10]}>
-      {['en', 'ua'].map((lng) => (
-        <Pressable key={lng} onPress={() => changeLang(lng)} style={[sg.p10]}>
-          <Text style={{ fontWeight: i18n.language === lng ? 'bold' : 'normal' }}>
-            {lng.toUpperCase()}
-          </Text>
-        </Pressable>
-      ))}
+    <View style={styles.container}>
+      <Text style={[styles.label, fonts.medium, { color: colors.text }]}>Language</Text>
+      <View style={styles.langContainer}>
+        {['en', 'ua'].map((lng) => {
+          const isActive = i18n.language === lng;
+          return (
+            <Pressable
+              key={lng}
+              onPress={() => changeLang(lng)}
+              style={[
+                styles.langButton,
+                {
+                  backgroundColor: isActive ? activeBg : 'transparent',
+                  borderColor: colors.primary,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.langText,
+                  fonts.medium,
+                  {
+                    color: isActive ? activeText : colors.text,
+                  },
+                ]}
+              >
+                {lng.toUpperCase()}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </View>
     </View>
   );
-};
+});
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 16,
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 12,
+  },
+  langContainer: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  langButton: {
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    borderWidth: 1,
+    borderRadius: 8,
+  },
+  langText: {
+    fontSize: 14,
+  },
+});
 
 export default LanguageSwitcher;
