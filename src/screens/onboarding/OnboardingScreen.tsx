@@ -5,18 +5,20 @@ import { ROOT_TABS } from '../../navigation/RouteNames';
 import ScreenView from '../../components/ScreenView';
 import { onboardingSlides } from '../../constants/onboarding';
 import OnboardingScreenStyle from '../../styles/screens/OnboardingScreen';
-import { sg } from '../../styling';
-import { RootStackParamList } from '../../navigation/types';
 import { useTranslation } from 'react-i18next';
 import Pagination from '../../components/Pagination';
+
+import { useStore } from '../../store/StoreProvider';  // імпорт useStore
 
 type OnboardingScreenProps = {
   onFinish: () => void;
 };
 
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<any>>();
   const { t } = useTranslation();
+  const { themeStore } = useStore();       // отримуємо тему
+  const { colors, fonts } = themeStore.theme;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
@@ -30,9 +32,13 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
   };
 
   const renderItem = ({ item }: { item: typeof onboardingSlides[0] }) => (
-    <View style={OnboardingScreenStyle.slide}>
-      <Text style={OnboardingScreenStyle.title}>{t(item.titleKey)}</Text>
-      <Text style={OnboardingScreenStyle.description}>{t(item.descriptionKey)}</Text>
+    <View style={[OnboardingScreenStyle.slide, { backgroundColor: colors.background }]}>
+      <Text style={[OnboardingScreenStyle.title, { color: colors.text, fontFamily: fonts.medium.fontFamily }]}>
+        {t(item.titleKey)}
+      </Text>
+      <Text style={[OnboardingScreenStyle.description, { color: colors.text }]}>
+        {t(item.descriptionKey)}
+      </Text>
     </View>
   );
 
@@ -51,7 +57,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
   };
 
   return (
-    <ScreenView style={sg.bgWhite}>
+    <ScreenView style={{ flex: 1, backgroundColor: colors.background }}>
       <View style={OnboardingScreenStyle.container}>
         <FlatList
           ref={flatListRef}
@@ -68,12 +74,21 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
           total={onboardingSlides.length}
           currentIndex={currentIndex}
           onDotPress={onDotPress}
+          activeColor={themeStore.theme.colors.primary}
+          inactiveColor={themeStore.theme.colors.placeholder}
         />
-        <Pressable style={OnboardingScreenStyle.button} onPress={handleDone}>
-          <Text style={OnboardingScreenStyle.buttonText}>{t('button:getStarted')}</Text>
+        <Pressable
+          style={[OnboardingScreenStyle.button, { backgroundColor: colors.primary }]}
+          onPress={handleDone}
+        >
+          <Text style={[OnboardingScreenStyle.buttonText, { color: colors.textLight }]}>
+            {t('button.getStarted')}
+          </Text>
         </Pressable>
         <Pressable style={OnboardingScreenStyle.skipButton} onPress={handleDone}>
-          <Text style={OnboardingScreenStyle.skipText}>{t('button:skip')}</Text>
+          <Text style={[OnboardingScreenStyle.skipText, { color: colors.placeholder }]}>
+            {t('button.skip')}
+          </Text>
         </Pressable>
       </View>
     </ScreenView>
