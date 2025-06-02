@@ -1,0 +1,85 @@
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import CustomInput from '../../components/CustomInput';
+import RegisterScreenStyle from '../../styles/screens/RegisterScreenStyle';
+import { useStore } from '../../store/StoreProvider';
+import { LOGIN_SCREEN } from '../../navigation/RouteNames';
+
+const RegisterScreen: React.FC = () => {
+  const { themeStore } = useStore();
+  const { colors, fonts } = themeStore.theme;
+  const navigation = useNavigation();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleRegister = () => {
+    if (!email || !password || !confirmPassword) {
+      setError('Please fill all fields');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+    setError('');
+  };
+
+  return (
+    <View style={[RegisterScreenStyle.container, { backgroundColor: colors.background }]}>
+      <Text style={[RegisterScreenStyle.title, { color: colors.text, ...fonts.bold }]}>
+        Create Account
+      </Text>
+
+      <CustomInput
+        label="Email"
+        placeholder="Enter your email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <CustomInput
+        label="Password"
+        placeholder="Enter your password"
+        value={password}
+        onChangeText={setPassword}
+        secureText
+      />
+
+      <CustomInput
+        label="Confirm Password"
+        placeholder="Confirm your password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureText
+        error={error}
+      />
+
+      <TouchableOpacity
+        style={[RegisterScreenStyle.button, { backgroundColor: colors.primary }]}
+        onPress={handleRegister}
+      >
+        <Text style={[RegisterScreenStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
+          Register
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
+        style={RegisterScreenStyle.linkWrapper}
+      >
+        <Text style={[RegisterScreenStyle.linkText, { color: colors.text, ...fonts.regular }]}>
+          Already have an account?{' '}
+          <Text style={{ color: colors.primary, ...fonts.medium }}>Login</Text>
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+export default RegisterScreen;

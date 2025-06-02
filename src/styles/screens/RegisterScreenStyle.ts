@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const LoginScreenStyle = StyleSheet.create({
+const RegisterScreenStyle = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -29,4 +29,4 @@ const LoginScreenStyle = StyleSheet.create({
   },
 });
 
-export default LoginScreenStyle;
+export default RegisterScreenStyle;

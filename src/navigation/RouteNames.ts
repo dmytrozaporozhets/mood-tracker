@@ -5,3 +5,4 @@ export const PROFILE_SCREEN = 'Profile';
 
 export const ONBOARDING_SCREEN ='ONBOARDING_SCREEN'
 export const LOGIN_SCREEN ='LOGIN_SCREEN'
+export const REGISTER_SCREEN = 'REGISTER_SCREEN'

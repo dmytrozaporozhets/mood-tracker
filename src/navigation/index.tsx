@@ -7,6 +7,8 @@ import { LOGIN_SCREEN, ONBOARDING_SCREEN, ROOT_TABS } from './RouteNames';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import { ONBOARDING_SHOWN_KEY } from '../constants/storage';
 import LoginScreen from '../screens/auth/LoginScreen';
+import RegisterScreen from '../screens/auth/RegisterScreen';
+import { REGISTER_SCREEN } from './RouteNames';
 
 type NavigationProps = {
   showOnboarding: boolean;
@@ -22,6 +24,7 @@ const Navigation: React.FC<NavigationProps> = ({
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
+      <Stack.Screen name={REGISTER_SCREEN} component={RegisterScreen} />
       <Stack.Screen
         name={ONBOARDING_SCREEN}
         children={(props) => (

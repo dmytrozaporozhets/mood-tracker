@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import CustomInput from '../../components/CustomInput';
 import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
 import { useStore } from '../../store/StoreProvider';
+import { REGISTER_SCREEN } from '../../navigation/RouteNames';
 
 const LoginScreen: React.FC = () => {
   const { themeStore } = useStore();
   const { colors, fonts } = themeStore.theme;
+  const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,7 +23,7 @@ const LoginScreen: React.FC = () => {
     }
 
     setError('');
-    // TODO: Handle auth
+    // TODO: Implement auth logic
   };
 
   return (
@@ -53,6 +56,16 @@ const LoginScreen: React.FC = () => {
       >
         <Text style={[LoginScreenStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
           Login
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate(REGISTER_SCREEN as never)}
+        style={LoginScreenStyle.linkWrapper}
+      >
+        <Text style={[LoginScreenStyle.linkText, { color: colors.text, ...fonts.regular }]}>
+          Don't have an account?{' '}
+          <Text style={{ color: colors.primary, ...fonts.medium }}>Register</Text>
         </Text>
       </TouchableOpacity>
     </View>
