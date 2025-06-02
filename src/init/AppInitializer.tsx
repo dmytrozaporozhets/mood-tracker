@@ -42,6 +42,7 @@ const AppInitializer = () => {
         }
       });
     }
+   setShowMoodModal(false)
   }, [showOnboarding]);
 
   if (!isReady) return <Spinner />;

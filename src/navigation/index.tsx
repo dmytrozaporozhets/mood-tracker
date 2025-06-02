@@ -3,9 +3,10 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomTabBar from './BottomTabBar';
-import { ONBOARDING_SCREEN, ROOT_TABS } from './RouteNames';
+import { LOGIN_SCREEN, ONBOARDING_SCREEN, ROOT_TABS } from './RouteNames';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import { ONBOARDING_SHOWN_KEY } from '../constants/storage';
+import LoginScreen from '../screens/auth/LoginScreen';
 
 type NavigationProps = {
   showOnboarding: boolean;
@@ -20,6 +21,7 @@ const Navigation: React.FC<NavigationProps> = ({
 }) => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={LOGIN_SCREEN} component={LoginScreen} />
       <Stack.Screen
         name={ONBOARDING_SCREEN}
         children={(props) => (
