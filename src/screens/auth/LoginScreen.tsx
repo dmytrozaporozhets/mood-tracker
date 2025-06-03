@@ -3,9 +3,9 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import CustomInput from '../../components/CustomInput';
-import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
 import { useStore } from '../../store/StoreProvider';
-import { REGISTER_SCREEN } from '../../navigation/RouteNames';
+import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN } from '../../navigation/RouteNames';
+import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
 
 const LoginScreen: React.FC = () => {
   const { themeStore } = useStore();
@@ -21,9 +21,8 @@ const LoginScreen: React.FC = () => {
       setError('Please enter both email and password');
       return;
     }
-
     setError('');
-    // TODO: Implement auth logic
+    // TODO: Add login logic
   };
 
   return (
@@ -56,6 +55,15 @@ const LoginScreen: React.FC = () => {
       >
         <Text style={[LoginScreenStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
           Login
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        onPress={() => navigation.navigate(RESET_PASSWORD_SCREEN as never)}
+        style={LoginScreenStyle.linkWrapper}
+      >
+        <Text style={[LoginScreenStyle.linkText, { color: colors.primary, ...fonts.regular }]}>
+          Forgot your password?
         </Text>
       </TouchableOpacity>
 
