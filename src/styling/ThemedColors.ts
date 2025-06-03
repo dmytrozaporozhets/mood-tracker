@@ -46,5 +46,8 @@ export default {
     inactiveText: '#90CAF9',
   },
   notification: '#FF453A',
-  notificationDark: '#FF453A',
+  spinnerOverlay:'rgba(255, 255, 255, 0.4)',
+  spinnerOverlayDark:'rgba(0, 0, 0, 0.4)',
+  spinnerBackground:  'rgba(255, 255, 255, 0.8)',
+  spinnerBackgroundDark:  'rgba(0, 0, 0, 0.6)',
 };

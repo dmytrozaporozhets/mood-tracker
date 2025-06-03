@@ -1,4 +1,4 @@
-import ThemedColors, { MoodColors } from '../ThemedColors';
+import ThemedColors from '../ThemedColors';
 import { Theme } from '../../types/theme';
 
 export const createTheme = (isDark: boolean): Theme => ({
@@ -25,13 +25,17 @@ export const createTheme = (isDark: boolean): Theme => ({
     inputBackgroundDark: ThemedColors.inputBackgroundDark,
     bottomBar: isDark ? ThemedColors.bottomBarDark : ThemedColors.bottomBar,
     bottomBarDark: ThemedColors.bottomBarDark,
-    moodEmoji: { 
-      background: typeof MoodColors,
+    notification: ThemedColors.notification,
+    spinnerOverlay: isDark ? ThemedColors.spinnerOverlayDark : ThemedColors.spinnerOverlay,
+    spinnerOverlayDark: ThemedColors.spinnerOverlayDark,
+    spinnerBackground: isDark ? ThemedColors.spinnerBackgroundDark : ThemedColors.spinnerBackground,
+    spinnerBackgroundDark: ThemedColors.spinnerBackgroundDark,
+    moodEmoji: {
+      background: ThemedColors.moodEmoji.background,
       label: ThemedColors.moodEmoji.label,
       date: ThemedColors.moodEmoji.date,
       note: ThemedColors.moodEmoji.note,
     },
-    notification: isDark ? ThemedColors.notificationDark : ThemedColors.notification,
   },
   fonts: {
     regular: { fontFamily: 'System', fontWeight: '400' },

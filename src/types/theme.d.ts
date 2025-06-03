@@ -34,6 +34,10 @@ export interface ColorsStyle {
   bottomBar: BottomBarColors;
   bottomBarDark: BottomBarColors;
   notification: string;
+  spinnerOverlay:string;
+  spinnerOverlayDark:string;
+  spinnerBackground:string;
+  spinnerBackgroundDark:string;
 }
 
 export interface FontStyle {
