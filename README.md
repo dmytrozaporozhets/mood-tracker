@@ -1,6 +1,6 @@
 # Mood Tracker 😌
 
-A simple mobile app for tracking your daily mood. Built with React Native and Expo.
+A simple mobile app for tracking your daily mood. Built with React Native, Expo, and Firebase.
 
 ## 📱 Features
 
@@ -9,19 +9,23 @@ A simple mobile app for tracking your daily mood. Built with React Native and Ex
 - View your emotional history
 - Bottom tab navigation: Home, History, Profile
 - Internationalization (i18n) with English & Ukrainian support
-- Dynamic language switching from the **Profile** screen
-- **State management with MobX for reactive mood tracking**
+- Dynamic language switching from the Profilе screen
+- **Authentication with Firebase (register, login, logout, reset password)**
+- **State management with MobX**
+- **Toast notifications for success feedback**
 
 ## 🚀 Technologies
 
 - React Native
 - Expo
-- JavaScript (ES6+)
+- TypeScript
 - MobX & mobx-react-lite
+- Firebase Authentication
 - AsyncStorage
 - React Navigation (Stack & Bottom Tabs)
 - react-native-safe-area-context
-- react-i18next & expo-localization
+- react-native-toast-message
+- i18next & react-i18next
 - ESLint & Prettier
 
 ## 🛠️ Getting Started
