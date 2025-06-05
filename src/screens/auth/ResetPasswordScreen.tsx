@@ -6,22 +6,33 @@ import CustomInput from '../../components/CustomInput';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
 import ResetPasswordStyle from '../../styles/screens/ResetPasswordStyle';
+import { showSuccessToast } from '../../utils/toast';
 
 const ResetPasswordScreen: React.FC = () => {
-  const { themeStore } = useStore();
+  const { themeStore, authStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (!email) {
       setError('Please enter your email');
       return;
     }
+
     setError('');
-    // TODO: Reset password logic (e.g., Firebase)
+    await authStore.resetPassword(email);
+
+    if (authStore.error) {
+      setError(authStore.error);
+      return;
+    } else {
+      showSuccessToast('Password reset link sent to your email');
+      setEmail('');
+      navigation.navigate(LOGIN_SCREEN as never);
+    }
   };
 
   return (
@@ -41,14 +52,20 @@ const ResetPasswordScreen: React.FC = () => {
       />
 
       <TouchableOpacity
-        style={[ResetPasswordStyle.button, { backgroundColor: colors.primary }]}
+        style={[
+          ResetPasswordStyle.button,
+          {
+            backgroundColor: authStore.loading ? '#A5A5A5' : colors.primary,
+            opacity: authStore.loading ? 0.7 : 1,
+          },
+        ]}
         onPress={handleReset}
+        disabled={authStore.loading}
       >
         <Text style={[ResetPasswordStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
-          Send Reset Link
+          {authStore.loading ? 'Sending...' : 'Send Reset Link'}
         </Text>
       </TouchableOpacity>
-
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
         style={ResetPasswordStyle.linkWrapper}
