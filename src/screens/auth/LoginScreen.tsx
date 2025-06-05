@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { getAuth,  } from 'firebase/auth';
-import {auth} from '../../../firebaseConfig'
 
 import CustomInput from '../../components/CustomInput';
 import { useStore } from '../../store/StoreProvider';
 import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN } from '../../navigation/RouteNames';
 import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
+import Spinner from '../../components/Spinner';
+import { observer } from 'mobx-react-lite';
 
 const LoginScreen: React.FC = () => {
-  const { themeStore } = useStore();
+  const { themeStore, authStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
-  console.log('auth',auth)
-
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
-      setError('Please enter both email and password');
+      authStore.error = 'Please enter both email and password';
       return;
     }
-    setError('');
-    // TODO: Add login logic
+    await authStore.login(email, password);
   };
 
   return (
@@ -49,7 +46,7 @@ const LoginScreen: React.FC = () => {
         value={password}
         onChangeText={setPassword}
         secureText
-        error={error}
+        error={authStore.error || ''}
       />
 
       <TouchableOpacity
@@ -79,8 +76,9 @@ const LoginScreen: React.FC = () => {
           <Text style={{ color: colors.primary, ...fonts.medium }}>Register</Text>
         </Text>
       </TouchableOpacity>
+      {authStore.loading && <Spinner />}
     </View>
   );
 };
 
-export default LoginScreen;
+export default observer(LoginScreen);
