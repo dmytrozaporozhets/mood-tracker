@@ -6,9 +6,10 @@ import CustomInput from '../../components/CustomInput';
 import RegisterScreenStyle from '../../styles/screens/RegisterScreenStyle';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
+import { showSuccessToast } from '../../utils/toast';
 
 const RegisterScreen: React.FC = () => {
-  const { themeStore } = useStore();
+  const { themeStore, authStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
 
@@ -17,16 +18,28 @@ const RegisterScreen: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!email || !password || !confirmPassword) {
       setError('Please fill all fields');
       return;
     }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
+
     setError('');
+    await authStore.register(email, password);
+
+    if (authStore.error) {
+      setError(authStore.error);
+    } else if (authStore.user) {
+      showSuccessToast('Your account has been created');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+    }
   };
 
   return (
@@ -62,13 +75,21 @@ const RegisterScreen: React.FC = () => {
       />
 
       <TouchableOpacity
-        style={[RegisterScreenStyle.button, { backgroundColor: colors.primary }]}
+        style={[
+          RegisterScreenStyle.button,
+          {
+            backgroundColor: authStore.loading ? '#A5A5A5' : colors.primary,
+            opacity: authStore.loading ? 0.7 : 1,
+          },
+        ]}
         onPress={handleRegister}
+        disabled={authStore.loading}
       >
         <Text style={[RegisterScreenStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
-          Register
+          {authStore.loading ? 'Registering...' : 'Register'}
         </Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
         style={RegisterScreenStyle.linkWrapper}

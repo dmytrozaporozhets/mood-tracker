@@ -33,7 +33,12 @@ export interface ColorsStyle {
   },
   bottomBar: BottomBarColors;
   bottomBarDark: BottomBarColors;
-  notification: string;
+  notification: {
+        info: string,
+        danger: string,
+        success: string,
+        warning: string,
+    },
   spinnerOverlay:string;
   spinnerOverlayDark:string;
   spinnerBackground:string;

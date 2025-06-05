@@ -25,7 +25,12 @@ export const createTheme = (isDark: boolean): Theme => ({
     inputBackgroundDark: ThemedColors.inputBackgroundDark,
     bottomBar: isDark ? ThemedColors.bottomBarDark : ThemedColors.bottomBar,
     bottomBarDark: ThemedColors.bottomBarDark,
-    notification: ThemedColors.notification,
+    notification: {
+      info: ThemedColors.notification.info,
+      danger: ThemedColors.notification.danger,
+      success: ThemedColors.notification.success,
+      warning: ThemedColors.notification.warning,
+  },
     spinnerOverlay: isDark ? ThemedColors.spinnerOverlayDark : ThemedColors.spinnerOverlay,
     spinnerOverlayDark: ThemedColors.spinnerOverlayDark,
     spinnerBackground: isDark ? ThemedColors.spinnerBackgroundDark : ThemedColors.spinnerBackground,
