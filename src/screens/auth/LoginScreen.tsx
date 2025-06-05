@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { getAuth,  } from 'firebase/auth';
+import {auth} from '../../../firebaseConfig'
 
 import CustomInput from '../../components/CustomInput';
 import { useStore } from '../../store/StoreProvider';
@@ -11,6 +13,7 @@ const LoginScreen: React.FC = () => {
   const { themeStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
+  console.log('auth',auth)
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
