@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import CustomInput from '../../components/CustomInput';
 import { useStore } from '../../store/StoreProvider';
-import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN } from '../../navigation/RouteNames';
+import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN, ROOT_TABS } from '../../navigation/RouteNames';
 import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
 import Spinner from '../../components/Spinner';
 import { observer } from 'mobx-react-lite';

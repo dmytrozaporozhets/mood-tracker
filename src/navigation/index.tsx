@@ -11,6 +11,7 @@ import RegisterScreen from '../screens/auth/RegisterScreen';
 import { REGISTER_SCREEN } from './RouteNames';
 import ResetPasswordScreen from '../screens/auth/ResetPasswordScreen';
 import { useStore } from '../store/StoreProvider';
+import { observer } from 'mobx-react-lite';
 
 type NavigationProps = {
   showOnboarding: boolean;
@@ -19,10 +20,7 @@ type NavigationProps = {
 
 const Stack = createNativeStackNavigator();
 
-const Navigation: React.FC<NavigationProps> = ({
-  showOnboarding,
-  setShowOnboarding,
-}) => {
+const Navigation: React.FC<NavigationProps> = observer(({ showOnboarding, setShowOnboarding }) => {
   const { authStore } = useStore();
   console.log(authStore)
   return (
@@ -50,6 +48,6 @@ const Navigation: React.FC<NavigationProps> = ({
         </>)}
     </Stack.Navigator>
   );
-};
+});
 
 export default Navigation;
