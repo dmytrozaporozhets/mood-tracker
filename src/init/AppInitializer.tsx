@@ -6,8 +6,10 @@ import MoodModal from '../components/MoodModal';
 import Navigation from '../navigation';
 import { getTodayMood } from '../storage/moodStorage';
 import { ONBOARDING_SHOWN_KEY } from '../constants/storage';
+import { useStore } from '../store/StoreProvider';
 
 const AppInitializer = () => {
+  const { authStore } = useStore();
   const [isReady, setIsReady] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showMoodModal, setShowMoodModal] = useState(false);
@@ -42,6 +44,7 @@ const AppInitializer = () => {
         }
       });
     }
+   setShowMoodModal(false)
   }, [showOnboarding]);
 
   if (!isReady) return <Spinner />;
@@ -52,7 +55,7 @@ const AppInitializer = () => {
         showOnboarding={showOnboarding}
         setShowOnboarding={setShowOnboarding}
       />
-      {showMoodModal && <MoodModal onClose={() => setShowMoodModal(false)} />}
+      {authStore.user && showMoodModal && <MoodModal onClose={() => setShowMoodModal(false)} />}
     </>
   );
 };

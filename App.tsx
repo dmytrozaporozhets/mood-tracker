@@ -6,6 +6,7 @@ import { i18n, initI18n } from './src/utils/i18n/i18n';
 import Spinner from './src/components/Spinner';
 import AppShell from './src/init/AppShell';
 import { StoreProvider } from './src/store/StoreProvider';
+import CustomToast from './src/components/CustomToast';
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -19,12 +20,13 @@ export default function App() {
   }, []);
 
   return (
-    <StoreProvider>
-      <I18nextProvider i18n={i18n}>
-        <SafeAreaProvider>
-          {isReady ? <AppShell /> : <Spinner />}
-        </SafeAreaProvider>
-      </I18nextProvider>
-    </StoreProvider>
+      <StoreProvider>
+        <I18nextProvider i18n={i18n}>
+          <SafeAreaProvider>
+            {isReady ? <AppShell /> : <Spinner />}
+          </SafeAreaProvider>
+        </I18nextProvider>
+        <CustomToast />
+      </StoreProvider>
   );
 }

@@ -9,10 +9,10 @@ import AppInitializer from './AppInitializer';
 import Spinner from '../components/Spinner';
 
 const AppShell = observer(() => {
-  const { themeStore } = useStore();
+const { themeStore, authStore } = useStore();
 
-  if (!themeStore.initialized) {
-    return <Spinner/>
+  if (!themeStore.initialized || !authStore.initialized) {
+    return <Spinner />;
   }
 
   const currentTheme = themeStore.isDark ? DarkTheme : LightTheme;

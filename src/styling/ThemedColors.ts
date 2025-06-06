@@ -1,3 +1,4 @@
+
 export const MoodColors = {
   Happy: '#D1F5D3',
   Relaxed: '#FFF5C3',
@@ -45,6 +46,14 @@ export default {
     activeText: '#FFFFFF',
     inactiveText: '#90CAF9',
   },
-  notification: '#FF453A',
-  notificationDark: '#FF453A',
+  notification: {
+    info: '#01D2E0',
+    danger: '#D40000',
+    success: '#008000',
+    warning: '#FFCB13',
+  },
+  spinnerOverlay:'rgba(255, 255, 255, 0.4)',
+  spinnerOverlayDark:'rgba(0, 0, 0, 0.4)',
+  spinnerBackground:  'rgba(255, 255, 255, 0.8)',
+  spinnerBackgroundDark:  'rgba(0, 0, 0, 0.6)',
 };
