@@ -25,6 +25,10 @@ export interface ColorsStyle {
   placeholderDark: string;
   inputBackground: string;
   inputBackgroundDark: string;
+  disabled:string;
+  disabledDark:string;
+  disabledText:string;
+  disabledTextDark:string;
   moodEmoji: { 
     background: typeof MoodColors,
     label: string,
