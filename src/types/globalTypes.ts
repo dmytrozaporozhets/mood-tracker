@@ -229,6 +229,4 @@ export interface GlobalTypes {
   r30: ViewStyle;
   r40: ViewStyle;
   r50: ViewStyle;
-  bgBlack: ViewStyle;
-  bgWhite: ViewStyle;
 }
