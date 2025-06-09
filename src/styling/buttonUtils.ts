@@ -1,5 +1,6 @@
-import { ColorsStyle } from "../types/theme";
-import { DANGER, LARGE, MEDIUM, PRIMARY, SECONDARY, Size, SMALL, Type } from '../constants/types';
+import { Size, Type, SMALL, MEDIUM, LARGE, PRIMARY, SECONDARY, DANGER } from '../constants/types';
+import { ColorsStyle } from '../types/theme';
+import { ButtonDimensions } from '../styles/components/ButtonStyle';
 
 export const getBackgroundColor = (
   type: Type,
@@ -7,6 +8,7 @@ export const getBackgroundColor = (
   colors: ColorsStyle
 ): string => {
   if (disabled) return colors.disabled;
+
   switch (type) {
     case SECONDARY:
       return colors.secondary;
@@ -25,26 +27,26 @@ export const getTextColor = (
   return disabled ? colors.disabledText : colors.textLight;
 };
 
-export const getPadding = (size: Size): number => {
+export const getFontSize = (size: Size): number => {
   switch (size) {
     case SMALL:
-      return 8;
-    case MEDIUM:
       return 12;
+    case MEDIUM:
+      return 14;
     case LARGE:
     default:
       return 16;
   }
 };
 
-export const getFontSize = (size: Size): number => {
+export const getButtonSizeStyle = (size: Size) => {
   switch (size) {
     case SMALL:
-      return 14;
+      return ButtonDimensions.S;
     case MEDIUM:
-      return 16;
+      return ButtonDimensions.M;
     case LARGE:
     default:
-      return 18;
+      return ButtonDimensions.L;
   }
 };

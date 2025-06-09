@@ -9,12 +9,12 @@ import {
 import { useStore } from '../store/StoreProvider';
 import {
   getBackgroundColor,
-  getFontSize,
-  getPadding,
   getTextColor,
-} from '../styling/styleUtils';
+  getFontSize,
+  getButtonSizeStyle,
+} from '../styling/buttonUtils';
 import { Size, Type, PRIMARY, LARGE } from '../constants/types';
-import ButtonStyle from '../styles/components/Buttonstyle';
+import ButtonStyle from '../styles/components/ButtonStyle';
 
 type Props = {
   title: string;
@@ -44,16 +44,16 @@ const Button: React.FC<Props> = ({
 
   const backgroundColor = getBackgroundColor(type, isDisabled, colors);
   const textColor = getTextColor(isDisabled, colors);
-  const padding = getPadding(size);
   const fontSize = getFontSize(size);
+  const sizeStyle = getButtonSizeStyle(size);
 
   return (
     <TouchableOpacity
       style={[
         ButtonStyle.button,
+        sizeStyle,
         {
           backgroundColor,
-          paddingVertical: padding,
           opacity: isDisabled ? 0.7 : 1,
         },
         style,
