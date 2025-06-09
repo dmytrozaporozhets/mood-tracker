@@ -1,4 +1,27 @@
 export default {
+  auth: {
+    welcome: 'Welcome Back',
+    email: 'Email',
+    emailPlaceholder: 'Enter your email',
+    password: 'Password',
+    passwordPlaceholder: 'Enter your password',
+    login: 'Login',
+    forgotPassword: 'Forgot your password?',
+    noAccount: "Don't have an account?",
+    register: 'Register',
+  },
+  validation: {
+    required: 'This field is required',
+    requiredPassword: 'Password is required',
+    invalidEmail: 'Invalid email address',
+    passwordMinLength: 'Password must be at least {{length}} characters',
+    minLength: 'Minimum length is {{length}} characters',
+    invalidCredential: "Invalid email or password",
+    userNotFound: "User not found",
+    wrongPassword: "Incorrect password",
+    tooManyRequests: "Too many attempts. Please try again later.",
+    default: "An error occurred. Please try again."
+  },
   route: {
     home: 'Home',
     history: 'History',

@@ -1,4 +1,27 @@
 export default {
+  auth: {
+    welcome: 'З поверненням',
+    email: 'Електронна пошта',
+    emailPlaceholder: 'Введіть електронну пошту',
+    password: 'Пароль',
+    passwordPlaceholder: 'Введіть пароль',
+    login: 'Увійти',
+    forgotPassword: 'Забули пароль?',
+    noAccount: 'Немає акаунта?',
+    register: 'Зареєструватись',
+  },
+  validation: {
+    required: 'Це поле є обовʼязковим',
+    requiredPassword: 'Пароль є обовʼязковим',
+    invalidEmail: 'Невірна email адреса',
+    passwordMinLength: 'Пароль має містити щонайменше {{length}} символів',
+    minLength: 'Мінімальна довжина — {{length}} символів',
+    invalidCredential: "Невірна пошта або пароль",
+    userNotFound: "Користувача не знайдено",
+    wrongPassword: "Невірний пароль",
+    tooManyRequests: "Забагато спроб. Спробуйте пізніше.",
+    default: "Сталася помилка. Спробуйте ще раз."
+  },
   route: {
     home: 'Домашня',
     history: 'Історія',

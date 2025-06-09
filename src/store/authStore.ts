@@ -8,6 +8,7 @@ import {
   User,
 } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
+import { handleFirebaseError } from '../validation/firebaseErrorMessages';
 
 export class AuthStore {
   user: User | null = null;
@@ -52,7 +53,7 @@ export class AuthStore {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
       runInAction(() => {
-        this.error = err.message;
+        this.error = handleFirebaseError(err);
       });
     } finally {
       runInAction(() => {
