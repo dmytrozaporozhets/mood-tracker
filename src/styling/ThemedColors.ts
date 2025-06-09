@@ -28,6 +28,10 @@ export default {
   placeholderDark: '#777777',
   inputBackground: '#F0F0F0',
   inputBackgroundDark: '#2A2A2A',
+  disabled:'#CCCCCC',
+  disabledDark:'#555555',
+  disabledText:'#FFFFFF',
+  disabledTextDark:'#AAAAAA',
   moodEmoji: 
     { background: MoodColors,
       label: '#1A1A1A',

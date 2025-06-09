@@ -7,6 +7,8 @@ import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
 import ResetPasswordStyle from '../../styles/screens/ResetPasswordStyle';
 import { showSuccessToast } from '../../utils/toast';
+import Button from '../../components/Button';
+import { sg } from '../../styling';
 
 const ResetPasswordScreen: React.FC = () => {
   const { themeStore, authStore } = useStore();
@@ -50,22 +52,7 @@ const ResetPasswordScreen: React.FC = () => {
         autoCapitalize="none"
         error={error}
       />
-
-      <TouchableOpacity
-        style={[
-          ResetPasswordStyle.button,
-          {
-            backgroundColor: authStore.loading ? '#A5A5A5' : colors.primary,
-            opacity: authStore.loading ? 0.7 : 1,
-          },
-        ]}
-        onPress={handleReset}
-        disabled={authStore.loading}
-      >
-        <Text style={[ResetPasswordStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
-          {authStore.loading ? 'Sending...' : 'Send Reset Link'}
-        </Text>
-      </TouchableOpacity>
+      <Button title='Send Reset Link' onPress={handleReset}   loading={authStore.loading} style={sg.mT25}/>
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
         style={ResetPasswordStyle.linkWrapper}

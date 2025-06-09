@@ -7,6 +7,8 @@ import RegisterScreenStyle from '../../styles/screens/RegisterScreenStyle';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
 import { showSuccessToast } from '../../utils/toast';
+import Button from '../../components/Button';
+import { sg } from '../../styling';
 
 const RegisterScreen: React.FC = () => {
   const { themeStore, authStore } = useStore();
@@ -73,23 +75,10 @@ const RegisterScreen: React.FC = () => {
         secureText
         error={error}
       />
-
-      <TouchableOpacity
-        style={[
-          RegisterScreenStyle.button,
-          {
-            backgroundColor: authStore.loading ? '#A5A5A5' : colors.primary,
-            opacity: authStore.loading ? 0.7 : 1,
-          },
-        ]}
+      <Button title='Register' 
         onPress={handleRegister}
         disabled={authStore.loading}
-      >
-        <Text style={[RegisterScreenStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
-          {authStore.loading ? 'Registering...' : 'Register'}
-        </Text>
-      </TouchableOpacity>
-
+        style={sg.mT25}/>
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
         style={RegisterScreenStyle.linkWrapper}

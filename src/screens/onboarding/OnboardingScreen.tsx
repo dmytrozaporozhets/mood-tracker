@@ -8,7 +8,7 @@ import OnboardingScreenStyle from '../../styles/screens/OnboardingScreen';
 import { useTranslation } from 'react-i18next';
 import Pagination from '../../components/Pagination';
 
-import { useStore } from '../../store/StoreProvider';  // імпорт useStore
+import { useStore } from '../../store/StoreProvider';
 
 type OnboardingScreenProps = {
   onFinish: () => void;
@@ -17,7 +17,7 @@ type OnboardingScreenProps = {
 const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
   const navigation = useNavigation<NavigationProp<any>>();
   const { t } = useTranslation();
-  const { themeStore } = useStore();       // отримуємо тему
+  const { themeStore } = useStore();  
   const { colors, fonts } = themeStore.theme;
 
   const [currentIndex, setCurrentIndex] = useState(0);
