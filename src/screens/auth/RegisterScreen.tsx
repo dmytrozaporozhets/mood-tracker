@@ -1,91 +1,109 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
-import CustomInput from '../../components/CustomInput';
+import ControlledInput from '../../components/ControlledInput';
 import RegisterScreenStyle from '../../styles/screens/RegisterScreenStyle';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
 import { showSuccessToast } from '../../utils/toast';
 import Button from '../../components/Button';
+import { getLoginRules, getPasswordRules } from '../../validation/rules';
+import { useTranslation } from 'react-i18next';
 import { sg } from '../../styling';
+
+type FormValues = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const RegisterScreen: React.FC = () => {
   const { themeStore, authStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
+  const { t } = useTranslation();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const handleRegister = async () => {
-    if (!email || !password || !confirmPassword) {
-      setError('Please fill all fields');
-      return;
-    }
+  const password = watch('password');
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match');
-      return;
-    }
+  const onSubmit = async (data: FormValues) => {
+    await authStore.register(data.email, data.password);
 
-    setError('');
-    await authStore.register(email, password);
+    if (authStore.error) return;
 
-    if (authStore.error) {
-      setError(authStore.error);
-    } else if (authStore.user) {
-      showSuccessToast('Your account has been created');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
-    }
+    showSuccessToast(t('auth.accountCreated'));
+    navigation.navigate(LOGIN_SCREEN as never);
   };
 
   return (
     <View style={[RegisterScreenStyle.container, { backgroundColor: colors.background }]}>
       <Text style={[RegisterScreenStyle.title, { color: colors.text, ...fonts.bold }]}>
-        Create Account
+        {t('auth.register')}
       </Text>
 
-      <CustomInput
-        label="Email"
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
+      <ControlledInput
+        name="email"
+        label={t('auth.email')}
+        placeholder={t('auth.emailPlaceholder')}
         keyboardType="email-address"
-        autoCapitalize="none"
+        control={control}
+        rules={getLoginRules(t)}
+        warning={authStore.error}
       />
 
-      <CustomInput
-        label="Password"
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={setPassword}
+      <ControlledInput
+        name="password"
+        label={t('auth.password')}
+        placeholder={t('auth.passwordPlaceholder')}
         secureText
+        control={control}
+        rules={getPasswordRules(t)}
       />
 
-      <CustomInput
-        label="Confirm Password"
-        placeholder="Confirm your password"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
+      <ControlledInput
+        name="confirmPassword"
+        label={t('auth.confirmPassword')}
+        placeholder={t('auth.confirmPasswordPlaceholder')}
         secureText
-        error={error}
+        control={control}
+        rules={{
+          required: {
+            value: true,
+            message: t('validation.requiredPassword'),
+          },
+          validate: (value: string) =>
+            value === password || t('validation.passwordsDoNotMatch'),
+        }}
       />
-      <Button title='Register' 
-        onPress={handleRegister}
+
+      <Button
+        title={t('auth.register')}
+        onPress={handleSubmit(onSubmit)}
         disabled={authStore.loading}
-        style={sg.mT25}/>
+        style={sg.mT25}
+      />
+
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
         style={RegisterScreenStyle.linkWrapper}
       >
         <Text style={[RegisterScreenStyle.linkText, { color: colors.text, ...fonts.regular }]}>
-          Already have an account?{' '}
-          <Text style={{ color: colors.primary, ...fonts.medium }}>Login</Text>
+          {t('auth.noAccount')}{' '}
+          <Text style={{ color: colors.primary, ...fonts.medium }}>{t('auth.login')}</Text>
         </Text>
       </TouchableOpacity>
     </View>
