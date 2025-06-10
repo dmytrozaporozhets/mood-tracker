@@ -1,4 +1,3 @@
-import Colors from './Colors';
 import  {GlobalTypes} from'../types/globalTypes';
 
 const globalStyles:GlobalTypes = {
@@ -526,7 +525,7 @@ const globalStyles:GlobalTypes = {
     flexGrow: 1,
   },
   flexGrowNull: {
-    flexGrow: null,
+    flexGrow: undefined,
   },
   flexWrap: {
     flexWrap: 'wrap',
@@ -683,8 +682,6 @@ const globalStyles:GlobalTypes = {
   r30: { right: 30 },
   r40: { right: 40 },
   r50: { right: 50 },
-  bgBlack: { backgroundColor: Colors.neutrals[600] },
-  bgWhite: { backgroundColor: Colors.neutrals.white },
 };
 
 export default globalStyles;

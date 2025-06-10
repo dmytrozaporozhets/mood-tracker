@@ -13,7 +13,7 @@ import CustomInputStyle from '../styles/components/CustomInputStyle';
 
 interface CustomInputProps extends TextInputProps {
   label: string;
-  error?: string;
+  error?: string | null;
   secureText?: boolean;
 }
 
@@ -47,6 +47,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           style={[CustomInputStyle.input, { color: colors.text, ...fonts.regular }]}
           secureTextEntry={secureText && !isPasswordVisible}
           placeholderTextColor={colors.placeholder}
+          autoCapitalize="none"
           {...rest}
         />
 

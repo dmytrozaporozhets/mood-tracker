@@ -11,15 +11,6 @@ const ResetPasswordStyle = StyleSheet.create({
     marginBottom: 32,
     textAlign: 'center',
   },
-  button: {
-    marginTop: 24,
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  buttonText: {
-    fontSize: 16,
-  },
   linkWrapper: {
     marginTop: 20,
     alignItems: 'center',

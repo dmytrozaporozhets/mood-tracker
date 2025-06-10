@@ -23,6 +23,10 @@ export const createTheme = (isDark: boolean): Theme => ({
     placeholderDark: ThemedColors.placeholderDark,
     inputBackground: isDark ? ThemedColors.inputBackgroundDark : ThemedColors.inputBackground,
     inputBackgroundDark: ThemedColors.inputBackgroundDark,
+    disabled: isDark ? ThemedColors.disabledDark : ThemedColors.disabled,
+    disabledDark: ThemedColors.disabledDark,
+    disabledText: isDark ? ThemedColors.disabledTextDark : ThemedColors.disabledText,
+    disabledTextDark: ThemedColors.disabledTextDark,
     bottomBar: isDark ? ThemedColors.bottomBarDark : ThemedColors.bottomBar,
     bottomBarDark: ThemedColors.bottomBarDark,
     notification: {

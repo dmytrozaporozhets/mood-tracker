@@ -7,6 +7,7 @@ import DarkTheme from '../styling/themes/DarkTheme';
 import LightTheme from '../styling/themes/LightTheme';
 import AppInitializer from './AppInitializer';
 import Spinner from '../components/Spinner';
+import { toNavigationTheme } from '../styling/themes/toNavigationTheme';
 
 const AppShell = observer(() => {
 const { themeStore, authStore } = useStore();
@@ -15,11 +16,12 @@ const { themeStore, authStore } = useStore();
     return <Spinner />;
   }
 
-  const currentTheme = themeStore.isDark ? DarkTheme : LightTheme;
+const currentTheme = themeStore.isDark ? DarkTheme : LightTheme;
+const navigationTheme = toNavigationTheme(currentTheme);
 
 
   return (
-    <NavigationContainer theme={currentTheme}>
+    <NavigationContainer theme={navigationTheme}>
       <AppInitializer />
     </NavigationContainer>
   );

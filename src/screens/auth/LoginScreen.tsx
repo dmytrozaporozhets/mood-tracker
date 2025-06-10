@@ -1,69 +1,82 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-import CustomInput from '../../components/CustomInput';
-import { useStore } from '../../store/StoreProvider';
-import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN, ROOT_TABS } from '../../navigation/RouteNames';
-import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
-import Spinner from '../../components/Spinner';
 import { observer } from 'mobx-react-lite';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+
+import ControlledInput from '../../components/ControlledInput';
+import Button from '../../components/Button';
+import { useStore } from '../../store/StoreProvider';
+import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN } from '../../navigation/RouteNames';
+import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
+
+import { getLoginRules, getPasswordRules } from '../../validation/rules';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 const LoginScreen: React.FC = () => {
   const { themeStore, authStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
-  
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { t } = useTranslation();
 
-  const handleLogin = async () => {
-    if (!email || !password) {
-      authStore.error = 'Please enter both email and password';
-      return;
-    }
+  const {
+  control,
+  handleSubmit,
+  formState: { isSubmitting },
+} = useForm<LoginFormValues>({
+  mode: 'onChange',
+  defaultValues: {
+    email: '',
+    password: '',
+  },
+});
+
+  const onSubmit = async ({ email, password }: LoginFormValues) => {
     await authStore.login(email, password);
   };
 
   return (
     <View style={[LoginScreenStyle.container, { backgroundColor: colors.background }]}>
       <Text style={[LoginScreenStyle.title, { color: colors.text, ...fonts.bold }]}>
-        Welcome Back
+        {t('auth.welcome')}
       </Text>
 
-      <CustomInput
-        label="Email"
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
+      <ControlledInput
+        name="email"
+        control={control}
+        label={t('auth.email')}
+        placeholder={t('auth.emailPlaceholder')}
         keyboardType="email-address"
-        autoCapitalize="none"
+        rules={getLoginRules(t)}
       />
 
-      <CustomInput
-        label="Password"
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={setPassword}
+      <ControlledInput
+        name="password"
+        control={control}
+        label={t('auth.password')}
+        placeholder={t('auth.passwordPlaceholder')}
         secureText
-        error={authStore.error || ''}
+        rules={getPasswordRules(t)}
+        warning={authStore?.error}
       />
 
-      <TouchableOpacity
-        style={[LoginScreenStyle.button, { backgroundColor: colors.primary }]}
-        onPress={handleLogin}
-      >
-        <Text style={[LoginScreenStyle.buttonText, { color: '#fff', ...fonts.medium }]}>
-          Login
-        </Text>
-      </TouchableOpacity>
+      <Button
+        title={t('auth.login')}
+        onPress={handleSubmit(onSubmit)}
+        loading={isSubmitting || authStore.loading}
+      />
 
       <TouchableOpacity
         onPress={() => navigation.navigate(RESET_PASSWORD_SCREEN as never)}
         style={LoginScreenStyle.linkWrapper}
       >
         <Text style={[LoginScreenStyle.linkText, { color: colors.primary, ...fonts.regular }]}>
-          Forgot your password?
+          {t('auth.forgotPassword')}
         </Text>
       </TouchableOpacity>
 
@@ -72,11 +85,10 @@ const LoginScreen: React.FC = () => {
         style={LoginScreenStyle.linkWrapper}
       >
         <Text style={[LoginScreenStyle.linkText, { color: colors.text, ...fonts.regular }]}>
-          Don't have an account?{' '}
-          <Text style={{ color: colors.primary, ...fonts.medium }}>Register</Text>
+          {t('auth.noAccount')}{' '}
+          <Text style={{ color: colors.primary, ...fonts.medium }}>{t('auth.register')}</Text>
         </Text>
       </TouchableOpacity>
-      {authStore.loading && <Spinner />}
     </View>
   );
 };
