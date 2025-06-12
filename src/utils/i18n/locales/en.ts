@@ -9,6 +9,10 @@ export default {
     forgotPassword: 'Forgot your password?',
     noAccount: "Don't have an account?",
     register: 'Register',
+    resetPassword: "Reset Password",
+    sendResetLink: "Send Reset Link",
+    resetSuccess: "Password reset link sent to your email",
+    backToLogin: "Back to Login"
   },
   validation: {
     required: 'This field is required',

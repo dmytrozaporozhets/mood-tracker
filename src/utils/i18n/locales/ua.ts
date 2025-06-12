@@ -9,6 +9,10 @@ export default {
     forgotPassword: 'Забули пароль?',
     noAccount: 'Немає акаунта?',
     register: 'Зареєструватись',
+    resetPassword: "Скинути пароль",
+    sendResetLink: "Надіслати посилання для скидання",
+    resetSuccess: "Посилання для скидання паролю надіслано на вашу пошту",
+    backToLogin: "Повернутись до входу"
   },
   validation: {
     required: 'Це поле є обовʼязковим',

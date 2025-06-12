@@ -1,38 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 
-import CustomInput from '../../components/CustomInput';
+import ControlledInput from '../../components/ControlledInput';
+import Button from '../../components/Button';
+import ResetPasswordStyle from '../../styles/screens/ResetPasswordStyle';
+import { sg } from '../../styling';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
-import ResetPasswordStyle from '../../styles/screens/ResetPasswordStyle';
+import { getLoginRules } from '../../validation/rules';
+import { useTranslation } from 'react-i18next';
 import { showSuccessToast } from '../../utils/toast';
-import Button from '../../components/Button';
-import { sg } from '../../styling';
 
-const ResetPasswordScreen: React.FC = () => {
+const ResetPasswordScreen: React.FC = observer(() => {
+  const { t } = useTranslation();
   const { themeStore, authStore } = useStore();
   const { colors, fonts } = themeStore.theme;
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({ defaultValues: { email: '' } });
 
-  const handleReset = async () => {
-    if (!email) {
-      setError('Please enter your email');
-      return;
-    }
+  const onSubmit = async (data: { email: string }) => {
+    await authStore.resetPassword(data.email);
 
-    setError('');
-    await authStore.resetPassword(email);
-
-    if (authStore.error) {
-      setError(authStore.error);
-      return;
-    } else {
-      showSuccessToast('Password reset link sent to your email');
-      setEmail('');
+    if (!authStore.error) {
+      showSuccessToast(t('auth.resetSuccess'));
       navigation.navigate(LOGIN_SCREEN as never);
     }
   };
@@ -40,29 +38,36 @@ const ResetPasswordScreen: React.FC = () => {
   return (
     <View style={[ResetPasswordStyle.container, { backgroundColor: colors.background }]}>
       <Text style={[ResetPasswordStyle.title, { color: colors.text, ...fonts.bold }]}>
-        Reset Password
+        {t('auth.resetPassword')}
       </Text>
 
-      <CustomInput
-        label="Email"
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
+      <ControlledInput
+        name="email"
+        label={t('auth.email')}
+        placeholder={t('auth.emailPlaceholder')}
+        control={control}
+        rules={getLoginRules(t)}
         keyboardType="email-address"
-        autoCapitalize="none"
-        error={error}
+        warning={authStore.error}
       />
-      <Button title='Send Reset Link' onPress={handleReset}   loading={authStore.loading} style={sg.mT25}/>
+
+      <Button
+        title={t('auth.sendResetLink')}
+        onPress={handleSubmit(onSubmit)}
+        loading={authStore.loading || isSubmitting}
+        style={sg.mT25}
+      />
+
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
         style={ResetPasswordStyle.linkWrapper}
       >
         <Text style={[ResetPasswordStyle.linkText, { color: colors.primary, ...fonts.regular }]}>
-          Back to Login
+          {t('auth.backToLogin')}
         </Text>
       </TouchableOpacity>
     </View>
   );
-};
+});
 
 export default ResetPasswordScreen;
