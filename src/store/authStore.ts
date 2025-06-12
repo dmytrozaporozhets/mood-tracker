@@ -37,7 +37,7 @@ export class AuthStore {
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (err: any) {
       runInAction(() => {
-        this.error = err.message;
+        this.error = handleFirebaseError(err);
       });
     } finally {
       runInAction(() => {

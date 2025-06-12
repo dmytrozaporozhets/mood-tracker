@@ -9,13 +9,16 @@ export default {
     forgotPassword: 'Forgot your password?',
     noAccount: "Don't have an account?",
     register: 'Register',
+    confirmPassword: 'Confirm Password',
+    confirmPasswordPlaceholder: 'Confirm your password',
+    accountCreated: 'Your account has been created',
     resetPassword: "Reset Password",
     sendResetLink: "Send Reset Link",
     resetSuccess: "Password reset link sent to your email",
     backToLogin: "Back to Login"
   },
   validation: {
-    required: 'This field is required',
+    requiredEmail: "Email is required",
     requiredPassword: 'Password is required',
     invalidEmail: 'Invalid email address',
     passwordMinLength: 'Password must be at least {{length}} characters',
@@ -24,7 +27,8 @@ export default {
     userNotFound: "User not found",
     wrongPassword: "Incorrect password",
     tooManyRequests: "Too many attempts. Please try again later.",
-    default: "An error occurred. Please try again."
+    default: "An error occurred. Please try again.",
+    passwordsDoNotMatch: 'Passwords do not match',
   },
   route: {
     home: 'Home',

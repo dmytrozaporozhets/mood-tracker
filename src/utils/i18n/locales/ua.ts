@@ -9,13 +9,16 @@ export default {
     forgotPassword: 'Забули пароль?',
     noAccount: 'Немає акаунта?',
     register: 'Зареєструватись',
+    confirmPassword: 'Підтвердження пароля',
+    confirmPasswordPlaceholder: 'Повторіть пароль',
+    accountCreated: 'Ваш акаунт створено',
     resetPassword: "Скинути пароль",
     sendResetLink: "Надіслати посилання для скидання",
     resetSuccess: "Посилання для скидання паролю надіслано на вашу пошту",
     backToLogin: "Повернутись до входу"
   },
   validation: {
-    required: 'Це поле є обовʼязковим',
+    requiredEmail: "Електронна пошта обов’язкова",
     requiredPassword: 'Пароль є обовʼязковим',
     invalidEmail: 'Невірна email адреса',
     passwordMinLength: 'Пароль має містити щонайменше {{length}} символів',
@@ -24,7 +27,8 @@ export default {
     userNotFound: "Користувача не знайдено",
     wrongPassword: "Невірний пароль",
     tooManyRequests: "Забагато спроб. Спробуйте пізніше.",
-    default: "Сталася помилка. Спробуйте ще раз."
+    default: "Сталася помилка. Спробуйте ще раз.",
+    passwordsDoNotMatch: 'Паролі не співпадають',
   },
   route: {
     home: 'Домашня',
