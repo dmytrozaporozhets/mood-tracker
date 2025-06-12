@@ -12,6 +12,7 @@ export default {
     confirmPassword: 'Confirm Password',
     confirmPasswordPlaceholder: 'Confirm your password',
     accountCreated: 'Your account has been created',
+    logout: 'Logout'
   },
   validation: {
     requiredEmail: "Email is required",
