@@ -17,7 +17,7 @@ const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
   const { moodStore, themeStore } = useStore();
   const { t } = useTranslation();
 
-  const theme = themeStore.theme;
+  const {colors} = themeStore.theme;
 
   const handleSave = async () => {
     if (!selectedMood) return;
@@ -50,15 +50,15 @@ const MoodPicker: React.FC<MoodPickerProps> = ({ onSelectMood }) => {
         style={[
           MoodPickerStyle.saveButton,
           {
-            backgroundColor: selectedMood ? theme.colors.primary : theme.colors.placeholder,
-            shadowColor: selectedMood ? theme.colors.primaryDark : 'transparent',
+            backgroundColor: selectedMood ? colors.primary : colors.placeholder,
+            shadowColor: selectedMood ? colors.primaryDark : 'transparent',
           },
           !selectedMood && { opacity: 0.6 },
         ]}
         onPress={handleSave}
         disabled={!selectedMood}
       >
-        <Text style={[MoodPickerStyle.saveButtonText, { color: theme.colors.textLight }]}>
+        <Text style={[MoodPickerStyle.saveButtonText, { color: colors.textLight }]}>
           {t('button.save')}
         </Text>
       </TouchableOpacity>
