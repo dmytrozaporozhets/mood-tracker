@@ -8,9 +8,8 @@ export class RootStore {
   authStore: AuthStore;
 
   constructor() {
-    this.moodStore = new MoodStore();
     this.themeStore = new ThemeStore();
     this.authStore = new AuthStore();
+    this.moodStore = new MoodStore(this);
   }
 }
-

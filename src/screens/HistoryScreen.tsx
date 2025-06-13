@@ -8,14 +8,17 @@ import MoodCard from '../components/MoodCard';
 import { useStore } from '../store/StoreProvider';
 import { sg } from '../styling';
 
-const HistoryScreen = () => {
+const HistoryScreen = observer(() => {
   const insets = useSafeAreaInsets();
-  const { moodStore } = useStore();
+  const { moodStore, authStore, themeStore } = useStore();
+  const {colors}=themeStore.theme
 
   useFocusEffect(
     useCallback(() => {
-      moodStore.loadMoods();
-    }, [moodStore])
+      if (authStore.user) {
+        moodStore.loadMoods();
+      }
+    }, [moodStore, authStore.user])
   );
 
   const { moodList } = moodStore;
@@ -24,7 +27,7 @@ const HistoryScreen = () => {
     <View style={[sg.flex, { paddingTop: insets.top }]}>
       {!moodList.length ? (
         <View style={[sg.center, sg.flex]}>
-          <Text style={sg.textCenter}>No history yet</Text>
+          <Text style={[sg.textCenter,{color:colors.text}]}>No history yet</Text>
         </View>
       ) : (
         <FlatList
@@ -38,6 +41,6 @@ const HistoryScreen = () => {
       )}
     </View>
   );
-};
+});
 
-export default observer(HistoryScreen);
+export default HistoryScreen;

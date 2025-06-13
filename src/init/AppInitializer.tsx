@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from '../components/Spinner';
 import MoodModal from '../components/MoodModal';
 import Navigation from '../navigation';
-import { getTodayMood } from '../storage/moodStorage';
 import { ONBOARDING_SHOWN_KEY } from '../constants/storage';
 import { useStore } from '../store/StoreProvider';
+import { getTodayMood } from '../storage/moodStorage';
 
 const AppInitializer = () => {
   const { authStore } = useStore();
@@ -18,10 +18,15 @@ const AppInitializer = () => {
     const init = async () => {
       try {
         const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
+
         if (!onboardingShown) {
           setShowOnboarding(true);
-        } else {
-          const mood = await getTodayMood();
+          return;
+        }
+
+        const uid = authStore.user?.uid;
+        if (uid) {
+          const mood = await getTodayMood(uid);
           if (!mood) {
             setShowMoodModal(true);
           }
@@ -33,19 +38,11 @@ const AppInitializer = () => {
       }
     };
 
-    init();
-  }, []);
-
-  useEffect(() => {
-    if (!showOnboarding) {
-      getTodayMood().then((mood) => {
-        if (!mood) {
-          setShowMoodModal(true);
-        }
-      });
+    if (authStore.initialized) {
+      init();
     }
-   setShowMoodModal(false)
-  }, [showOnboarding]);
+  }, [authStore.initialized, authStore.user]);
+
 
   if (!isReady) return <Spinner />;
 
@@ -55,7 +52,9 @@ const AppInitializer = () => {
         showOnboarding={showOnboarding}
         setShowOnboarding={setShowOnboarding}
       />
-      {authStore.user && showMoodModal && <MoodModal onClose={() => setShowMoodModal(false)} />}
+      {authStore.user && showMoodModal && (
+        <MoodModal onClose={() => setShowMoodModal(false)} />
+      )}
     </>
   );
 };
