@@ -73,7 +73,7 @@ export class AuthStore {
       await sendPasswordResetEmail(auth, email);
     } catch (err: any) {
       runInAction(() => {
-        this.error = err.message;
+        this.error = handleFirebaseError(err);
       });
     } finally {
       runInAction(() => {

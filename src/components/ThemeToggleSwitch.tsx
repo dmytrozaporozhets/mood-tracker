@@ -21,9 +21,12 @@ const ThemeToggleSwitch = observer(() => {
           {t('settings.light')}
         </Text>
         <Switch
-          trackColor={{ false: '#767577', true: '#81b0ff' }}
-          thumbColor={dark ? '#f4f3f4' : '#f4f3f4'}
-          ios_backgroundColor="#3e3e3e"
+          trackColor={{
+            false: colors.border,
+            true: colors.primary,
+          }}
+          thumbColor={dark ? colors.textLight : colors.text}
+          ios_backgroundColor={colors.border}
           onValueChange={toggleSwitch}
           value={dark}
         />

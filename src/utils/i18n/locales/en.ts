@@ -12,6 +12,11 @@ export default {
     confirmPassword: 'Confirm Password',
     confirmPasswordPlaceholder: 'Confirm your password',
     accountCreated: 'Your account has been created',
+    resetPassword: "Reset Password",
+    sendResetLink: "Send Reset Link",
+    resetSuccess: "Password reset link sent to your email",
+    backToLogin: "Back to Login",
+    logout: 'Logout'
   },
   validation: {
     requiredEmail: "Email is required",
