@@ -47,6 +47,8 @@ export interface ColorsStyle {
   spinnerOverlayDark:string;
   spinnerBackground:string;
   spinnerBackgroundDark:string;
+  icon:string;
+  iconDark:string;
 }
 
 export interface FontStyle {

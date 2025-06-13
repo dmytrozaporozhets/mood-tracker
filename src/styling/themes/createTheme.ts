@@ -45,6 +45,8 @@ export const createTheme = (isDark: boolean): Theme => ({
       date: ThemedColors.moodEmoji.date,
       note: ThemedColors.moodEmoji.note,
     },
+    icon: isDark ?ThemedColors.iconDark :ThemedColors.icon,
+    iconDark: ThemedColors.iconDark,
   },
   fonts: {
     regular: { fontFamily: 'System', fontWeight: '400' },

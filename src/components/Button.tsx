@@ -24,7 +24,7 @@ type Props = {
   icon?: React.ReactNode;
   type?: Type;
   size?: Size;
-  style?: ViewStyle;
+  style?: object;
 };
 
 const Button: React.FC<Props> = ({

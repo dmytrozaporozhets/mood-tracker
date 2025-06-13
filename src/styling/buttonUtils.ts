@@ -30,7 +30,7 @@ export const getTextColor = (
 export const getFontSize = (size: Size): number => {
   switch (size) {
     case SMALL:
-      return 12;
+      return 14;
     case MEDIUM:
       return 14;
     case LARGE:

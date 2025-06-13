@@ -8,17 +8,14 @@ import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
 import { useStore } from '../store/StoreProvider';
 
 const LanguageSwitcher: React.FC = observer(() => {
-  const { i18n,t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { themeStore } = useStore();
-  const { colors, fonts } = themeStore.theme;
+  const { colors, fonts} = themeStore.theme;
 
   const changeLang = async (lng: string) => {
     await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
     await i18n.changeLanguage(lng);
   };
-
-  const activeBg = colors.primary;
-  const activeText = themeStore.isDark ? '#000' : '#fff';
 
   return (
     <View style={styles.container}>
@@ -35,7 +32,7 @@ const LanguageSwitcher: React.FC = observer(() => {
               style={[
                 styles.langButton,
                 {
-                  backgroundColor: isActive ? activeBg : 'transparent',
+                  backgroundColor: isActive ? colors.primary : 'transparent',
                   borderColor: colors.primary,
                 },
               ]}
@@ -45,7 +42,7 @@ const LanguageSwitcher: React.FC = observer(() => {
                   styles.langText,
                   fonts.medium,
                   {
-                    color: isActive ? activeText : colors.text,
+                    color: isActive ? colors.textLight : colors.text,
                   },
                 ]}
               >
