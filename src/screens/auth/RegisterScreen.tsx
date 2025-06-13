@@ -46,6 +46,7 @@ const RegisterScreen: React.FC = () => {
     if (authStore.error) return;
 
     showSuccessToast(t('auth.accountCreated'));
+    navigation.navigate(LOGIN_SCREEN as never);
   };
 
   return (

@@ -15,8 +15,7 @@ export default {
     resetPassword: "Reset Password",
     sendResetLink: "Send Reset Link",
     resetSuccess: "Password reset link sent to your email",
-    backToLogin: "Back to Login",
-    logout: 'Logout'
+    backToLogin: "Back to Login"
   },
   validation: {
     requiredEmail: "Email is required",

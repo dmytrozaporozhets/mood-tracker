@@ -3,7 +3,7 @@ import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BottomTabBar from './BottomTabBar';
-import { LOGIN_SCREEN, ONBOARDING_SCREEN, RESET_PASSWORD_SCREEN, ROOT_TABS, SETTINGS_SCREEN } from './RouteNames';
+import { LOGIN_SCREEN, ONBOARDING_SCREEN, RESET_PASSWORD_SCREEN, ROOT_TABS } from './RouteNames';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import { ONBOARDING_SHOWN_KEY } from '../constants/storage';
 import LoginScreen from '../screens/auth/LoginScreen';
@@ -12,7 +12,6 @@ import { REGISTER_SCREEN } from './RouteNames';
 import ResetPasswordScreen from '../screens/auth/ResetPasswordScreen';
 import { useStore } from '../store/StoreProvider';
 import { observer } from 'mobx-react-lite';
-import SettingsScreen from '../screens/SettingsScreen';
 
 type NavigationProps = {
   showOnboarding: boolean;
@@ -46,7 +45,6 @@ const Navigation: React.FC<NavigationProps> = observer(({ showOnboarding, setSho
             )}
           />
           <Stack.Screen name={ROOT_TABS} component={BottomTabBar} />
-          <Stack.Screen name={SETTINGS_SCREEN} component={SettingsScreen} />
         </>)}
     </Stack.Navigator>
   );

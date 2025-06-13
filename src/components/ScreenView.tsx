@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { SafeAreaView, StatusBar, StyleProp, ViewStyle } from 'react-native';
-import { observer } from 'mobx-react-lite';
 
 import { isAndroid } from '../utils/device';
 import { sg } from '../styling';
@@ -11,7 +10,7 @@ interface ScreenViewProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const ScreenView: React.FC<ScreenViewProps> = observer(({ children, style }) => {
+const ScreenView: React.FC<ScreenViewProps> = ({ children, style }) => {
   const paddingTop = isAndroid ? StatusBar.currentHeight ?? 0 : 0;
 
   const { themeStore } = useStore();
@@ -32,6 +31,6 @@ const ScreenView: React.FC<ScreenViewProps> = observer(({ children, style }) => 
       {children}
     </SafeAreaView>
   );
-});
+};
 
 export default ScreenView;

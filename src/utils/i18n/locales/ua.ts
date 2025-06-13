@@ -15,8 +15,7 @@ export default {
     resetPassword: "Скинути пароль",
     sendResetLink: "Надіслати посилання для скидання",
     resetSuccess: "Посилання для скидання паролю надіслано на вашу пошту",
-    backToLogin: "Повернутись до входу",
-    logout: 'Вийти'
+    backToLogin: "Повернутись до входу"
   },
   validation: {
     requiredEmail: "Електронна пошта обов’язкова",

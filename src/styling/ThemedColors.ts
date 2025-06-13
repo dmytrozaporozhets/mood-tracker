@@ -60,6 +60,4 @@ export default {
   spinnerOverlayDark:'rgba(0, 0, 0, 0.4)',
   spinnerBackground:  'rgba(255, 255, 255, 0.8)',
   spinnerBackgroundDark:  'rgba(0, 0, 0, 0.6)',
-  icon:'#1C1C1E',
-  iconDark:'#F2F2F7',
 };
