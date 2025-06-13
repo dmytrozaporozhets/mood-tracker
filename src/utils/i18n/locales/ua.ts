@@ -12,7 +12,11 @@ export default {
     confirmPassword: 'Підтвердження пароля',
     confirmPasswordPlaceholder: 'Повторіть пароль',
     accountCreated: 'Ваш акаунт створено',
-    logout: 'Вийти',
+    resetPassword: "Скинути пароль",
+    sendResetLink: "Надіслати посилання для скидання",
+    resetSuccess: "Посилання для скидання паролю надіслано на вашу пошту",
+    backToLogin: "Повернутись до входу",
+    logout: 'Вийти'
   },
   validation: {
     requiredEmail: "Електронна пошта обов’язкова",
