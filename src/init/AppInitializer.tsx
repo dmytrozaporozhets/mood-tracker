@@ -15,34 +15,50 @@ const AppInitializer = () => {
   const [showMoodModal, setShowMoodModal] = useState(false);
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
-
-        if (!onboardingShown) {
-          setShowOnboarding(true);
-          return;
-        }
-
-        const uid = authStore.user?.uid;
-        if (uid) {
-          const mood = await getTodayMood(uid);
-          if (!mood) {
-            setShowMoodModal(true);
-          }
-        }
-      } catch (e) {
-        console.warn('Initialization error:', e);
-      } finally {
+    const checkUserState = async () => {
+      const user = authStore.user;
+      if (!user) {
         setIsReady(true);
+        return;
       }
+
+      const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
+      const isNewUser =
+        user.metadata?.creationTime === user.metadata?.lastSignInTime;
+      console.log('isNewUser:', isNewUser, 'creationTime:', user.metadata?.creationTime, 'lastSignInTime:', user.metadata?.lastSignInTime);
+
+      if (isNewUser && !onboardingShown) {
+        setShowOnboarding(true);
+      } else {
+        const mood = await getTodayMood(user.uid);
+        if (!mood) {
+          setShowMoodModal(true);
+        }
+      }
+
+      setIsReady(true);
     };
 
-    if (authStore.initialized) {
-      init();
+    if (authStore.initialized && authStore.user && !isReady) {
+      checkUserState();
     }
-  }, [authStore.initialized, authStore.user]);
+    if (authStore.initialized && !authStore.user && !isReady) {
+      setIsReady(true); 
+    }
+  }, [authStore.initialized, authStore.user, ]);
 
+  const handleOnboardingFinish = async () => {
+    await AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, 'true');
+    setShowOnboarding(false);
+
+    const uid = authStore.user?.uid;
+    if (uid) {
+      const mood = await getTodayMood(uid);
+      if (!mood) {
+        setShowMoodModal(true);
+      }
+    }
+  };
 
   if (!isReady) return <Spinner />;
 
@@ -50,7 +66,7 @@ const AppInitializer = () => {
     <>
       <Navigation
         showOnboarding={showOnboarding}
-        setShowOnboarding={setShowOnboarding}
+        setShowOnboarding={handleOnboardingFinish}
       />
       {authStore.user && showMoodModal && (
         <MoodModal onClose={() => setShowMoodModal(false)} />
