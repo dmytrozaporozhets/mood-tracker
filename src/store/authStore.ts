@@ -30,21 +30,28 @@ export class AuthStore {
     });
   }
 
-  async register(email: string, password: string) {
-    this.loading = true;
-    this.error = null;
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-    } catch (err: any) {
-      runInAction(() => {
-        this.error = handleFirebaseError(err);
-      });
-    } finally {
-      runInAction(() => {
-        this.loading = false;
-      });
-    }
+async register(email: string, password: string) {
+  this.loading = true;
+  this.error = null;
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+
+    await result.user.reload();
+
+    runInAction(() => {
+      this.user = auth.currentUser;
+    });
+  } catch (err: any) {
+    runInAction(() => {
+      this.error = handleFirebaseError(err);
+    });
+  } finally {
+    runInAction(() => {
+      this.loading = false;
+    });
   }
+}
+
 
   async login(email: string, password: string) {
     this.loading = true;

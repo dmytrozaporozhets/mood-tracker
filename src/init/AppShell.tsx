@@ -10,15 +10,14 @@ import Spinner from '../components/Spinner';
 import { toNavigationTheme } from '../styling/themes/toNavigationTheme';
 
 const AppShell = observer(() => {
-const { themeStore, authStore } = useStore();
+  const { themeStore, authStore } = useStore();
 
-  if (!themeStore.initialized || !authStore.initialized) {
+  if (!themeStore.initialized || !authStore.initialized || authStore.loading) {
     return <Spinner />;
   }
 
-const currentTheme = themeStore.isDark ? DarkTheme : LightTheme;
-const navigationTheme = toNavigationTheme(currentTheme);
-
+  const currentTheme = themeStore.isDark ? DarkTheme : LightTheme;
+  const navigationTheme = toNavigationTheme(currentTheme);
 
   return (
     <NavigationContainer theme={navigationTheme}>
