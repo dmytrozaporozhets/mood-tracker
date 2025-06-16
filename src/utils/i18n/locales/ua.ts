@@ -16,7 +16,11 @@ export default {
     sendResetLink: "Надіслати посилання для скидання",
     resetSuccess: "Посилання для скидання паролю надіслано на вашу пошту",
     backToLogin: "Повернутись до входу",
-    logout: 'Вийти'
+    logout: 'Вийти',
+    displayName: 'Імʼя',
+    displayNamePlaceholder: 'Введіть імʼя',
+    phoneNumber: 'Телефон',
+    phoneNumberPlaceholder: 'Введіть номер телефону',
   },
   validation: {
     requiredEmail: "Електронна пошта обов’язкова",
@@ -30,6 +34,10 @@ export default {
     tooManyRequests: "Забагато спроб. Спробуйте пізніше.",
     default: "Сталася помилка. Спробуйте ще раз.",
     passwordsDoNotMatch: 'Паролі не співпадають',
+    requiredDisplayName: 'Імʼя обовʼязкове',
+    displayNameMinLength: 'Імʼя має містити щонайменше {{length}} символів',
+    requiredPhoneNumber: 'Номер телефону обовʼязковий',
+    invalidPhoneNumber: 'Невірний формат номера телефону',
   },
   route: {
     home: 'Домашня',
