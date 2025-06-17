@@ -1,55 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useCallback, useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { getTodayMood } from '../storage/moodStorage';
 
+import { useStore } from '../store/StoreProvider';
 import Spinner from '../components/Spinner';
 import MoodModal from '../components/MoodModal';
 import Navigation from '../navigation';
-import { ONBOARDING_SHOWN_KEY } from '../constants/storage';
-import { useStore } from '../store/StoreProvider';
-import { getTodayMood } from '../storage/moodStorage';
 
-const AppInitializer = () => {
+const AppInitializer = observer(() => {
   const { authStore } = useStore();
   const [isReady, setIsReady] = useState(false);
-  const [showOnboarding, setShowOnboarding] = useState(false);
   const [showMoodModal, setShowMoodModal] = useState(false);
 
-  useEffect(() => {
-    const checkUserState = async () => {
-      const user = authStore.user;
-      if (!user) {
-        setIsReady(true);
-        return;
-      }
+  const checkUserState = useCallback(async () => {
+    const user = authStore.user;
 
-      const onboardingShown = await AsyncStorage.getItem(ONBOARDING_SHOWN_KEY);
-      const isNewUser =
-        user.metadata?.creationTime === user.metadata?.lastSignInTime;
-      console.log('isNewUser:', isNewUser, 'creationTime:', user.metadata?.creationTime, 'lastSignInTime:', user.metadata?.lastSignInTime);
+    if (!authStore.initialized || authStore.loading) return;
 
-      if (isNewUser && !onboardingShown) {
-        setShowOnboarding(true);
-      } else {
-        const mood = await getTodayMood(user.uid);
-        if (!mood) {
-          setShowMoodModal(true);
-        }
-      }
-
+    if (!user) {
       setIsReady(true);
-    };
+      return;
+    }
 
-    if (authStore.initialized && authStore.user && !isReady) {
-      checkUserState();
+    if (!authStore.isNewUser) {
+      const mood = await getTodayMood(user.uid);
+      if (!mood) {
+        setShowMoodModal(true);
+      }
     }
-    if (authStore.initialized && !authStore.user && !isReady) {
-      setIsReady(true); 
-    }
-  }, [authStore.initialized, authStore.user, ]);
+
+    setIsReady(true);
+  }, [authStore]);
+
+  useEffect(() => {
+    checkUserState();
+  }, [checkUserState]);
+
 
   const handleOnboardingFinish = async () => {
-    await AsyncStorage.setItem(ONBOARDING_SHOWN_KEY, 'true');
-    setShowOnboarding(false);
+    authStore.isNewUser = false;
 
     const uid = authStore.user?.uid;
     if (uid) {
@@ -64,15 +53,12 @@ const AppInitializer = () => {
 
   return (
     <>
-      <Navigation
-        showOnboarding={showOnboarding}
-        setShowOnboarding={handleOnboardingFinish}
-      />
+      <Navigation onOnboardingFinish={handleOnboardingFinish} />
       {authStore.user && showMoodModal && (
         <MoodModal onClose={() => setShowMoodModal(false)} />
       )}
     </>
   );
-};
+});
 
 export default AppInitializer;

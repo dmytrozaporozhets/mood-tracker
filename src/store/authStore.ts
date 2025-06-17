@@ -15,6 +15,7 @@ export class AuthStore {
   loading = false;
   error: string | null = null;
   initialized = false;
+  isNewUser = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,42 +23,54 @@ export class AuthStore {
   }
 
   init() {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) await user.reload();
+
       runInAction(() => {
         this.user = user;
         this.initialized = true;
+
+        if (!this.isNewUser) {
+          this.isNewUser = false;
+        }
       });
     });
   }
 
-async register(email: string, password: string) {
-  this.loading = true;
-  this.error = null;
-  try {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
+  async register(email: string, password: string) {
+    this.loading = true;
+    this.error = null;
+    try {
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await result.user.reload();
 
-    await result.user.reload();
-
-    runInAction(() => {
-      this.user = auth.currentUser;
-    });
-  } catch (err: any) {
-    runInAction(() => {
-      this.error = handleFirebaseError(err);
-    });
-  } finally {
-    runInAction(() => {
-      this.loading = false;
-    });
+      runInAction(() => {
+        this.isNewUser = true; 
+        this.user = result.user;
+      });
+    } catch (err: any) {
+      runInAction(() => {
+        this.error = handleFirebaseError(err);
+        this.isNewUser = false;
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
   }
-}
-
 
   async login(email: string, password: string) {
     this.loading = true;
     this.error = null;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      await result.user.reload();
+
+      runInAction(() => {
+        this.user = result.user;
+        this.isNewUser = false;
+      });
     } catch (err: any) {
       runInAction(() => {
         this.error = handleFirebaseError(err);
@@ -71,6 +84,10 @@ async register(email: string, password: string) {
 
   async logout() {
     await signOut(auth);
+    runInAction(() => {
+      this.user = null;
+      this.isNewUser = false;
+    });
   }
 
   async resetPassword(email: string) {
@@ -89,4 +106,3 @@ async register(email: string, password: string) {
     }
   }
 }
-
