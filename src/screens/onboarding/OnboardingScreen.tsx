@@ -23,14 +23,6 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  const handleDone = () => {
-    onFinish();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: ROOT_TABS }],
-    });
-  };
-
   const renderItem = ({ item }: { item: typeof onboardingSlides[0] }) => (
     <View style={[OnboardingScreenStyle.slide, { backgroundColor: colors.background }]}>
       <Text style={[OnboardingScreenStyle.title, { color: colors.text, fontFamily: fonts.medium.fontFamily }]}>
@@ -79,13 +71,13 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ onFinish }) => {
         />
         <Pressable
           style={[OnboardingScreenStyle.button, { backgroundColor: colors.primary }]}
-          onPress={handleDone}
+          onPress={onFinish}
         >
           <Text style={[OnboardingScreenStyle.buttonText, { color: colors.textLight }]}>
             {t('button.getStarted')}
           </Text>
         </Pressable>
-        <Pressable style={OnboardingScreenStyle.skipButton} onPress={handleDone}>
+        <Pressable style={OnboardingScreenStyle.skipButton} onPress={onFinish}>
           <Text style={[OnboardingScreenStyle.skipText, { color: colors.placeholder }]}>
             {t('button.skip')}
           </Text>
