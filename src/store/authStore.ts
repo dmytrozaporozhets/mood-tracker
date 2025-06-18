@@ -15,6 +15,7 @@ export class AuthStore {
   loading = false;
   error: string | null = null;
   initialized = false;
+  isNewUser = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -22,10 +23,16 @@ export class AuthStore {
   }
 
   init() {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) await user.reload();
+
       runInAction(() => {
         this.user = user;
         this.initialized = true;
+
+        if (!this.isNewUser) {
+          this.isNewUser = false;
+        }
       });
     });
   }
@@ -34,10 +41,17 @@ export class AuthStore {
     this.loading = true;
     this.error = null;
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(auth, email, password);
+      await result.user.reload();
+
+      runInAction(() => {
+        this.isNewUser = true; 
+        this.user = result.user;
+      });
     } catch (err: any) {
       runInAction(() => {
         this.error = handleFirebaseError(err);
+        this.isNewUser = false;
       });
     } finally {
       runInAction(() => {
@@ -50,7 +64,13 @@ export class AuthStore {
     this.loading = true;
     this.error = null;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      await result.user.reload();
+
+      runInAction(() => {
+        this.user = result.user;
+        this.isNewUser = false;
+      });
     } catch (err: any) {
       runInAction(() => {
         this.error = handleFirebaseError(err);
@@ -64,6 +84,10 @@ export class AuthStore {
 
   async logout() {
     await signOut(auth);
+    runInAction(() => {
+      this.user = null;
+      this.isNewUser = false;
+    });
   }
 
   async resetPassword(email: string) {
@@ -82,4 +106,3 @@ export class AuthStore {
     }
   }
 }
-
