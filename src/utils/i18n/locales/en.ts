@@ -93,4 +93,14 @@ export default {
     light: 'Light',
     dark: 'Dark',
   },
+  profile: {
+    emailVerified: '✅ Email verified',
+    emailNotVerified: '⚠️ Email not verified',
+    email: 'Email',
+    lastActivity: 'Last activity',
+    memberSince: 'Member since',
+    editProfile: '✏️ Edit Profile',
+    anonymous: 'Anonymous',
+    noEmail: 'No email',
+  }
 };

@@ -23,6 +23,7 @@ export class AuthStore {
   loading = false;
   error: string | null = null;
   initialized = false;
+  isNewUser = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -32,9 +33,16 @@ export class AuthStore {
   // Listen for authentication state changes
   init() {
     onAuthStateChanged(auth, async (user) => {
+
+      if (user) await user.reload();
+
       runInAction(() => {
         this.user = user;
         this.initialized = true;
+
+        if (!this.isNewUser) {
+          this.isNewUser = false;
+        }
       });
 
       if (user) {
@@ -81,11 +89,13 @@ export class AuthStore {
       runInAction(() => {
         this.user = user;
         this.userProfile = profile;
+        this.isNewUser = true; 
       });
     } catch (err: any) {
       console.error('Registration error:', err);
       runInAction(() => {
         this.error = handleFirebaseError(err);
+        this.isNewUser = false;
       });
     } finally {
       runInAction(() => {
@@ -108,6 +118,8 @@ export class AuthStore {
       runInAction(() => {
         this.user = user;
         this.userProfile = profile;
+        this.isNewUser = false;
+
       });
     } catch (err: any) {
       runInAction(() => {
@@ -130,6 +142,7 @@ export class AuthStore {
       runInAction(() => {
         this.user = null;
         this.userProfile = null;
+        this.isNewUser = false;
       });
     } catch (err: any) {
       runInAction(() => {
@@ -140,7 +153,7 @@ export class AuthStore {
         this.loading = false;
       });
     }
-  }
+
 
   // Reset password
   async resetPassword(email: string) {
@@ -176,4 +189,3 @@ export class AuthStore {
       return null;
     }
   }
-}

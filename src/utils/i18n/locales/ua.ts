@@ -93,4 +93,14 @@ export default {
     light: 'Світла',
     dark: 'Темна',
   },
+  profile: {
+    emailVerified: '✅ Пошта підтверджена',
+    emailNotVerified: '⚠️ Пошта не підтверджена',
+    email: 'Електронна пошта',
+    lastActivity: 'Остання активність',
+    memberSince: 'З нами з',
+    editProfile: '✏️ Редагувати профіль',
+    anonymous: 'Анонім',
+    noEmail: 'Без електронної пошти',
+  }
 };

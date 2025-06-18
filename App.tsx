@@ -20,13 +20,13 @@ export default function App() {
   }, []);
 
   return (
-      <StoreProvider>
-        <I18nextProvider i18n={i18n}>
-          <SafeAreaProvider>
-            {isReady ? <AppShell /> : <Spinner />}
-          </SafeAreaProvider>
-        </I18nextProvider>
-        <CustomToast />
-      </StoreProvider>
+    <StoreProvider>
+      <I18nextProvider i18n={i18n}>
+        <SafeAreaProvider>
+          {isReady ? <AppShell /> : <Spinner />}
+        </SafeAreaProvider>
+      </I18nextProvider>
+      <CustomToast />
+    </StoreProvider>
   );
 }
