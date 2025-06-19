@@ -1,4 +1,4 @@
-import ThemedColors from '../ThemedColors';
+import ThemedColors from '../Colors';
 import { Theme } from '../../types/theme';
 
 export const createTheme = (isDark: boolean): Theme => ({

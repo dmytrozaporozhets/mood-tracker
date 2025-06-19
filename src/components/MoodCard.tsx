@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import MoodCardStyle from '../styles/components/MoodCard';
 import { formatDate } from '../utils/date';
-import { MoodColors } from '../styling/ThemedColors';
+import { MoodColors } from '../styling/Colors';
 import { useStore } from '../store/StoreProvider';
 
 export type MoodLabel = keyof typeof MoodColors;
@@ -26,7 +26,7 @@ const MoodCard: React.FC<MoodCardProps> = ({ item }) => {
   const { themeStore } = useStore();
   const { colors } = themeStore.theme;
 
-  const { emoji, label, date, note } = item;
+  const { emoji, label, date, note} = item;
   const backgroundColor = MoodColors[label] || '#eee';
 
   return (
