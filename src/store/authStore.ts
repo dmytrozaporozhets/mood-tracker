@@ -5,13 +5,21 @@ import {
   signOut,
   onAuthStateChanged,
   sendPasswordResetEmail,
+  updateProfile,
   User,
 } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import {
+  doc,
+  setDoc,
+  getDoc,
+  DocumentData,
+} from 'firebase/firestore';
+import { auth, firestore } from '../../firebaseConfig';
 import { handleFirebaseError } from '../validation/firebaseErrorMessages';
 
 export class AuthStore {
   user: User | null = null;
+  userProfile: DocumentData | null = null;
   loading = false;
   error: string | null = null;
   initialized = false;
@@ -22,8 +30,10 @@ export class AuthStore {
     this.init();
   }
 
+  // Listen for authentication state changes
   init() {
     onAuthStateChanged(auth, async (user) => {
+
       if (user) await user.reload();
 
       runInAction(() => {
@@ -34,21 +44,55 @@ export class AuthStore {
           this.isNewUser = false;
         }
       });
+
+      if (user) {
+        const profile = await this.fetchUserProfile(user.uid);
+        runInAction(() => {
+          this.userProfile = profile;
+        });
+      } else {
+        runInAction(() => {
+          this.userProfile = null;
+        });
+      }
     });
   }
 
-  async register(email: string, password: string) {
+  // Register a new user
+  async register(email: string, password: string, displayName: string, phoneNumber: string) {
     this.loading = true;
     this.error = null;
+
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
-      await result.user.reload();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = userCredential;
+
+      await updateProfile(user, { displayName });
+
+      try {
+        await setDoc(doc(firestore, 'users', user.uid), {
+          displayName,
+          phoneNumber,
+          email,
+          createdAt: new Date().toISOString(),
+        });
+      } catch (err) {
+        console.error('Firestore setDoc error:', err);
+        runInAction(() => {
+          this.error = handleFirebaseError(err);
+        });
+      }
+
+
+      const profile = await this.fetchUserProfile(user.uid);
 
       runInAction(() => {
+        this.user = user;
+        this.userProfile = profile;
         this.isNewUser = true; 
-        this.user = result.user;
       });
     } catch (err: any) {
+      console.error('Registration error:', err);
       runInAction(() => {
         this.error = handleFirebaseError(err);
         this.isNewUser = false;
@@ -60,16 +104,22 @@ export class AuthStore {
     }
   }
 
+  // Login
   async login(email: string, password: string) {
     this.loading = true;
     this.error = null;
+
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      await result.user.reload();
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const { user } = userCredential;
+
+      const profile = await this.fetchUserProfile(user.uid);
 
       runInAction(() => {
-        this.user = result.user;
+        this.user = user;
+        this.userProfile = profile;
         this.isNewUser = false;
+
       });
     } catch (err: any) {
       runInAction(() => {
@@ -82,17 +132,34 @@ export class AuthStore {
     }
   }
 
+  // Logout
   async logout() {
-    await signOut(auth);
-    runInAction(() => {
-      this.user = null;
-      this.isNewUser = false;
-    });
-  }
+    this.loading = true;
+    this.error = null;
 
+    try {
+      await signOut(auth);
+      runInAction(() => {
+        this.user = null;
+        this.userProfile = null;
+        this.isNewUser = false;
+      });
+    } catch (err: any) {
+      runInAction(() => {
+        this.error = handleFirebaseError(err);
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
+    }
+
+
+  // Reset password
   async resetPassword(email: string) {
     this.loading = true;
     this.error = null;
+
     try {
       await sendPasswordResetEmail(auth, email);
     } catch (err: any) {
@@ -105,4 +172,20 @@ export class AuthStore {
       });
     }
   }
-}
+
+  // Fetch user profile from Firestore
+  async fetchUserProfile(uid: string) {
+    try {
+      const docRef = doc(firestore, 'users', uid);
+      const snapshot = await getDoc(docRef);
+      if (snapshot.exists()) {
+        return snapshot.data();
+      } else {
+        console.warn('No user profile found in Firestore');
+        return null;
+      }
+    } catch (err) {
+      console.error('Failed to fetch user profile:', err);
+      return null;
+    }
+  }

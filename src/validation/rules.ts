@@ -21,3 +21,25 @@ export const getPasswordRules = (t: TFunction) => ({
     message: t('validation.passwordMinLength', { length: 6 }),
   },
 });
+
+export const getDisplayNameRules = (t: TFunction) => ({
+  required: {
+    value: true,
+    message: t('validation.requiredDisplayName'),
+  },
+  minLength: {
+    value: 2,
+    message: t('validation.displayNameMinLength', { length: 2 }),
+  },
+});
+
+export const getPhoneNumberRules = (t: TFunction) => ({
+  required: {
+    value: true,
+    message: t('validation.requiredPhoneNumber'),
+  },
+  pattern: {
+    value: /^\+?[0-9]{7,15}$/,
+    message: t('validation.invalidPhoneNumber'),
+  },
+});

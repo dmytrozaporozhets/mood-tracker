@@ -1,15 +1,19 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 
 import ControlledInput from '../../components/ControlledInput';
-import RegisterScreenStyle from '../../styles/screens/RegisterScreenStyle';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
 import { showSuccessToast } from '../../utils/toast';
 import Button from '../../components/Button';
-import { getLoginRules, getPasswordRules } from '../../validation/rules';
+import { 
+  getLoginRules, 
+  getPasswordRules, 
+  getDisplayNameRules, 
+  getPhoneNumberRules 
+} from '../../validation/rules';
 import { useTranslation } from 'react-i18next';
 import { sg } from '../../styling';
 
@@ -17,6 +21,8 @@ type FormValues = {
   email: string;
   password: string;
   confirmPassword: string;
+  displayName: string;
+  phoneNumber: string;
 };
 
 const RegisterScreen: React.FC = () => {
@@ -35,13 +41,15 @@ const RegisterScreen: React.FC = () => {
       email: '',
       password: '',
       confirmPassword: '',
+      displayName: '',
+      phoneNumber: '',
     },
   });
 
   const password = watch('password');
 
   const onSubmit = async (data: FormValues) => {
-    await authStore.register(data.email, data.password);
+    await authStore.register(data.email, data.password, data.displayName, data.phoneNumber);
 
     if (authStore.error) return;
 
@@ -49,10 +57,18 @@ const RegisterScreen: React.FC = () => {
   };
 
   return (
-    <View style={[RegisterScreenStyle.container, { backgroundColor: colors.background }]}>
-      <Text style={[RegisterScreenStyle.title, { color: colors.text, ...fonts.bold }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text, ...fonts.bold }]}>
         {t('auth.register')}
       </Text>
+
+      <ControlledInput
+        name="displayName"
+        label={t('auth.displayName')}
+        placeholder={t('auth.displayNamePlaceholder')}
+        control={control}
+        rules={getDisplayNameRules(t)}
+      />
 
       <ControlledInput
         name="email"
@@ -62,6 +78,15 @@ const RegisterScreen: React.FC = () => {
         control={control}
         rules={getLoginRules(t)}
         warning={authStore.error}
+      />
+
+      <ControlledInput
+        name="phoneNumber"
+        label={t('auth.phoneNumber')}
+        placeholder={t('auth.phoneNumberPlaceholder')}
+        keyboardType="phone-pad"
+        control={control}
+        rules={getPhoneNumberRules(t)}
       />
 
       <ControlledInput
@@ -98,9 +123,9 @@ const RegisterScreen: React.FC = () => {
 
       <TouchableOpacity
         onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
-        style={RegisterScreenStyle.linkWrapper}
+        style={styles.linkWrapper}
       >
-        <Text style={[RegisterScreenStyle.linkText, { color: colors.text, ...fonts.regular }]}>
+        <Text style={[styles.linkText, { color: colors.text, ...fonts.regular }]}>
           {t('auth.noAccount')}{' '}
           <Text style={{ color: colors.primary, ...fonts.medium }}>{t('auth.login')}</Text>
         </Text>
@@ -108,5 +133,25 @@ const RegisterScreen: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  title: {
+    fontSize: 28,
+    marginBottom: 32,
+    textAlign: 'center',
+  },
+  linkWrapper: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 14,
+  },
+});
 
 export default RegisterScreen;

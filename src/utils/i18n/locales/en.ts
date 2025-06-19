@@ -16,7 +16,11 @@ export default {
     sendResetLink: "Send Reset Link",
     resetSuccess: "Password reset link sent to your email",
     backToLogin: "Back to Login",
-    logout: 'Logout'
+    logout: 'Logout',
+    displayName: 'Name',
+    displayNamePlaceholder: 'Enter your name',
+    phoneNumber: 'Phone Number',
+    phoneNumberPlaceholder: 'Enter your phone number',
   },
   validation: {
     requiredEmail: "Email is required",
@@ -30,6 +34,10 @@ export default {
     tooManyRequests: "Too many attempts. Please try again later.",
     default: "An error occurred. Please try again.",
     passwordsDoNotMatch: 'Passwords do not match',
+    requiredDisplayName: 'Name is required',
+    displayNameMinLength: 'Name must be at least {{length}} characters',
+    requiredPhoneNumber: 'Phone number is required',
+    invalidPhoneNumber: 'Invalid phone number format',
   },
   route: {
     home: 'Home',
