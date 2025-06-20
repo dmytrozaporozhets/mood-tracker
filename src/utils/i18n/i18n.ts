@@ -4,12 +4,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Localization from 'expo-localization';
 
 import en from './locales/en';
-import ua from './locales/ua';
+import uk from './locales/uk';
 import { LANGUAGE_STORAGE_KEY } from '../../constants/storage';
 
 const resources = {
   en: { translation: en },
-  ua: { translation: ua },
+  uk: { translation: uk },
 };
 
 const getInitialLanguage = async (): Promise<string> => {
@@ -41,6 +41,7 @@ export const initI18n = (): Promise<void> => {
           defaultNS: 'translation',
           interpolation: { escapeValue: false },
           react: { useSuspense: false },
+          pluralSeparator: '_',
         })
         .then(() => undefined) 
     );

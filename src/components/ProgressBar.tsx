@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated, ViewStyle } from 'react-native';
+import { View, StyleSheet, Animated, ViewStyle, Text } from 'react-native';
 import { useStore } from '../store/StoreProvider';
 
 type Props = {
@@ -9,6 +9,8 @@ type Props = {
   height?: number;
   duration?: number;
   style?: ViewStyle;
+  leftLabel?: string; 
+  rightLabel?: string;  
 };
 
 const ProgressBar: React.FC<Props> = ({
@@ -18,12 +20,14 @@ const ProgressBar: React.FC<Props> = ({
   height = 10,
   duration = 500,
   style,
+  leftLabel,
+  rightLabel,
 }) => {
   const { themeStore } = useStore();
   const { colors } = themeStore.theme;
 
   const clampedProgress = Math.max(0, Math.min(progress, 1));
-  const animatedWidth = useRef(new Animated.Value(clampedProgress)).current;
+  const [animatedWidth] = React.useState(() => new Animated.Value(0));
 
   useEffect(() => {
     Animated.timing(animatedWidth, {
@@ -39,34 +43,56 @@ const ProgressBar: React.FC<Props> = ({
   });
 
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: backgroundColor ?? colors.border,
-          height,
-          borderRadius: height / 2,
-        },
-        style,
-      ]}
-    >
-      <Animated.View
-        style={{
-          width: widthInterpolated,
-          backgroundColor: color ?? colors.primary,
-          height: '100%',
-          borderRadius: height / 2,
-        }}
-      />
+    <View style={[styles.wrapper, style]}>
+      {leftLabel !== undefined && (
+        <Text style={[styles.label, { color: colors.text, marginRight: 8 }]}>
+          {leftLabel}
+        </Text>
+      )}
+
+      <View
+        style={[
+          styles.container,
+          {
+            backgroundColor: backgroundColor ?? colors.border,
+            height,
+            borderRadius: height / 2,
+            flex: 1,
+          },
+        ]}
+      >
+        <Animated.View
+          style={{
+            width: widthInterpolated,
+            backgroundColor: color ?? colors.primary,
+            height: '100%',
+            borderRadius: height / 2,
+          }}
+        />
+      </View>
+
+      {rightLabel !== undefined && (
+        <Text style={[styles.label, { color: colors.text, marginLeft: 8 }]}>
+          {rightLabel}
+        </Text>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
   container: {
-    width: '100%',
     overflow: 'hidden',
-    marginVertical:10,
+  },
+  label: {
+    fontSize: 14,
+    minWidth: 40,
+    textAlign: 'center',
   },
 });
 

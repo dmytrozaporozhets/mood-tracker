@@ -45,3 +45,10 @@ export const safeParseDate = (value?: string): string => {
 export const getTodayDate = (): string => {
   return formatDateToYYYYMMDD(new Date());
 };
+
+export function getDateBefore(dateString: string, daysBack: number): string {
+  const date = new Date(dateString);
+  date.setDate(date.getDate() - daysBack);
+  return date.toISOString().split('T')[0];
+}
+

@@ -22,7 +22,8 @@ import { SECONDARY, SMALL } from '../constants/types';
 import { sg } from '../styling';
 import { useNavigation } from '@react-navigation/native';
 import { PROFILE_SCREEN, HISTORY_SCREEN } from '../navigation/RouteNames';
-import ProgressBar from '../components/ProgressBar';
+
+import StreakCard from '../components/StreakCard';
 
 
 const QUOTES = [
@@ -115,17 +116,7 @@ const HomeScreen = observer(() => {
           />
         </Animated.View>
 
-        <View style={[styles.cardBox, { backgroundColor: colors.card }]}>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>🔥 {t('home.streakTitle')}</Text>
-          <ProgressBar
-            progress={0.75}
-            duration={800}
-          />
-          <Text style={[styles.cardContent, { color: colors.text }]}> 
-            {t('home.streakCount', { count: 5 })}
-          </Text>
-        </View>
-
+        <StreakCard title={t('home.streakTitle')} />
         <View style={[styles.cardBox, { backgroundColor: colors.card }]}>
           <Text style={[styles.cardTitle, { color: colors.text }]}> {t('home.quoteOfTheDay')}</Text>
           <FlatList
@@ -181,13 +172,6 @@ const styles = StyleSheet.create({
   cardContent: {
     fontSize: 16,
     fontStyle: 'italic',
-  },
-  progressBarContainer: {
-    height: 10,
-    backgroundColor: '#eee',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginBottom: 8,
   },
   quickActions: {
     flexDirection: 'row',
