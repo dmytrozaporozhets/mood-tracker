@@ -2,18 +2,18 @@ import React from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '../store/StoreProvider';
-import ThemeToggleSwitch from '../components/ThemeToggleSwitch';
-import LanguageSwitcher from '../components/LanguageSwitcher';
-import { sg } from '../styling';
+import ThemeToggleSwitch from '../../components/ThemeToggleSwitch';
+import LanguageSwitcher from '../../components/LanguageSwitcher';
+import { sg } from '../../styling';
 import { useTranslation } from 'react-i18next';
-import Button from '../components/Button';
-import { DANGER, SMALL } from '../constants/types';
-import ScreenView from '../components/ScreenView';
-import AppHeader from '../components/AppHeader';
+import Button from '../../components/Button';
+import { DANGER, SMALL } from '../../constants/types';
+import ScreenView from '../../components/ScreenView';
+import AppHeader from '../../components/AppHeader';
+import { useStore } from '../../store/StoreProvider';
 
 const SettingsScreen = observer(() => {
-  const { authStore } = useStore();
+  const { authStore } = useStore()
   const { t } = useTranslation();
 
   const handleLogout = () => {

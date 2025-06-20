@@ -3,16 +3,16 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-
-import { useStore } from '../store/StoreProvider';
-import AppHeader from '../components/AppHeader';
-import ScreenView from '../components/ScreenView';
-import { safeParseDate } from '../utils/date';
-import { DEFAULT_AVATAR } from '../constants/images';
-import UserInfoRow from '../components/sections/UserInfoRow';
-import Button from '../components/Button';
-import { MEDIUM } from '../constants/types';
-import { sg } from '../styling';
+import AppHeader from '../../components/AppHeader';
+import ScreenView from '../../components/ScreenView';
+import { safeParseDate } from '../../utils/date';
+import { DEFAULT_AVATAR} from '../../constants/images';
+import UserInfoRow from '../../components/sections/UserInfoRow';
+import Button from '../../components/Button';
+import { MEDIUM } from '../../constants/types';
+import { sg } from '../../styling';
+import { EDIT_PROFILE_SCREEN } from '../../navigation/RouteNames';
+import { useStore } from '../../store/StoreProvider';
 
 type ExtendedMetadata = {
   creationTime: string;
@@ -62,7 +62,7 @@ const ProfileScreen = observer(() => {
         </View>
         <Button 
           title={t('profile.editProfile')}
-          onPress={() => navigation.navigate('EditProfile' as never)}
+          onPress={() => navigation.navigate(EDIT_PROFILE_SCREEN as never)}
           size={MEDIUM}
           style={sg.mT30}
         />
