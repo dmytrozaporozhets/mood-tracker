@@ -82,6 +82,7 @@ export class AuthStore {
           this.error = handleFirebaseError(err);
         });
       }
+      
 
 
       const profile = await this.fetchUserProfile(user.uid);
@@ -153,6 +154,7 @@ export class AuthStore {
         this.loading = false;
       });
     }
+  }
 
 
   // Reset password
@@ -189,3 +191,4 @@ export class AuthStore {
       return null;
     }
   }
+}
