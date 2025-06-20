@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 export const ButtonDimensions = StyleSheet.create({
-  S:{ paddingVertical:8, borderRadius:4,},
+  S:{ paddingVertical:8, borderRadius:8, width:120},
   M:{ paddingVertical:8, paddingHorizontal:16, borderRadius:8},
   L: { paddingVertical: 12, paddingHorizontal:24, borderRadius:8, width: '100%' },
 })
