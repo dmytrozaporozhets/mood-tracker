@@ -30,7 +30,6 @@ export class AuthStore {
     this.init();
   }
 
-  // Listen for authentication state changes
   init() {
     onAuthStateChanged(auth, async (user) => {
 
@@ -153,6 +152,7 @@ export class AuthStore {
         this.loading = false;
       });
     }
+  }
 
 
   // Reset password
@@ -173,7 +173,6 @@ export class AuthStore {
     }
   }
 
-  // Fetch user profile from Firestore
   async fetchUserProfile(uid: string) {
     try {
       const docRef = doc(firestore, 'users', uid);
@@ -189,3 +188,39 @@ export class AuthStore {
       return null;
     }
   }
+
+  async updateUserProfile(data: { displayName?: string; phoneNumber?: string }) {
+  if (!this.user) return;
+
+  this.loading = true;
+  this.error = null;
+
+  try {
+    if (data.displayName) {
+      await updateProfile(this.user, { displayName: data.displayName });
+    }
+
+    await setDoc(doc(firestore, 'users', this.user.uid), {
+      ...this.userProfile,
+      ...data,
+    });
+
+    const updatedProfile = await this.fetchUserProfile(this.user.uid);
+    runInAction(() => {
+      this.userProfile = updatedProfile;
+    });
+
+  } catch (err: any) {
+    runInAction(() => {
+      this.error = handleFirebaseError(err);
+    });
+  } finally {
+    runInAction(() => {
+      this.loading = false;
+    });
+  }
+}
+
+}
+
+
