@@ -9,3 +9,5 @@ export const REGISTER_SCREEN = 'REGISTER_SCREEN'
 export const RESET_PASSWORD_SCREEN = 'RESET_PASSWORD_SCREEN';
 
 export const SETTINGS_SCREEN = 'SettingsScreen';
+export const EDIT_PROFILE_SCREEN = 'EditProfile';
+
