@@ -58,6 +58,8 @@ export default {
       Sad: 'Сумний',
       Angry: 'Злий',
     },
+    editMood: "Змінити настрій",
+    selectMood: "Обери свій настрій",
   },
   onboarding: {
     trackTitle: 'Відстежуйте настрій',
@@ -102,5 +104,15 @@ export default {
     editProfile: '✏️ Редагувати профіль',
     anonymous: 'Анонім',
     noEmail: 'Без електронної пошти',
-  }
+  },
+  home: {
+    greetingMorning: "Доброго ранку",
+    greetingAfternoon: "Доброго дня",
+    greetingEvening: "Доброго вечора",
+    quoteOfTheDay: "Цитата дня",
+    history: "Історія",
+    addMood: "Додати настрій",
+    streakTitle: "Серія настрою",
+    streakCount: "{{count}} днів поспіль",
+  },
 };

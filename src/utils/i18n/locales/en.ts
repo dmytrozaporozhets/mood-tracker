@@ -58,6 +58,8 @@ export default {
       Sad: 'Sad',
       Angry: 'Angry',
     },
+    editMood: "Edit mood",
+    selectMood: "Select your mood",
   },
   onboarding: {
     trackTitle: 'Track your mood',
@@ -102,5 +104,15 @@ export default {
     editProfile: '✏️ Edit Profile',
     anonymous: 'Anonymous',
     noEmail: 'No email',
-  }
+  },
+  home: {
+    greetingMorning: "Good morning",
+    greetingAfternoon: "Good afternoon",
+    greetingEvening: "Good evening",
+    quoteOfTheDay: "Quote of the day",
+    history: "History",
+    addMood: "Add Mood",
+    streakTitle: "Your Mood Streak",
+    streakCount: "{{count}} days in a row",
+  },
 };

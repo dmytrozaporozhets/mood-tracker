@@ -30,6 +30,7 @@ const Stack = createNativeStackNavigator();
 const Navigation: React.FC<NavigationProps> = observer(
   ({ onOnboardingFinish }) => {
     const { authStore } = useStore();
+    console.log(authStore.user);
 
     return (
        <Stack.Navigator screenOptions={{ headerShown: false }}>
