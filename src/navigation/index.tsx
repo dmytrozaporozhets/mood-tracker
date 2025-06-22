@@ -10,6 +10,7 @@ import {
   ONBOARDING_SCREEN,
   ROOT_TABS,
   SETTINGS_SCREEN,
+  EDIT_PROFILE_SCREEN,
 } from './RouteNames';
 
 import LoginScreen from '../screens/auth/LoginScreen';
@@ -17,7 +18,8 @@ import RegisterScreen from '../screens/auth/RegisterScreen';
 import ResetPasswordScreen from '../screens/auth/ResetPasswordScreen';
 import OnboardingScreen from '../screens/onboarding/OnboardingScreen';
 import BottomTabBar from './BottomTabBar';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsScreen from '../screens/profile/SettingsScreen';
+import EditProfileScreen from '../screens/profile/EditProfileScreen';
 
 type NavigationProps = {
   onOnboardingFinish: () => void;
@@ -49,6 +51,7 @@ const Navigation: React.FC<NavigationProps> = observer(
           <>
             <Stack.Screen name={ROOT_TABS} component={BottomTabBar} />
             <Stack.Screen name={SETTINGS_SCREEN} component={SettingsScreen} />
+            <Stack.Screen name={EDIT_PROFILE_SCREEN} component={EditProfileScreen} />
           </>
         )}
       </Stack.Navigator>

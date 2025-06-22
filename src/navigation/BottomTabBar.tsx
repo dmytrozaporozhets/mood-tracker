@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import HistoryScreen from '../screens/HistoryScreen';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/profile/ProfileScreen';
 import { CustomBottomBar } from './CustomBottomBar';
 import { HISTORY_SCREEN, HOME_SCREEN, PROFILE_SCREEN } from './RouteNames';
 
