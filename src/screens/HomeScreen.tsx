@@ -23,6 +23,9 @@ import { sg } from '../styling';
 import { useNavigation } from '@react-navigation/native';
 import { PROFILE_SCREEN, HISTORY_SCREEN } from '../navigation/RouteNames';
 
+import StreakCard from '../components/StreakCard';
+
+
 const QUOTES = [
   "Take a deep breath. You're doing great.",
   'Every day is a new beginning.',
@@ -113,16 +116,7 @@ const HomeScreen = observer(() => {
           />
         </Animated.View>
 
-        <View style={[styles.cardBox, { backgroundColor: colors.card }]}>
-          <Text style={[styles.cardTitle, { color: colors.text }]}>🔥 {t('home.streakTitle')}</Text>
-          <View style={styles.progressBarContainer}>
-            <View style={[styles.progressBar, { backgroundColor: colors.primary, width: '50%' }]} />
-          </View>
-          <Text style={[styles.cardContent, { color: colors.text }]}> 
-            {t('home.streakCount', { count: 5 })}
-          </Text>
-        </View>
-
+        <StreakCard title={t('home.streakTitle')} />
         <View style={[styles.cardBox, { backgroundColor: colors.card }]}>
           <Text style={[styles.cardTitle, { color: colors.text }]}> {t('home.quoteOfTheDay')}</Text>
           <FlatList
@@ -174,22 +168,10 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: '700',
-    marginBottom: 8,
   },
   cardContent: {
     fontSize: 16,
     fontStyle: 'italic',
-  },
-  progressBarContainer: {
-    height: 10,
-    backgroundColor: '#eee',
-    borderRadius: 5,
-    overflow: 'hidden',
-    marginBottom: 8,
-  },
-  progressBar: {
-    height: '100%',
-    borderRadius: 5,
   },
   quickActions: {
     flexDirection: 'row',

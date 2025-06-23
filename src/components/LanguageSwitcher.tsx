@@ -23,7 +23,7 @@ const LanguageSwitcher: React.FC = observer(() => {
         {t('settings.language')}
       </Text>
       <View style={styles.langContainer}>
-        {['en', 'ua'].map((lng) => {
+        {['en', 'uk'].map((lng) => {
           const isActive = i18n.language === lng;
           return (
             <Pressable

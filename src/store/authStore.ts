@@ -81,6 +81,7 @@ export class AuthStore {
           this.error = handleFirebaseError(err);
         });
       }
+      
 
 
       const profile = await this.fetchUserProfile(user.uid);
@@ -188,7 +189,7 @@ export class AuthStore {
       return null;
     }
   }
-
+  
   async updateUserProfile(data: { displayName?: string; phoneNumber?: string }) {
   if (!this.user) return;
 
@@ -222,5 +223,4 @@ export class AuthStore {
 }
 
 }
-
 
