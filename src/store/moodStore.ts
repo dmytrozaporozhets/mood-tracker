@@ -1,8 +1,9 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { MoodItem } from '../components/MoodCard';
-import { getTodayDate } from '../utils/date';
+import { getDateBefore, getTodayDate } from '../utils/date';
 import { saveTodayMoodItem, loadUserMoods, clearUserMoods, getTodayMood } from '../storage/moodStorage';
 import { RootStore } from './RootStore';
+import { calculateMoodStreakCount } from '../utils/mood';
 
 export class MoodStore {
   root: RootStore;
@@ -54,4 +55,9 @@ export class MoodStore {
     const today = getTodayDate();
     return this.moodList.find((item) => item.date.split("T")[0] === today) ?? null;
   }
+
+get moodStreakCount(): number {
+  return calculateMoodStreakCount(this.moodList);
+}
+
 }
