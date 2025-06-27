@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useForm } from 'react-hook-form';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 
 import ControlledInput from '../../components/ControlledInput';
 import Button from '../../components/Button';
-import ResetPasswordStyle from '../../styles/screens/ResetPasswordStyle';
 import { sg } from '../../styling';
 import { useStore } from '../../store/StoreProvider';
 import { LOGIN_SCREEN } from '../../navigation/RouteNames';
@@ -35,9 +34,14 @@ const ResetPasswordScreen: React.FC = observer(() => {
     }
   };
 
+    const onBack =() => {
+       authStore.clearError();
+       navigation.goBack();
+    }
+
   return (
-    <View style={[ResetPasswordStyle.container, { backgroundColor: colors.background }]}>
-      <Text style={[ResetPasswordStyle.title, { color: colors.text, ...fonts.bold }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text, ...fonts.bold }]}>
         {t('auth.resetPassword')}
       </Text>
 
@@ -59,10 +63,10 @@ const ResetPasswordScreen: React.FC = observer(() => {
       />
 
       <TouchableOpacity
-        onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
-        style={ResetPasswordStyle.linkWrapper}
+        onPress={onBack}
+        style={styles.linkWrapper}
       >
-        <Text style={[ResetPasswordStyle.linkText, { color: colors.primary, ...fonts.regular }]}>
+        <Text style={[styles.linkText, { color: colors.primary, ...fonts.regular }]}>
           {t('auth.backToLogin')}
         </Text>
       </TouchableOpacity>
@@ -71,3 +75,25 @@ const ResetPasswordScreen: React.FC = observer(() => {
 });
 
 export default ResetPasswordScreen;
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  title: {
+    fontSize: 28,
+    marginBottom: 32,
+    textAlign: 'center',
+  },
+  linkWrapper: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 14,
+  },
+});
