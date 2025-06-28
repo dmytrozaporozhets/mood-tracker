@@ -56,6 +56,11 @@ const RegisterScreen: React.FC = () => {
     showSuccessToast(t('auth.accountCreated'));
   };
 
+  const onSignUp =() => {
+       authStore.clearError();
+       navigation.navigate(LOGIN_SCREEN as never)
+    }
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.text, ...fonts.bold }]}>
@@ -122,7 +127,7 @@ const RegisterScreen: React.FC = () => {
       />
 
       <TouchableOpacity
-        onPress={() => navigation.navigate(LOGIN_SCREEN as never)}
+        onPress={onSignUp}
         style={styles.linkWrapper}
       >
         <Text style={[styles.linkText, { color: colors.text, ...fonts.regular }]}>
