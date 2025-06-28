@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity,StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import { useForm } from 'react-hook-form';
@@ -9,7 +9,6 @@ import ControlledInput from '../../components/ControlledInput';
 import Button from '../../components/Button';
 import { useStore } from '../../store/StoreProvider';
 import { REGISTER_SCREEN, RESET_PASSWORD_SCREEN } from '../../navigation/RouteNames';
-import LoginScreenStyle from '../../styles/screens/LoginScreenStyle';
 
 import { getLoginRules, getPasswordRules } from '../../validation/rules';
 
@@ -40,9 +39,14 @@ const LoginScreen: React.FC = () => {
     await authStore.login(email, password);
   };
 
+  const onSignIn =() => {
+     authStore.clearError();
+     navigation.navigate(RESET_PASSWORD_SCREEN as never)
+  }
+
   return (
-    <View style={[LoginScreenStyle.container, { backgroundColor: colors.background }]}>
-      <Text style={[LoginScreenStyle.title, { color: colors.text, ...fonts.bold }]}>
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Text style={[styles.title, { color: colors.text, ...fonts.bold }]}>
         {t('auth.welcome')}
       </Text>
 
@@ -72,19 +76,19 @@ const LoginScreen: React.FC = () => {
       />
 
       <TouchableOpacity
-        onPress={() => navigation.navigate(RESET_PASSWORD_SCREEN as never)}
-        style={LoginScreenStyle.linkWrapper}
+        onPress={onSignIn}
+        style={styles.linkWrapper}
       >
-        <Text style={[LoginScreenStyle.linkText, { color: colors.primary, ...fonts.regular }]}>
+        <Text style={[styles.linkText, { color: colors.primary, ...fonts.regular }]}>
           {t('auth.forgotPassword')}
         </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => navigation.navigate(REGISTER_SCREEN as never)}
-        style={LoginScreenStyle.linkWrapper}
+        style={styles.linkWrapper}
       >
-        <Text style={[LoginScreenStyle.linkText, { color: colors.text, ...fonts.regular }]}>
+        <Text style={[styles.linkText, { color: colors.text, ...fonts.regular }]}>
           {t('auth.noAccount')}{' '}
           <Text style={{ color: colors.primary, ...fonts.medium }}>{t('auth.register')}</Text>
         </Text>
@@ -94,3 +98,23 @@ const LoginScreen: React.FC = () => {
 };
 
 export default observer(LoginScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  title: {
+    fontSize: 28,
+    marginBottom: 32,
+    textAlign: 'center',
+  },
+  linkWrapper: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  linkText: {
+    fontSize: 14,
+  },
+})

@@ -5,7 +5,6 @@ const MoodPickerStyle = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 5,
   },
   saveButton: {
     paddingVertical: 10,

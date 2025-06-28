@@ -14,22 +14,6 @@ const StreakCard: React.FC<{ title: string }> = ({ title }) => {
   const streakCount = calculateMoodStreakCount(moodStore.moodList);
   const { progress, level, levelLabel, daysToNextLevel, nextLevel } = getStreakLevelAndProgress(streakCount);
 
-console.log('daysToNextLevel', typeof daysToNextLevel)
-console.log('streakCount', typeof streakCount)
-
-console.log(t('home.streakCount', { count: streakCount}));
-console.log(t('home.motivation', {
-            count: daysToNextLevel,
-            nextLevel,
-          }));
-
-console.log('1:', t('home.motivation', { count: 1, nextLevel: 2 }));
-console.log('2:', t('home.motivation', { count: 2, nextLevel: 3 }));
-console.log('5:', t('home.motivation', { count: 5, nextLevel: 4 }));
-console.log('21:', t('home.motivation', { count: 21, nextLevel: 5 }));
-
-
-
   return (
     <View style={[styles.cardBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <Text style={[styles.cardTitle, { color: colors.text }]}>{title}</Text>
