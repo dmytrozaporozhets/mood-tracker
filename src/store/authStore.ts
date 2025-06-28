@@ -180,9 +180,12 @@ export class AuthStore {
       return null;
     }
   }
-
-  async updateUserProfile(data: { displayName?: string; phoneNumber?: string }) {
-    if (!this.user) return;
+  
+async updateUserProfile(data: { displayName?: string; phoneNumber?: string }) {
+  if (!this.user || !this.userProfile) {
+    console.warn('Cannot update profile: no user or userProfile');
+    return;
+  }
 
     this.loading = true;
     this.error = null;
@@ -192,10 +195,14 @@ export class AuthStore {
         await updateProfile(this.user, { displayName: data.displayName });
       }
 
-      await setDoc(doc(firestore, 'users', this.user.uid), {
+    await setDoc(
+      doc(firestore, 'users', this.user.uid),
+      {
         ...this.userProfile,
         ...data,
-      });
+      },
+      { merge: true }
+    );
 
       const updatedProfile = await this.fetchUserProfile(this.user.uid);
       runInAction(() => {
@@ -212,4 +219,12 @@ export class AuthStore {
       });
     }
   }
+}
+
+
+clearError() {
+  this.error = null;
+}
+
+
 }
