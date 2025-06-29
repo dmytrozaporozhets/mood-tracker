@@ -9,7 +9,9 @@ export class RootStore {
 
   constructor() {
     this.themeStore = new ThemeStore();
-    this.authStore = new AuthStore();
+    this.authStore = new AuthStore(this);
     this.moodStore = new MoodStore(this);
+
+    this.themeStore.setRootStore(this);
   }
 }
