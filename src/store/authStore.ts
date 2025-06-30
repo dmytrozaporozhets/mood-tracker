@@ -18,6 +18,7 @@ import { auth, firestore } from '../../firebaseConfig';
 import { handleFirebaseError } from '../validation/firebaseErrorMessages';
 import { DARK, LIGHT } from '../constants/types';
 import { RootStore } from './RootStore';
+import { i18n } from '../utils/i18n/i18n';
 
 export class AuthStore {
   rootStore: RootStore;
@@ -52,6 +53,11 @@ export class AuthStore {
           this.rootStore.themeStore.setDarkMode(false, false);
         }
 
+        if (profile?.language && ['en', 'uk'].includes(profile.language)) {
+          await i18n.changeLanguage(profile.language);
+        }
+
+
         runInAction(() => {
           this.userProfile = profile;
         });
@@ -78,6 +84,7 @@ export class AuthStore {
         email,
         createdAt: new Date().toISOString(),
         theme: LIGHT,
+        language: 'en',
       });
 
       const profile = await this.fetchUserProfile(user.uid);
@@ -108,6 +115,10 @@ export class AuthStore {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const { user } = userCredential;
       const profile = await this.fetchUserProfile(user.uid);
+
+      if (profile?.language && ['en', 'uk'].includes(profile.language)) {
+        await i18n.changeLanguage(profile.language);
+      }
 
       if (profile?.theme === DARK) {
         this.rootStore.themeStore.setDarkMode(true, false);
