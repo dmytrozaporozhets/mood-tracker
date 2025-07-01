@@ -135,4 +135,10 @@ export default {
     },
     level: "Рівень {{level}}",
   },
+  errors: {
+    uploadPhotoFailed: "Не вдалося завантажити фото профілю. Спробуйте ще раз.",
+    error: "Помилка",
+    uploadPhotoTooLarge: "Фото завелике (максимум 1MB)",
+    photoSaveFailed: "Не вдалося зберегти фото."
+  }
 };

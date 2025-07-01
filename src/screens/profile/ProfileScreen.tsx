@@ -1,12 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+} from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import * as ImagePicker from 'expo-image-picker';
+import Toast from 'react-native-toast-message';
+
 import AppHeader from '../../components/AppHeader';
 import ScreenView from '../../components/ScreenView';
 import { safeParseDate } from '../../utils/date';
-import { DEFAULT_AVATAR} from '../../constants/images';
+import { DEFAULT_AVATAR } from '../../constants/images';
 import UserInfoRow from '../../components/sections/UserInfoRow';
 import Button from '../../components/Button';
 import { MEDIUM } from '../../constants/types';
@@ -28,7 +37,10 @@ const ProfileScreen = observer(() => {
 
   if (!user) return null;
 
-  const avatarSource = user.photoURL ? { uri: user.photoURL } : { uri: DEFAULT_AVATAR };
+  const avatarSource = authStore.userProfile?.photoBase64
+    ? { uri: authStore.userProfile.photoBase64 }
+    : { uri: DEFAULT_AVATAR };
+
   const name = user.displayName || t('profile.anonymous');
   const email = user.email || t('profile.noEmail');
   const metadata = user.metadata as ExtendedMetadata;
@@ -37,30 +49,56 @@ const ProfileScreen = observer(() => {
   const lastLogin = safeParseDate(metadata?.lastLoginAt);
 
   const verificationColor = user.emailVerified
-  ? theme.colors.notification.success
-  : theme.colors.notification.warning;
+    ? theme.colors.notification.success
+    : theme.colors.notification.warning;
 
   const verificationLabel = user.emailVerified
     ? t('profile.emailVerified')
     : t('profile.emailNotVerified');
 
+  const handleChoosePhoto = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      quality: 0.8,
+    });
+
+    if (!result.canceled && result.assets?.[0]?.uri) {
+      try {
+        await authStore.uploadProfilePhoto(result.assets[0].uri, t);
+      } catch (err) {
+        Toast.show({
+          type: 'error',
+          text1: t('errors.error'),
+          text2: t('errors.uploadPhotoFailed'),
+        });
+      }
+    }
+  };
+
   return (
     <ScreenView style={{ backgroundColor: theme.colors.background }}>
       <AppHeader showSettings />
       <View style={styles.container}>
-
-        <Image source={avatarSource} style={[styles.avatar, { backgroundColor: theme.colors.card }]} />
+        <Pressable onPress={handleChoosePhoto}>
+          <Image
+            source={avatarSource}
+            style={[styles.avatar, { backgroundColor: theme.colors.card }]}
+          />
+        </Pressable>
 
         <Text style={[styles.name, { color: theme.colors.text }]}>{name}</Text>
         <Text style={[styles.verification, { color: verificationColor }]}>
           {verificationLabel}
         </Text>
+
         <View style={styles.infoContainer}>
           <UserInfoRow label={t('profile.email')} value={email} />
           <UserInfoRow label={t('profile.lastActivity')} value={lastLogin} />
           <UserInfoRow label={t('profile.memberSince')} value={created} />
         </View>
-        <Button 
+
+        <Button
           title={t('profile.editProfile')}
           onPress={() => navigation.navigate(EDIT_PROFILE_SCREEN as never)}
           size={MEDIUM}
@@ -89,7 +127,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 4,
   },
-  warning: {
+  verification: {
     fontSize: 14,
     fontWeight: '500',
     marginBottom: 8,
@@ -99,11 +137,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
   },
-  verification: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
-  },
+  
 });
 
 export default ProfileScreen;
