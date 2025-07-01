@@ -131,4 +131,10 @@ export default {
     },
     level:"Level {{level}}",
   },
+  errors: {
+    uploadPhotoFailed: "Failed to upload profile photo. Please try again.",
+    error: "Error",
+    uploadPhotoTooLarge: "The photo is too large (max 1MB)",
+    photoSaveFailed: "Failed to save photo. Please try again."
+  }
 };
