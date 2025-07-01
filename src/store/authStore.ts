@@ -19,6 +19,9 @@ import { handleFirebaseError } from '../validation/firebaseErrorMessages';
 import { DARK, LIGHT } from '../constants/types';
 import { RootStore } from './RootStore';
 import { i18n } from '../utils/i18n/i18n';
+import * as FileSystem from 'expo-file-system';
+import * as ImageManipulator from 'expo-image-manipulator';
+import Toast from 'react-native-toast-message';
 
 export class AuthStore {
   rootStore: RootStore;
@@ -191,9 +194,12 @@ export class AuthStore {
       return null;
     }
   }
-
+  
   async updateUserProfile(data: { displayName?: string; phoneNumber?: string }) {
-    if (!this.user) return;
+    if (!this.user || !this.userProfile) {
+      console.warn('Cannot update profile: no user or userProfile');
+      return;
+    }
 
     this.loading = true;
     this.error = null;
@@ -203,10 +209,14 @@ export class AuthStore {
         await updateProfile(this.user, { displayName: data.displayName });
       }
 
-      await setDoc(doc(firestore, 'users', this.user.uid), {
-        ...this.userProfile,
-        ...data,
-      });
+      await setDoc(
+        doc(firestore, 'users', this.user.uid),
+        {
+          ...this.userProfile,
+          ...data,
+        },
+        { merge: true }
+      );
 
       const updatedProfile = await this.fetchUserProfile(this.user.uid);
       runInAction(() => {
@@ -221,6 +231,61 @@ export class AuthStore {
       runInAction(() => {
         this.loading = false;
       });
+    }
+  }
+
+  clearError() {
+    this.error = null;
+  }
+
+  async uploadProfilePhoto(uri: string, t: (key: string) => string) {
+    if (!this.user) return;
+
+    try {
+      const manipulated = await ImageManipulator.manipulateAsync(
+        uri,
+        [{ resize: { width: 300 } }],
+        { compress: 0.4, format: ImageManipulator.SaveFormat.JPEG }
+      );
+
+      const base64 = await FileSystem.readAsStringAsync(manipulated.uri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      const maxBase64Length = 1_000_000;
+
+      if (base64.length > maxBase64Length) {
+        throw new Error('PhotoTooLarge');
+      }
+
+      const dataUrl = `data:image/jpeg;base64,${base64}`;
+
+      await setDoc(
+        doc(firestore, 'users', this.user.uid),
+        { ...this.userProfile, photoBase64: dataUrl },
+        { merge: true }
+      );
+
+      const updatedProfile = await this.fetchUserProfile(this.user.uid);
+      runInAction(() => {
+        this.userProfile = updatedProfile;
+      });
+    } catch (err: any) {
+      console.error('Failed to save base64 avatar:', err);
+
+      if (err.message === 'PhotoTooLarge') {
+        Toast.show({
+          type: 'error',
+          text1: t('errors.error'),
+          text2: t('errors.uploadPhotoTooLarge'),
+        });
+      } else {
+        Toast.show({
+          type: 'error',
+          text1: t('errors.error'),
+          text2: t('errors.photoSaveFailed'),
+        });
+      }
     }
   }
 }
