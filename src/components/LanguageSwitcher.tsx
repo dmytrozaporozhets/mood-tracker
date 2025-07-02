@@ -3,18 +3,24 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { observer } from 'mobx-react-lite';
-
 import { LANGUAGE_STORAGE_KEY } from '../constants/storage';
 import { useStore } from '../store/StoreProvider';
+import { doc, setDoc } from 'firebase/firestore';
+import { firestore } from '../../firebaseConfig';
 
 const LanguageSwitcher: React.FC = observer(() => {
   const { i18n, t } = useTranslation();
-  const { themeStore } = useStore();
-  const { colors, fonts} = themeStore.theme;
+  const { themeStore, authStore } = useStore();
+  const { colors, fonts } = themeStore.theme;
+  const uid = authStore.user?.uid;
 
   const changeLang = async (lng: string) => {
     await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lng);
     await i18n.changeLanguage(lng);
+
+    if (uid) {
+      await setDoc(doc(firestore, 'users', uid), { language: lng }, { merge: true });
+    }
   };
 
   return (
@@ -57,28 +63,11 @@ const LanguageSwitcher: React.FC = observer(() => {
 });
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 16,
-  },
-  label: {
-    fontSize: 16,
-    marginBottom: 12,
-  },
-  langContainer: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  langButton: {
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  langText: {
-    fontSize: 14,
-  },
+  container: { alignItems: 'center', justifyContent: 'center', paddingVertical: 16 },
+  label: { fontSize: 16, marginBottom: 12 },
+  langContainer: { flexDirection: 'row', gap: 12 },
+  langButton: { paddingVertical: 6, paddingHorizontal: 14, borderWidth: 1, borderRadius: 8 },
+  langText: { fontSize: 14 },
 });
 
 export default LanguageSwitcher;
