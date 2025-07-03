@@ -15,6 +15,7 @@ export type StreakLevel = {
 };
 
 export const STREAK_LEVELS: StreakLevel[] = [
+  { level: 0, daysRequired: 0, label: 'Just started' },
   { level: 1, daysRequired: 3, label: 'Getting started' },
   { level: 2, daysRequired: 5, label: 'Staying consistent' },
   { level: 3, daysRequired: 7, label: 'One week streak' },

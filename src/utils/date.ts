@@ -52,3 +52,10 @@ export function getDateBefore(dateString: string, daysBack: number): string {
   return date.toISOString().split('T')[0];
 }
 
+export function getGreeting(date: Date, t: (key: string) => string) {
+  const hour = date.getHours();
+  if (hour < 12) return t('home.greetingMorning');
+  if (hour < 18) return t('home.greetingAfternoon');
+  return t('home.greetingEvening');
+}
+

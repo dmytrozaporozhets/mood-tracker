@@ -16,7 +16,7 @@ const UserHeader: React.FC<UserHeaderProps> = ({ greeting, userName, formattedDa
   const backgroundColor = colors.background === '#000000' ? '#222' : colors.background;
 
   return (
-    <View style={[styles.header, { backgroundColor }]}>
+    <View style={[styles.header, { backgroundColor, borderColor:colors.border }]}>
       <View style={styles.textBlock}>
         <Text style={[styles.greeting, { color: colors.text }]}>
           {greeting}, {userName ?? 'User'} 👋
@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 24,
     paddingHorizontal:20,
     paddingVertical:10,
+    borderBottomWidth:1,
   },
   textBlock: {
     flex: 1,
