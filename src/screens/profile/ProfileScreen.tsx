@@ -22,6 +22,8 @@ import { MEDIUM } from '../../constants/types';
 import { sg } from '../../styling';
 import { EDIT_PROFILE_SCREEN } from '../../navigation/RouteNames';
 import { useStore } from '../../store/StoreProvider';
+import EditableAvatar from '../../components/EditableAvatar';
+
 
 type ExtendedMetadata = {
   creationTime: string;
@@ -80,12 +82,10 @@ const ProfileScreen = observer(() => {
     <ScreenView style={{ backgroundColor: theme.colors.background }}>
       <AppHeader showSettings />
       <View style={styles.container}>
-        <Pressable onPress={handleChoosePhoto}>
-          <Image
-            source={avatarSource}
-            style={[styles.avatar, { backgroundColor: theme.colors.card }]}
-          />
-        </Pressable>
+        <EditableAvatar
+          uri={avatarSource.uri}
+          onPress={handleChoosePhoto}
+        />
 
         <Text style={[styles.name, { color: theme.colors.text }]}>{name}</Text>
         <Text style={[styles.verification, { color: verificationColor }]}>
