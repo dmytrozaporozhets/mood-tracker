@@ -12,7 +12,7 @@ import {
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../store/StoreProvider';
 import { moods } from '../constants/moods';
-import { formatDate } from '../utils/date';
+import { formatDate, getGreeting } from '../utils/date';
 import { useTranslation } from 'react-i18next';
 import ScreenView from '../components/ScreenView';
 import MoodSelectedCard from '../components/MoodSelectedCard';
@@ -34,12 +34,6 @@ const QUOTES = [
   'Remember to smile today 😊',
 ];
 
-function getGreeting(date: Date, t: (key: string) => string) {
-  const hour = date.getHours();
-  if (hour < 12) return t('home.greetingMorning');
-  if (hour < 18) return t('home.greetingAfternoon');
-  return t('home.greetingEvening');
-}
 
 const HomeScreen = observer(() => {
   const { authStore, moodStore, themeStore } = useStore();
@@ -107,17 +101,8 @@ const HomeScreen = observer(() => {
         style={[styles.container, { backgroundColor: colors.background }]}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
-        <Animated.View style={{ opacity: fadeAnim }}>
-          <MoodSelectedCard
-            isSelected={!!currentMood}
-            emoji={currentMood?.emoji}
-            label={currentMood?.label}
-            onSelectMood={onSelectMood}
-          />
-        </Animated.View>
 
-        <StreakCard title={t('home.streakTitle')} />
-        <View style={[styles.cardBox, { backgroundColor: colors.card }]}>
+        <View style={[styles.cardBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Text style={[styles.cardTitle, { color: colors.text }]}> {t('home.quoteOfTheDay')}</Text>
           <FlatList
             data={QUOTES}
@@ -134,6 +119,17 @@ const HomeScreen = observer(() => {
           />
         </View>
 
+        <StreakCard title={t('home.streakTitle')} />
+
+        <Animated.View style={{ opacity: fadeAnim }}>
+          <MoodSelectedCard
+            isSelected={!!currentMood}
+            emoji={currentMood?.emoji}
+            label={currentMood?.label}
+            onSelectMood={onSelectMood}
+          />
+        </Animated.View>
+
         <View style={styles.quickActions}>
           <Button
             title={t('home.history')}
@@ -148,6 +144,7 @@ const HomeScreen = observer(() => {
             type={SECONDARY}
           />
         </View>
+
       </ScrollView>
     </ScreenView>
   );
@@ -159,11 +156,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     marginBottom: 24,
+    borderWidth: 1,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    elevation: 5,
   },
   cardTitle: {
     fontSize: 18,
