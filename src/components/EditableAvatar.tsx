@@ -15,8 +15,8 @@ const EditableAvatar = ({ uri, onPress, size = 100 }: Props) => {
   const { theme} = themeStore;
 
   return (
-    <Pressable onPress={onPress} style={{ width: size, height: size }}>
-      <View style={styles.container}>
+    <Pressable onPress={onPress} style={[styles.container,{ width: size, height: size }]}>
+      <View>
         <Image
           source={{ uri }}
           style={[
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf:'center'
   },
   image: {
     resizeMode: 'cover',

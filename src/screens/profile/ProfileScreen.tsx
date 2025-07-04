@@ -3,23 +3,17 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
-  Pressable,
 } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import * as ImagePicker from 'expo-image-picker';
-import Toast from 'react-native-toast-message';
 
 import AppHeader from '../../components/AppHeader';
 import ScreenView from '../../components/ScreenView';
 import { safeParseDate } from '../../utils/date';
 import { DEFAULT_AVATAR } from '../../constants/images';
 import UserInfoRow from '../../components/sections/UserInfoRow';
-import Button from '../../components/Button';
-import { MEDIUM } from '../../constants/types';
-import { sg } from '../../styling';
+
 import { EDIT_PROFILE_SCREEN } from '../../navigation/RouteNames';
 import { useStore } from '../../store/StoreProvider';
 import EditableAvatar from '../../components/EditableAvatar';
@@ -58,25 +52,6 @@ const ProfileScreen = observer(() => {
     ? t('profile.emailVerified')
     : t('profile.emailNotVerified');
 
-  const handleChoosePhoto = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      quality: 0.8,
-    });
-
-    if (!result.canceled && result.assets?.[0]?.uri) {
-      try {
-        await authStore.uploadProfilePhoto(result.assets[0].uri, t);
-      } catch (err) {
-        Toast.show({
-          type: 'error',
-          text1: t('errors.error'),
-          text2: t('errors.uploadPhotoFailed'),
-        });
-      }
-    }
-  };
 
   return (
     <ScreenView style={{ backgroundColor: theme.colors.background }}>
@@ -84,7 +59,7 @@ const ProfileScreen = observer(() => {
       <View style={styles.container}>
         <EditableAvatar
           uri={avatarSource.uri}
-          onPress={handleChoosePhoto}
+          onPress={() => navigation.navigate(EDIT_PROFILE_SCREEN as never)}
         />
 
         <Text style={[styles.name, { color: theme.colors.text }]}>{name}</Text>
@@ -97,13 +72,6 @@ const ProfileScreen = observer(() => {
           <UserInfoRow label={t('profile.lastActivity')} value={lastLogin} />
           <UserInfoRow label={t('profile.memberSince')} value={created} />
         </View>
-
-        <Button
-          title={t('profile.editProfile')}
-          onPress={() => navigation.navigate(EDIT_PROFILE_SCREEN as never)}
-          size={MEDIUM}
-          style={sg.mT30}
-        />
       </View>
     </ScreenView>
   );
