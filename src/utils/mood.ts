@@ -16,8 +16,7 @@ export function getStreakLevelAndProgress(streakCount: number) {
   const next = STREAK_LEVELS[levelIndex + 1] ?? current;
 
   const progress = (streakCount - current.daysRequired) / (next.daysRequired - current.daysRequired);
-
-  const daysToNextLevel = next.daysRequired - streakCount > 0 ? next.daysRequired - streakCount : 0;
+  const daysToNextLevel = Math.max(next.daysRequired - streakCount, 0);
 
   return {
     level: current.level,
@@ -27,9 +26,6 @@ export function getStreakLevelAndProgress(streakCount: number) {
     nextLevel: next.level,
   };
 }
-
-
-
 
 export function calculateMoodStreakCount(moodList: MoodItem[]): number {
   if (!moodList.length) return 0;

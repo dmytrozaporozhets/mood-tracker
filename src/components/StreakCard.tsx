@@ -5,8 +5,9 @@ import { useStore } from '../store/StoreProvider';
 import ProgressBar from './ProgressBar';
 import { calculateMoodStreakCount, getStreakLevelAndProgress } from '../utils/mood';
 import { sg } from '../styling';
+import { observer } from 'mobx-react-lite';
 
-const StreakCard: React.FC<{ title: string }> = ({ title }) => {
+const StreakCard: React.FC<{ title: string }> = observer(({ title }) => {
   const { t } = useTranslation();
   const { themeStore, moodStore } = useStore();
   const { colors } = themeStore.theme;
@@ -51,7 +52,8 @@ const StreakCard: React.FC<{ title: string }> = ({ title }) => {
       )}
     </View>
   );
-};
+});
+
 
 const styles = StyleSheet.create({
   cardBox: {

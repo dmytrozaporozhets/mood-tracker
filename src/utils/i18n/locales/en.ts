@@ -118,6 +118,7 @@ export default {
     motivation: "Keep it up! Only {{count}} day to reach level {{nextLevel}}!",
     motivation_other: "Keep it up! Only {{count}} days to reach level {{nextLevel}}!",
     streakLevel: {
+      0: 'Just started',
       1: 'Getting started',
       2: 'Staying consistent',
       3: 'One week streak',

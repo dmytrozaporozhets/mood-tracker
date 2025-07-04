@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, ViewStyle, Text } from 'react-native';
 import { useStore } from '../store/StoreProvider';
+import { observer } from 'mobx-react-lite';
 
 type Props = {
   progress: number; // від 0 до 1
@@ -13,7 +14,7 @@ type Props = {
   rightLabel?: string;  
 };
 
-const ProgressBar: React.FC<Props> = ({
+const ProgressBar: React.FC<Props> =observer( ({
   progress,
   color,
   backgroundColor,
@@ -78,7 +79,7 @@ const ProgressBar: React.FC<Props> = ({
       )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   wrapper: {
