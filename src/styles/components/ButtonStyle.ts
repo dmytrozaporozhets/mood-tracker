@@ -1,9 +1,9 @@
 import {StyleSheet} from 'react-native';
 
 export const ButtonDimensions = StyleSheet.create({
-  S:{ paddingVertical:8, borderRadius:8, width:120},
-  M:{ paddingVertical:8, paddingHorizontal:16, borderRadius:8},
-  L: { paddingVertical: 12, paddingHorizontal:24, borderRadius:8, width: '100%' },
+  S:{ height: 30, width: "30%"},
+  M:{ height: 40, width: "50%"},
+  L: { height: 40, width: "100%" },
 })
 
 
@@ -12,13 +12,16 @@ const ButtonStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    borderRadius:8,
   },
   text: {
     textAlign: 'center',
   },
   content: {
+    flex:1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 8,
   },
   iconWrapper: {
