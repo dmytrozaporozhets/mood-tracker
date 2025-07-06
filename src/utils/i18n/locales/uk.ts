@@ -48,6 +48,8 @@ export default {
     save: 'Зберегти',
     getStarted: 'Почати',
     skip: 'Пропустити',
+    cancel: "Скасувати",
+    confirm: "Підтвердити",
   },
   mood: {
     title: 'Як ти почуваєшся сьогодні?',
@@ -104,6 +106,7 @@ export default {
     editProfile: '✏️ Редагувати профіль',
     anonymous: 'Анонім',
     noEmail: 'Без електронної пошти',
+    confirmLogout: "Ви впевнені, що хочете вийти з акаунту?"
   },
   home: {
     greetingMorning: "Доброго ранку",

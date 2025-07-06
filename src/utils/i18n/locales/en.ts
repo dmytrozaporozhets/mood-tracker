@@ -47,7 +47,9 @@ export default {
   button: {
     save: 'Save',
     getStarted: 'Get Started',
-    skip: 'Skip'
+    skip: 'Skip',
+    cancel: "Cancel",
+    confirm: "Confirm",
   },
   mood: {
     title: 'How are you feeling today?',
@@ -104,6 +106,7 @@ export default {
     editProfile: '✏️ Edit Profile',
     anonymous: 'Anonymous',
     noEmail: 'No email',
+    confirmLogout: "Are you sure you want to log out?"
   },
   home: {
     greetingMorning: "Good morning",
